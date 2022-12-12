@@ -4,20 +4,22 @@ import crypto from "crypto";
 const UserSchema = new mongoose.Schema({
     username: {
       type: String,
-      required: true,
+      required: [true, "please add a username"],
       unique: true,
       minlength: 5,
       maxlength: 15
     },
     password: {
       type: String,
-      required: true
+      required: [true, "please add a password"],
     },
     email: {
       type: String,
-      required: true,
+      required: [true, "please add an email"],
       unique: true,
       trim: true,
+      match: [/\S+@\S+\.\S+/, "invalid email"], //will detect if there are spaces in emails, no domains at all, or no period before .com
+      lowercase: true,
       validate: { // i havent jused this one, so not sure it works 
         validator: (value) => {
           return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)
