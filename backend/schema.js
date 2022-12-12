@@ -5,7 +5,9 @@ const UserSchema = new mongoose.Schema({
     username: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
+      minlength: 5,
+      maxlength: 15
     },
     password: {
       type: String,
@@ -40,7 +42,7 @@ export const User = mongoose.model("User", UserSchema)
     {
     question: String
     question_number: Number,
-    Answers: [
+    answerList: [
     {
     answer_one: String,
     correct: Boolean
@@ -76,33 +78,33 @@ export const User = mongoose.model("User", UserSchema)
         },
         creatorId: {
           type: mongoose.Schema.Types.ObjectId,
-          ref: "User", // vet inte hur denna fungerar, vet inte heller om vi behöver den
+          ref: "User" // kopplar denna till User Schema
         },
         creatorName: { 
           type: String 
         },
-        pointsPerQuestion: {
+      /*   pointsPerQuestion: {
           type: Number,
-          min: 1,
-        },
+          min: 1
+        }, */
         numberOfQuestions: {
           type: Number,
-          default: 0,
+          default: 0
         },
         questionList: [{
-            pointType: {
+       /*      pointType: {
               type: String,
               enum: ["Standard", "Double", "BasedOnTime"],
-              required: true,
+              required: true
             },
             answerTime: {
               type: Number,
               min: 5,
-              max: 90,
-            },
+              max: 90
+            }, */
             question: {
               type: String,
-              required: true,
+              required: true
             },
             answerList: [{
               name: { 
@@ -122,4 +124,118 @@ export const User = mongoose.model("User", UserSchema)
         }],
     }];
 
-    export const Quiz = mongoose.model("Quiz", QuizSchema)    
+    //vet inte om det räcker med answerList ovan eller om vi behöver lägga till detta också
+    // correctAnswersList: [
+      //   {
+      //     name: { type: String },
+      //     body: { type: String },
+      //   },
+      // ],
+      // answerList: [
+      //   {
+      //     name: { type: String },
+      //     content: { type: String },
+      //   },
+      // ],
+      // correctAnswer: [
+      //   {
+      //     name: { type: String },
+      //     content: { type: String },
+      //   },
+      // ],
+
+    export const Quiz = mongoose.model("Quiz", QuizSchema)
+
+    // When the game is in play
+    const GameSchema = new mongoose.Schema({
+        hostId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User"
+        },
+        quizId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Quiz"
+        },
+        pin: {
+          type: String,
+        },
+        isLive: {
+          type: Boolean,
+          default: false
+        },
+        playerList: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Player"
+          }],
+        date: {
+          type: Date,
+          required: true,
+          default: () => new Date()
+        },
+      /*   playerResultList: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "PlayerResult"
+          }] */
+      });
+
+    export const Game = mongoose.model("Game", GameSchema)
+
+    //Player schema
+    const PlayerSchema = new mongoose.Schema[{
+        name: {
+          type: String,
+          required: true
+        },
+        pin: {
+          type: String,
+          required: true
+        }
+      }];
+
+    export const Player = mongoose.model("Player", PlayerSchema)
+/* 
+    // Player result schema
+    const PlayerResultSchema = new mongoose.Schema[{
+        playerId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Player",
+          },
+          gameId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Game",
+          },
+          score: {
+            type: Number,
+            default: 0,
+          },
+        answers: [{
+            questionIndex: { 
+              type: Number 
+            },
+            answered: {
+              type: Boolean,
+              default: false
+            },
+            answers: [ String
+                // {
+                //   name: { type: String },
+                //   body: { type: String },
+                // },
+              ],
+              // correctAnswers: [
+              //   {
+              //     name: { type: String },
+              //     body: { type: String },
+              //   },
+              // ],
+              time: { 
+                type: Number 
+              },
+              points: {
+                type: Number,
+                default: 0
+              },
+        }],  
+    }]
+
+    export const PlayerResult = mongoose.model("PlayerResult", PlayerResultSchema) */
