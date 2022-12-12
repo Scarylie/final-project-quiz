@@ -1,4 +1,4 @@
-# Project Auth API
+# Final Project
 
 This is out final project by Saralie Bognandi, Sarah Kneedler and Younas Tesfamariam
 

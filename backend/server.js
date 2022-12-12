@@ -16,6 +16,15 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// shows error if the server is not responding
+app.use((req, res, next) => {
+  if (mongoose.connection.readyState === 1) {
+    next()
+  } else {
+    res.status(503).json({ error: 'Service unavailable' })
+  }
+})
+
 // Start defining your routes here
 app.get("/", (req, res) => {
   res.send("Hello Technigo!");
