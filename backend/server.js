@@ -1,7 +1,11 @@
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
-import dotenv from "dotenv"
+import dotenv from "dotenv";
+
+import { RegisterUser, LoginUser } from "./routes/user"
+
+dotenv.config()
 
 const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/final-project-quiz";
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -30,6 +34,9 @@ app.use((req, res, next) => {
 app.get("/", (req, res) => {
   res.send("Hello Technigo!");
 });
+
+app.post("/register", RegisterUser)
+app.post("/login", LoginUser)
 
 // Start the server
 app.listen(port, () => {

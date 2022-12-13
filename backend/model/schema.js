@@ -1,11 +1,17 @@
 import mongoose from "mongoose";
 import crypto from "crypto";
 
+//to validate the email when signing up/in
+const validateEmail = (email) => {
+  const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  return re.test(email);
+};
+
 const UserSchema = new mongoose.Schema({
     username: {
       type: String,
       required: [true, "please add a username"],
-      unique: true,
+      unique: [true, "user name already exists"],
       minlength: 5,
       maxlength: 15
     },
@@ -15,139 +21,93 @@ const UserSchema = new mongoose.Schema({
     },
     email: {
       type: String,
-      required: [true, "please add an email"],
+      required: [true, "please add an email"], // Do we want required or not?
       unique: true,
-      trim: true,
-      match: [/\S+@\S+\.\S+/, "invalid email"], //will detect if there are spaces in emails, no domains at all, or no period before .com
+      // trim: true, // This is included in match
       lowercase: true,
-      validate: { // i havent jused this one, so not sure it works 
-        validator: (value) => {
-          return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)
-        },
-        message: "Please enter a valid email address"
-      }
+      validate: [validateEmail, "Please add valid email"],
+      match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, "Please add valid email"], //will detect if there are spaces in emails, no domains at all, or no period before .com
     },
     accessToken: {
       type: String,
       default: () => crypto.randomBytes(128).toString("hex")
-    }
-  }); // for frontend: if the user exist promt an alert och someting 
+    },
+
+    //vi behöver få in typ "min sida" eller något sådant ? som är länkat till användaren
+  });
 
 export const User = mongoose.model("User", UserSchema)
 
-// schema for creating quiz and answers
+// Schema for creating questions and answers to Quiz
+const QuizSchema = new mongoose.Schema[{
+    quizName: {
+      type: String,
+      required: true, // eller något default om man inte fyller i
+      unique: true,
+      trim: true,
+      maxlength: 40
+    },
+    createdAt: {
+      type: Date,
+      default: () => new Date()
+    },
+    creatorId: {
+      type: mongoose.Schema.Types.ObjectId,  // if we want: display name?
+      ref: "User" // kopplar denna till User Schema
+    },
+    questionList: [{
+      type: QuestionSchema //kopplar till detta schema ovan
+    }],
+}];
 
-/* [{
-    quiz_name: String,
-    created_by: String,
-    createdAt: time()
-    {
-    question: String
-    question_number: Number,
-    answerList: [
-    {
-    answer_one: String,
-    correct: Boolean
-    image_url: String
-    },
-    {
-    answer_two: String,
-    correct: Boolean
-    },
-    {
-    answer_three: String,
-    correct: Boolean
-    },
-    {
-    answer_four: String,
-    correct: Boolean
-    },
-    ]
-    },
-    }] */
+export const Quiz = mongoose.model("Quiz", QuizSchema)
 
-    const QuizSchema = new mongoose.Schema[{
-        name: {
+ const QuestionSchema = new mongoose.Schema({
+   question: {
+     type: String,
+     required: true
+    },
+    questionIndex: { 
+        type: Number, 
+        default: 0,
+        required: true 
+    },
+    imageUrl: {
+      type: String,
+      default: "",
+    },
+     answerList: {
+      type: AnswerSchema,
+      minlength: 2,
+      maxlength: 4
+     },
+    answerTime: {
+      type: Number,
+      min: 5,
+      max: 60
+    }, 
+     pointsPerQuestion: {
+      type: Number,
+      min: 1
+    },
+/*     pointType: {
+    type: String,
+    enum: ["Standard", "Double", "BasedOnTime"],
+    required: true
+    }, */
+          });
+
+    const AnswerSchema = new mongoose.Schema({ 
+        answer: {
           type: String,
-          required: true,
           unique: true,
-          trim: true,
-          maxlength: 40
+          required: true
         },
-        createdAt: {
-          type: Date,
-          default: () => new Date()
-        },
-        creatorId: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "User" // kopplar denna till User Schema
-        },
-        creatorName: { 
-          type: String 
-        },
-      /*   pointsPerQuestion: {
-          type: Number,
-          min: 1
-        }, */
-        numberOfQuestions: {
-          type: Number,
-          default: 0
-        },
-        questionList: [{
-       /*      pointType: {
-              type: String,
-              enum: ["Standard", "Double", "BasedOnTime"],
-              required: true
-            },
-            answerTime: {
-              type: Number,
-              min: 5,
-              max: 90
-            }, */
-            question: {
-              type: String,
-              required: true
-            },
-            answerList: [{
-              name: {
-                type: String 
-              },
-              body: { 
-                type: String 
-              },
-              isCorrect: { 
-                type: Boolean 
-              }
-            }],
-            questionIndex: { 
-                type: Number, 
-                required: true 
-            }
-        }],
-    }];
-
-    //vet inte om det räcker med answerList ovan eller om vi behöver lägga till detta också
-    // correctAnswersList: [
-      //   {
-      //     name: { type: String },
-      //     body: { type: String },
-      //   },
-      // ],
-      // answerList: [
-      //   {
-      //     name: { type: String },
-      //     content: { type: String },
-      //   },
-      // ],
-      // correctAnswer: [
-      //   {
-      //     name: { type: String },
-      //     content: { type: String },
-      //   },
-      // ],
-
-    export const Quiz = mongoose.model("Quiz", QuizSchema)
-
+        isCorrect: { 
+          type: Boolean 
+        }
+    });
+    
     // When the game is in play
     const GameSchema = new mongoose.Schema({
         hostId: {
@@ -169,21 +129,21 @@ export const User = mongoose.model("User", UserSchema)
             type: mongoose.Schema.Types.ObjectId,
             ref: "Player"
           }],
-        date: {
+  /*       date: {
           type: Date,
           required: true,
           default: () => new Date()
-        },
-      /*   playerResultList: [{
+        }, */
+         playerResultList: [{
             type: mongoose.Schema.Types.ObjectId,
             ref: "PlayerResult"
-          }] */
+          }]
       });
 
     export const Game = mongoose.model("Game", GameSchema)
 
     //Player schema
-    const PlayerSchema = new mongoose.Schema[{
+    const PlayerSchema = new mongoose.Schema({
         name: {
           type: String,
           required: true
@@ -192,10 +152,14 @@ export const User = mongoose.model("User", UserSchema)
           type: String,
           required: true
         }
-      }];
+      });
 
     export const Player = mongoose.model("Player", PlayerSchema)
-/* 
+
+
+
+
+    /* 
     // Player result schema
     const PlayerResultSchema = new mongoose.Schema[{
         playerId: {
@@ -241,3 +205,44 @@ export const User = mongoose.model("User", UserSchema)
     }]
 
     export const PlayerResult = mongoose.model("PlayerResult", PlayerResultSchema) */
+
+
+              // const questionSchema = new mongoose.Schema({
+          //   topic: {
+          //     type: String,
+          //     required: true,
+          //   },
+          //   subtopic: {
+          //     type: String,
+          //     required: true,
+          //   },
+          //   question: {
+          //     type: String,
+          //     required: true,
+          //   },
+          //   option1: {
+          //     type: String,
+          //     required: true,
+          //   },
+          //   option2: {
+          //     type: String,
+          //     required: true,
+          //   },
+          //   option3: {
+          //     type: String,
+          //     required: true,
+          //   },
+          //   option4: {
+          //     type: String,
+          //     required: true,
+          //   },
+          //   correctOption: {
+          //     type: String,
+          //     required: true,
+          //   },
+          //   image: {
+          //     type: String,
+          //     default: "",
+          //     required: false,
+          //   },
+          // });
