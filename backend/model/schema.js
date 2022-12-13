@@ -109,7 +109,7 @@ export const User = mongoose.model("User", UserSchema)
               required: true
             },
             answerList: [{
-              name: { 
+              name: {
                 type: String 
               },
               body: { 

@@ -56,3 +56,23 @@ app.post("/register", async (req, res) => { // in the frontend "register" and "l
       });
     }
   });
+
+  export const authenticateUser = async (req, res, next) => {
+    const accessToken = req.header("Athorization");
+    try {
+      const user = await User.findOne({accessToken: accessToken});
+      if (user) {
+        next()
+      } else {
+        res.status(401).json({
+          success: false,
+          response: "Please log in"
+        })
+      }
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        response: error
+     })
+    }
+  };
