@@ -61,10 +61,19 @@ app.post("/register", async (req, res) => {
       });
     }
   } catch (error) {
+    if (error.code === 11000) {
+      res.status(400).json({
+        response: "Username already exists, please choose another username!",
+        error: error,
+        success: false,
+      });
+    } else {
     res.status(400).json({
       success: false,
-      response: error,
+      response: "Something went wrong",
+      error: error,
     });
+   }
   }
 });
 
@@ -117,55 +126,67 @@ const authenticateUser = async (req, res, next) => {
   }
 };
 
+// QUIZ SCHEMA //
 const QuizSchema = new mongoose.Schema({
-  quizName: { type: String, maxlength: 40, required: true },
+  quizTitle: { type: String, maxlength: 40/* , required: true  */},
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   createdAt: { type: Date, default: () => new Date() },
   questionList: [
     {
       question: {
         type: String,
+        required: true, // does not work
+      },
+      questionIndex: {
+        type: Number
       },
       answer: {
         type: String,
+        required: true, // does not work
       },
+      isCorrect: {
+        type: Boolean
+      }
     },
   ],
 });
-const Quiz = mongoose.model("Quiz", QuizSchema /* , QuestionSchema */);
 
-//  Question SCHEMA //
-/* const QuestionSchema = new mongoose.Schema({
-  question: {
-    type: String,
-    required: true,
-  },
-}); */
+const Quiz = mongoose.model("Quiz", QuizSchema);
 
 app.get("/quiz", authenticateUser);
 app.get("/quiz", async (req, res) => {
-  const quiz = await Quiz.find().sort({ createdAt: "desc" }).limit(18).exec();
-  res.status(200).json({ success: true, response: quiz });
+  try {
+    const quiz = await Quiz.find(req.body)
+    res.status(200).json({ success: true, response: quiz });
+  } catch (error) {
+    res.status(400).json({ success: false, response: error })
+  }
 });
 
 app.post("/quiz", authenticateUser);
 app.post("/quiz", async (req, res) => {
-  const { quizName, question } = req.body;
+  const { quizTitle, question, answer } = req.body;
+  console.log("questionList inside get quiz: req.body", req.body)
+  
   try {
-    const newQuiz = await new Quiz({ quizName, question }).save();
+    const newQuiz = await new Quiz({ quizTitle, question, answer }).save();
     res.status(201).json({ success: true, response: newQuiz });
   } catch (error) {
     res.status(400).json({ success: false, response: error });
   }
 });
-app.post("/quiz", authenticateUser);
-app.post("/quiz", async (req, res) => {
-  const { questionList } = req.body;
+
+app.delete("/quiz/:id", async (req, res) => {
+  const { _id } = req.body;
   try {
-    const newQuiz = await new Quiz({ questionList }).save();
-    res.status(201).json({ success: true, response: newQuiz });
+    const deletedQuiz = await Quiz.findOneAndDelete({ _id: _id });
+    if (deletedQuiz) {
+      res.status(200).json({success: true, response: deletedQuiz});
+    } else {
+      res.status(404).json({success: false, response: 'Quiz not found'});
+    }
   } catch (error) {
-    res.status(400).json({ success: false, response: error });
+    res.status(400).json({success: false, response: error});
   }
 });
 
