@@ -1,50 +1,10 @@
 import mongoose from "mongoose";
 import crypto from "crypto";
 
-//to validate the email when signing up/in
-/* const validateEmail = (email) => {
-  const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-  return re.test(email);
-}; */
-
-const UserSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: [true, "please add a username"],
-    unique: [true, "user name already exists"],
-    minlength: 5,
-    maxlength: 15,
-  },
-  password: {
-    type: String,
-    required: [true, "please add a password"],
-  },
-  /* email: {
-    type: String,
-    required: [true, "please add an email"], // Do we want required or not?
-    unique: true,
-    // trim: true, // This is included in match
-    lowercase: true,
-    validate: [validateEmail, "Please add valid email"],
-    match: [
-      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-      "Please add valid email",
-    ], //will detect if there are spaces in emails, no domains at all, or no period before .com
-  }, */
-  accessToken: {
-    type: String,
-    default: () => crypto.randomBytes(128).toString("hex"),
-  },
-
-  //vi behöver få in typ "min sida" eller något sådant ? som är länkat till användaren
-});
-
-/* export const User = mongoose.model("User", UserSchema); */
-
 // Schema for creating questions and answers to Quiz
 const QuizSchema = new mongoose.Schema[
   {
-    quizName: {
+    title: {
       type: String,
       required: true, // eller något default om man inte fyller i
       unique: true,
@@ -59,7 +19,7 @@ const QuizSchema = new mongoose.Schema[
       type: mongoose.Schema.Types.ObjectId, // if we want: display name?
       ref: "User", // kopplar denna till User Schema
     },
-    questionList: [
+    questions: [
       {
         type: QuestionSchema, //kopplar till detta schema ovan
       },
@@ -83,11 +43,13 @@ const QuestionSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
-  answerList: {
-    type: AnswerSchema,
-    minlength: 2,
-    maxlength: 4,
-  },
+  answers: [
+    {
+      type: AnswerSchema,
+      minlength: 2,
+      maxlength: 4,
+    },
+  ],
   answerTime: {
     type: Number,
     min: 5,
@@ -164,9 +126,11 @@ const PlayerSchema = new mongoose.Schema({
     required: true,
   },
 });
-
 export const Player = mongoose.model("Player", PlayerSchema);
 
+//////////////////////////////////////////////////////////////////////////
+
+// schemas from similar projects
 /* 
     // Player result schema
     const PlayerResultSchema = new mongoose.Schema[{
