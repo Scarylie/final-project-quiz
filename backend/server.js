@@ -61,7 +61,7 @@ app.post("/register", async (req, res) => {
       });
     }
   } catch (error) {
-    if (error.code === 11000) {
+    if (error.code === 11000) { //If Wrong syntax or Duplicate record
       res.status(400).json({
         response: "Username already exists, please choose another username!",
         error: error,
@@ -165,16 +165,37 @@ app.get("/quiz", async (req, res) => {
 
 app.post("/quiz", authenticateUser);
 app.post("/quiz", async (req, res) => {
-  const { quizTitle, question, answer } = req.body;
-  console.log("questionList inside get quiz: req.body", req.body)
-  
+  const { title, author, questions } = req.body;
+  console.log("POST quiz: req.body", req.body);
   try {
-    const newQuiz = await new Quiz({ quizTitle, question, answer }).save();
+    const newQuiz = new Quiz({title,
+      title,
+      author,
+      questions});
+
+    await newQuiz.save();
+    
     res.status(201).json({ success: true, response: newQuiz });
   } catch (error) {
-    res.status(400).json({ success: false, response: error });
+    res
+      .status(400)
+      .json({ success: false, response: "Failed to add quiz", error: error });
   }
 });
+
+
+
+//   const { quizTitle, question, answer } = req.body;
+//   console.log("questionList inside get quiz: req.body", req.body)
+  
+//   try {
+//     const newQuiz = await new Quiz({ quizTitle, question, answer });
+//     newQuiz.save();
+//     res.status(201).json({ success: true, response: newQuiz });
+//   } catch (error) {
+//     res.status(400).json({ success: false, response: "Failed to add Quiz", error: error });
+//   }
+// });
 
 app.delete("/quiz/:id", async (req, res) => {
   const { _id } = req.body;
