@@ -3,9 +3,8 @@ import mongoose from "mongoose";
 import crypto from "crypto";
 import bcrypt from "bcrypt";
 
-/// SCHEMAS ///
+// ************ SCHEMAS & MODELS *************** //
 
-// User Schema //
 const UserSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -32,7 +31,8 @@ const UserSchema = new mongoose.Schema({
 });
 const User = mongoose.model("User", UserSchema);
 
-/// END POINTS ///
+// ************ ENDPOINTS *************** //
+
 // Registration //
 const registerUser = async (req, res) => {
   const { username, password, email } = req.body;
