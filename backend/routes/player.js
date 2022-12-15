@@ -1,16 +1,21 @@
 import express from "express";
 import mongoose from "mongoose";
 
+/* const { User } */
+
 const PlayerSchema = new mongoose.Schema({
-    playerName: {
+    name: {
         type: String,
         required: true,
         maxlength: 15
     },
     pin: {
-
+      type: String
     }
 })
+
+const Player = mongoose.model("Player", PlayerSchema);
+/* module.exports = mongoose.model("Player", PlayerSchema) */
 
 // from repo on github:
 const gameSchema = new mongoose.Schema({
@@ -32,7 +37,7 @@ const gameSchema = new mongoose.Schema({
     playerList: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        ref: "Player",
       },
     ],
     date: {
@@ -49,6 +54,3 @@ const gameSchema = new mongoose.Schema({
   });
   
   module.exports = mongoose.model("Game", gameSchema);
-
-
-  
