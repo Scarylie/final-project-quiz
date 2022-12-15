@@ -1,13 +1,13 @@
 import express from "express";
 import mongoose from "mongoose";
 
-/// SCHEMAS ///
+// ************ SCHEMAS & MODELS *************** //
 const answerModelSchema = new mongoose.Schema({
   answer: { type: String },
   isCorrect: { type: Boolean },
 });
 
-const questionModelSchema = new mongoose.Schema({
+/* const questionModelSchema = new mongoose.Schema({
   question: { type: String },
   answers: [
     [
@@ -16,9 +16,15 @@ const questionModelSchema = new mongoose.Schema({
       },
     ],
   ],
+}); */
+
+const questionModelSchema = new mongoose.Schema({
+  question: { type: String },
+  answers: { type: [answerModelSchema],
+   }
 });
 
-const quizModelSchema = new mongoose.Schema({
+/* const quizModelSchema = new mongoose.Schema({
   title: { type: String },
   author: { type: String },
   questions: [
@@ -29,9 +35,18 @@ const quizModelSchema = new mongoose.Schema({
     ],
   ],
 });
+const Quiz = mongoose.model("Quiz", quizModelSchema); */
+
+const quizModelSchema = new mongoose.Schema({
+  title: { type: String },
+  author: { type: String },
+  questions: {
+        type:[ questionModelSchema] 
+      }
+});
 const Quiz = mongoose.model("Quiz", quizModelSchema);
 
-/// END POINTS ///
+// ************ ENDPOINTS *************** //
 
 // GET Quiz //
 const getQuiz = async (req, res) => {
@@ -46,9 +61,9 @@ const getQuiz = async (req, res) => {
 // GET Single Quiz //
 const singleQuiz = async (req, res) => {
   try {
-    const quiz = await Quiz.findById(req.params.id);
-    if (quiz) {
-      res.status(200).json({ success: true, response: quiz });
+    const oneQuiz = await Quiz.findById(req.params.id);
+    if (oneQuiz) {
+      res.status(200).json({ success: true, response: oneQuiz });
     } else {
       res.status(404).json({ error: "Quiz not found" });
     }
@@ -59,14 +74,15 @@ const singleQuiz = async (req, res) => {
 
 // POST //
 const createQuiz = async (req, res) => {
-  const { title, question, answer } = req.body;
+  const { userId } = req.params
+  const { title, author } = req.body;
   console.log("questionList inside get quiz: req.body", req.body);
 
   try {
-    const newQuiz = await new Quiz({ title, question, answer }).save();
+    const newQuiz = await new Quiz({ title, author, questions }).save();
     res.status(201).json({ success: true, response: newQuiz });
   } catch (error) {
-    res.status(400).json({ success: false, response: error });
+    res.status(400).json({ success: false, response: "Failed to add quiz", error: error });
   }
 };
 
@@ -85,9 +101,14 @@ const deleteQuiz = async (req, res) => {
   }
 };
 
+/* await Project.findByIdAndUpdate({ _id: projectId}, { $push:{
+  guestList: guestList},  $set: {name: name} }) */
+
+
 // PATCH //
 const editQuiz = async (req, res) => {
   const { _id } = req.params;
+  const {} = req.body
   try {
     const quizToUpdate = await Quiz.findByIdAndUpdate(
       _id /* {$inc: {hearts: 1}} */

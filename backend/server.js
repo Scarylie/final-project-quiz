@@ -48,7 +48,7 @@ app.post("/login", logInUser);
 
 app.get("/quiz", authenticateUser);
 app.get("/quiz", getQuiz);
-app.get("/quiz/:id", singleQuiz);
+app.get("/quiz/:id", singleQuiz); // Jag får alla quiz /Sarah
 app.post("/quiz", createQuiz);
 
 // these are not working
