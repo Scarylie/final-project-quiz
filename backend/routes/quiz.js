@@ -14,7 +14,7 @@ const questionModelSchema = new mongoose.Schema({
 });
 const Questions = mongoose.model("Questions", questionModelSchema);
 
-const quizModelSchema = new mongoose.Schema({
+const quizSchema = new mongoose.Schema({
   title: { type: String },
   author: { type: String },
   questions: {
@@ -22,7 +22,8 @@ const quizModelSchema = new mongoose.Schema({
     required: true,
   },
 });
-const Quiz = mongoose.model("Quiz", quizModelSchema);
+const Quiz = mongoose.model("Quiz", quizSchema);
+/* module.exports = mongoose.model("Quiz", quizSchema); */
 
 /* Template for POSTMAN */
 /* const ForPostmanTesting = 
@@ -129,4 +130,4 @@ const editQuiz = async (req, res) => {
   }
 };
 
-module.exports = { getQuiz, singleQuiz, createQuiz, deleteQuiz, editQuiz };
+module.exports = { getQuiz, singleQuiz, createQuiz, deleteQuiz, editQuiz, Quiz };
