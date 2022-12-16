@@ -2,24 +2,36 @@ import express from "express";
 import mongoose from "mongoose";
 
 // ************ SCHEMAS & MODELS *************** //
-const answerModelSchema = new mongoose.Schema({
-  answer: { type: String },
+const answerSchema = new mongoose.Schema({
+  answer: { type: String, unique: true, required: true, },
   isCorrect: { type: Boolean },
 });
-const Answers = mongoose.model("Answers", answerModelSchema);
+const Answers = mongoose.model("Answers", answerSchema);
 
-const questionModelSchema = new mongoose.Schema({
+const questionSchema = new mongoose.Schema({
   question: { type: String },
-  answers: { type: [answerModelSchema], required: true },
+  answer1: { type: [answerSchema], required: true },
+  answer2: { type: [answerSchema], required: true },
+  answer3: { type: [answerSchema], required: true },
+  answer4: { type: [answerSchema], required: true },
+  questionIndex: { type: Number, default: 0, required: true, },
 });
-const Questions = mongoose.model("Questions", questionModelSchema);
+const Questions = mongoose.model("Questions", questionSchema);
 
 const quizSchema = new mongoose.Schema({
-  title: { type: String },
+  title: { type: String, unique: true, trim: true, maxlength: 40, },
   author: { type: String },
   questions: {
-    type: [questionModelSchema],
+    type: [questionSchema],
     required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: () => new Date(),
+  },
+  creatorId: {
+    type: mongoose.Schema.Types.ObjectId, // if we want: display name?
+    ref: "User", // osäker på om denna funkar och om vi behöver den
   },
 });
 const Quiz = mongoose.model("Quiz", quizSchema);
@@ -28,7 +40,36 @@ const Quiz = mongoose.model("Quiz", quizSchema);
 /* Template for POSTMAN */
 /* const ForPostmanTesting = 
 
-
+{
+  "title": "Music quiz",
+  "author": "Bob",
+  "questions": 
+    [{
+      "question": "Who won eurovision 2012?",
+      "answer1":  [{
+        "answer": "Loreen",
+        "isCorrect": true
+       }
+      ],
+       "answer2":  [{
+        "answer": "Ricky",
+        "isCorrect": false
+       }
+      ],
+       "answer3":  [{
+        "answer": "Lady gaga",
+        "isCorrect": false
+       }
+      ],
+       "answer4":  [{
+        "answer": "Obama",
+        "isCorrect": false
+       }
+      ],
+      "questionIndex": 1
+    }
+  ]
+}
 
 */
 
@@ -66,7 +107,7 @@ const createQuiz = async (req, res) => {
   console.log("POST quiz: req.body", req.body);
 
   try {
-    const quizObject = {
+/*     const quizObject = {
       title: title,
       author: author,
     };
@@ -81,8 +122,9 @@ const createQuiz = async (req, res) => {
         answers: answers,
       }).save();
       quizObject.questions.push(question);
-    });
-    const newQuiz = await new Quiz(quizObject).save();
+    }); */
+    const newQuiz = await new Quiz({title, author, questions})
+    newQuiz.save();
     res.status(201).json({ success: true, response: newQuiz });
   } catch (error) {
     res
@@ -114,8 +156,8 @@ const editQuiz = async (req, res) => {
   const { _id } = req.params;
   const {} = req.body;
   try {
-    const quizToUpdate = await Quiz.findByIdAndUpdate(
-      _id /* {$inc: {hearts: 1}} */
+    const quizToUpdate = await Quiz.findByIdAndUpdate({ _id}
+       /* {$inc: {hearts: 1}} */
     );
     if (quizToUpdate) {
       res.status(200).json({
