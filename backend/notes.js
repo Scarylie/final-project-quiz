@@ -54,3 +54,84 @@ app.post("/register", async (req, res) => {
   }
 });
 /////////////////////// TEST ////////////////// */
+
+
+
+
+//////////////////////// från 1:1 med Daniel //////////////////////
+
+/* import express from "express";
+import mongoose from "mongoose";
+
+const { } = require("./quiz");
+
+const gameSchema = new mongoose.Schema({
+    hostId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true
+    },
+    quizId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Quiz",
+    },
+    pin: {
+      type: String,
+    },
+    isLive: {
+      type: Boolean,
+      default: false,
+    },
+    playerList: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Player",
+      },
+    ],
+    date: {
+      type: Date,
+      required: true,
+      default: Date.now,
+    },
+    playerResultList: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "PlayerResult",
+      },
+    ],
+  });
+  
+  module.exports = mongoose.model("Game", gameSchema);
+
+
+
+  // start a new game:
+
+  // endpoint 
+  
+// startFunc
+// quizId, or array of quizIds
+const startGame = async (hostId, quizId) => {
+  // create unique pin here 
+
+  const newGame = await new Game(hostId, quizId, uniquePIN);
+
+  /// return to frontend client:
+  return {
+    response: {
+      // return a full quiz object??
+
+      // return gameId, and link to share
+
+    }
+  }
+
+} */
+
+/// whenever someone enters game screen => request to backend, find game with UNIQUE!!!! pin, 
+// return a quiz object => quiz object is found
+// after last player completes the quiz, or expiration date  comes -> pin expires
+
+
+
+  // store the pin - sicka länk med ID och när id matchar med PINkod så kommer man in i spelet 
