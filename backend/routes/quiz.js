@@ -1,7 +1,9 @@
 import express from "express";
 import mongoose from "mongoose";
 
-const { User } = require("./user"); // används ej?
+const { UserSchema } = require("./user");
+
+const User = mongoose.model("User", UserSchema);
 
 // ************ SCHEMAS & MODELS *************** //
 const answerSchema = new mongoose.Schema({
@@ -40,9 +42,7 @@ const Questions = mongoose.model("Questions", questionSchema); // används ej
 
 const interactionSchema = new mongoose.Schema({
   name: {
-    type: String,
-    /* default: "Anonymous", */ // Or connect to username
-    maxlength: 30,
+    type: String, // connect to username
   },
   comment: {
     type: String,
@@ -65,8 +65,9 @@ const quizSchema = new mongoose.Schema({
     maxlength: 40,
   },
   creator: {
-    // connect this to username
-    type: String,
+    // connect to username
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
   },
   createdAt: {
     type: Date,
@@ -87,12 +88,16 @@ const quizSchema = new mongoose.Schema({
   interaction: {
     type: [interactionSchema],
   },
-  tags: [
+  cathegory: [
     {
       type: String,
       maxlength: 15,
     },
   ],
+  level: {
+    type: String,
+    enum: ["easy", "medium", "hard"],
+  },
 });
 const Quiz = mongoose.model("Quiz", quizSchema);
 /* module.exports = mongoose.model("Quiz", quizSchema); */
@@ -101,34 +106,58 @@ const Quiz = mongoose.model("Quiz", quizSchema);
 /* const ForPostmanTesting = 
 
 {
-  "title": "Personal quiz",
-  "creator": "my name",
+  "title": "Template quiz",
+  "creator": "User name",
   "questions": 
     [{
-      "question": "Whats my name?",
+      "question": "Question one?",
+      "imageUrl":"http://image.com",
       "answers":  [{
-        "answer": "Saralie",
+        "answer": "answer one",
         "isCorrect": true
        }
       ,
         {
-        "answer": "Ricky",
+        "answer": "answer two",
         "isCorrect": false
        }
       ,
         {
-        "answer": "Lady gaga",
+        "answer": "answer three",
         "isCorrect": false
        }
       ,
        {
-        "answer": "Obama",
+        "answer": "answer four",
         "isCorrect": false
        }
-      ],
-      "questionIndex": 1
+      ]
+    },
+    {
+      "question": "Question 2?",
+      "imageUrl":"http://image.com",
+      "answers":  [{
+        "answer": "answer one",
+        "isCorrect": true
+       }
+      ,
+        {
+        "answer": "answer two",
+        "isCorrect": false
+       }
+      ]
     }
-  ]
+  ],
+  "interaction":[{
+      "name":"username 1",
+      "comment":"comment"
+  },{
+      "name":"username 2",
+      "comment":"comment"
+  }
+  ],
+  "cathegory": ["cathegory" , "second tag"],
+  "level": "easy"
 }
 
 */
@@ -142,7 +171,7 @@ const Quiz = mongoose.model("Quiz", quizSchema);
 // GET all Quiz //
 const getQuiz = async (req, res) => {
   try {
-    const quiz = await Quiz.find();
+    const quiz = await Quiz.find().sort({ createdAt: "desc" });
     res.status(200).json({ success: true, response: quiz });
   } catch (error) {
     res.status(400).json({ success: false, response: error });
@@ -165,16 +194,16 @@ const singleQuiz = async (req, res) => {
 };
 
 // POST //
-const createQuiz = async (req, res) => {
-  // const { userId } = req.params;
-  const { title, author, questions, tags, interaction } = req.body;
+export const createQuiz = async (req, res) => {
+  /*   const { _id } = req.params; */
+  const { title, questions, cathegory, level, interaction } = req.body;
 
   try {
     const newQuiz = await new Quiz({
       title,
-      author,
       questions,
-      tags,
+      cathegory,
+      level,
       interaction,
     });
     newQuiz.save();
