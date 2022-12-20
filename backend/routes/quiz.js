@@ -5,10 +5,10 @@ const { User } = require("./user");
 
 // ************ SCHEMAS & MODELS *************** //
 const answerSchema = new mongoose.Schema({
-  answer: { type: String, required: true, },
+  answer: { type: String, required: true },
   isCorrect: { type: Boolean },
   numberOfAnswers: { type: String, enum: ["True/False", "Multiple"] },
- /*  minlength: 2,
+  /*  minlength: 2,
   maxlength: 4 */
 });
 const Answers = mongoose.model("Answers", answerSchema);
@@ -19,37 +19,37 @@ const questionSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
-    questionIndex: {
+  questionIndex: {
     type: Number,
     default: 0,
   },
-  answer: { type: [answerSchema], required: true },
-  questionIndex: { type: Number, default: 0, required: true, },
+  answers: { type: [answerSchema], required: true },
+  questionIndex: { type: Number, default: 0, required: true },
 });
-const Questions = mongoose.model("Questions", questionSchema); 
+const Questions = mongoose.model("Questions", questionSchema);
 
 const interactionSchema = new mongoose.Schema({
-    name: {
-      type: String,
-      default: 'Anonymous', // Or connect to username
-      maxlength: 30,
+  name: {
+    type: String,
+    default: "Anonymous", // Or connect to username
+    maxlength: 30,
   },
-    comment: {
-        type: String,
-        minlength: 5,
-        maxlength: 140,
-        trim: true
-    },
-    likes: {
-      type: Number,
-      default: 0
-    },
-})
+  comment: {
+    type: String,
+    minlength: 5,
+    maxlength: 140,
+    trim: true,
+  },
+  likes: {
+    type: Number,
+    default: 0,
+  },
+});
 
-const Interaction = mongoose.model("Interaction", interactionSchema); 
+const Interaction = mongoose.model("Interaction", interactionSchema);
 
 const quizSchema = new mongoose.Schema({
-  title: { type: String, trim: true, maxlength: 40, },
+  title: { type: String, trim: true, maxlength: 40 },
   creator: { type: String }, // connect this to username
   createdAt: {
     type: Date,
@@ -61,21 +61,21 @@ const quizSchema = new mongoose.Schema({
   },
   likes: {
     type: Number,
-    default: 0 
+    default: 0,
   },
   public: {
     type: Boolean,
-    default: false
+    default: false,
   },
   interaction: {
-    type: [interactionSchema]
+    type: [interactionSchema],
   },
-  tags: [{
-    type: String,
-    maxlength: 15
-  }
-  ]
-  
+  tags: [
+    {
+      type: String,
+      maxlength: 15,
+    },
+  ],
 });
 const Quiz = mongoose.model("Quiz", quizSchema);
 /* module.exports = mongoose.model("Quiz", quizSchema); */
@@ -84,27 +84,27 @@ const Quiz = mongoose.model("Quiz", quizSchema);
 /* const ForPostmanTesting = 
 
 {
-  "title": "Music quiz",
-  "author": "Bob",
+  "title": "Personal quiz",
+  "creator": "my name",
   "questions": 
     [{
-      "question": "Who won eurovision 2012?",
-      "answer1":  [{
-        "answer": "Loreen",
+      "question": "Whats my name?",
+      "answers":  [{
+        "answer": "Saralie",
         "isCorrect": true
        }
-      ],
-       "answer2":  [{
+      ,
+        {
         "answer": "Ricky",
         "isCorrect": false
        }
-      ],
-       "answer3":  [{
+      ,
+        {
         "answer": "Lady gaga",
         "isCorrect": false
        }
-      ],
-       "answer4":  [{
+      ,
+       {
         "answer": "Obama",
         "isCorrect": false
        }
@@ -136,8 +136,8 @@ const getQuiz = async (req, res) => {
 const singleQuiz = async (req, res) => {
   try {
     const oneQuiz = await Quiz.findById(req.params.id);
-    console.log(oneQuiz)
-    console.log(req.params.id)
+    console.log(oneQuiz);
+    console.log(req.params.id);
     if (oneQuiz) {
       res.status(200).json({ success: true, response: oneQuiz }); //returns all quizes
     } else {
@@ -157,7 +157,7 @@ const createQuiz = async (req, res) => {
   console.log("POST quiz: req.body", req.body);
 
   try {
-/*     const quizObject = {
+    /*     const quizObject = {
       title: title,
       author: author,
     };
@@ -173,7 +173,7 @@ const createQuiz = async (req, res) => {
       }).save();
       quizObject.questions.push(question);
     }); */
-    const newQuiz = await new Quiz({title, author, questions}) 
+    const newQuiz = await new Quiz({ title, author, questions });
     newQuiz.save();
     res.status(201).json({ success: true, response: newQuiz });
   } catch (error) {
@@ -206,8 +206,9 @@ const editQuiz = async (req, res) => {
   const { _id } = req.params;
   const {} = req.body;
   try {
-    const quizToUpdate = await Quiz.findByIdAndUpdate({ _id}
-       /* {$inc: {hearts: 1}} */
+    const quizToUpdate = await Quiz.findByIdAndUpdate(
+      { _id }
+      /* {$inc: {hearts: 1}} */
     );
     if (quizToUpdate) {
       res.status(200).json({
@@ -224,5 +225,11 @@ const editQuiz = async (req, res) => {
 
 ///// COMMENT AND LIKES /////////
 
-
-module.exports = { getQuiz, singleQuiz, createQuiz, deleteQuiz, editQuiz, Quiz };
+module.exports = {
+  getQuiz,
+  singleQuiz,
+  createQuiz,
+  deleteQuiz,
+  editQuiz,
+  Quiz,
+};
