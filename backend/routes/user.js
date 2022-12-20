@@ -126,4 +126,10 @@ const authenticateUser = async (req, res, next) => {
   }
 };
 
-module.exports = { registerUser, logInUser, authenticateUser, User };
+module.exports = {
+  registerUser,
+  logInUser,
+  authenticateUser,
+  User,
+  UserSchema,
+};
