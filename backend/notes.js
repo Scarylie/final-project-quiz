@@ -55,9 +55,6 @@ app.post("/register", async (req, res) => {
 });
 /////////////////////// TEST ////////////////// */
 
-
-
-
 //////////////////////// från 1:1 med Daniel //////////////////////
 
 /* import express from "express";
@@ -128,10 +125,26 @@ const startGame = async (hostId, quizId) => {
 
 } */
 
-/// whenever someone enters game screen => request to backend, find game with UNIQUE!!!! pin, 
+/// whenever someone enters game screen => request to backend, find game with UNIQUE!!!! pin,
 // return a quiz object => quiz object is found
 // after last player completes the quiz, or expiration date  comes -> pin expires
 
+// store the pin - sicka länk med ID och när id matchar med PINkod så kommer man in i spelet
 
-
-  // store the pin - sicka länk med ID och när id matchar med PINkod så kommer man in i spelet 
+// from Daniel helping us during class
+const quizObject = {
+  title: title,
+  author: author,
+};
+questions.foreach(async (singleQuestion) => {
+  const answers = [];
+  singleQuestion.answers.foreach(async (answer) => {
+    const singleAnswer = await new Answers(answer);
+    answers.push(singleAnswer).save();
+  });
+  const question = await new Questions({
+    question: singleQuestion.question,
+    answers: answers,
+  }).save();
+  quizObject.questions.push(question);
+});
