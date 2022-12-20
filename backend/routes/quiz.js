@@ -1,20 +1,28 @@
 import express from "express";
 import mongoose from "mongoose";
 
-const { User } = require("./user");
+const { User } = require("./user"); // används ej?
 
 // ************ SCHEMAS & MODELS *************** //
 const answerSchema = new mongoose.Schema({
-  answer: { type: String, required: true },
-  isCorrect: { type: Boolean },
-  numberOfAnswers: { type: String, enum: ["True/False", "Multiple"] },
-  /*  minlength: 2,
-  maxlength: 4 */
+  answer: {
+    type: String,
+    required: true,
+  },
+  isCorrect: {
+    type: Boolean,
+  },
+  numberOfAnswers: {
+    type: String,
+    enum: ["True/False", "Multiple"],
+  },
 });
-const Answers = mongoose.model("Answers", answerSchema);
+const Answers = mongoose.model("Answers", answerSchema); // används ej
 
 const questionSchema = new mongoose.Schema({
-  question: { type: String },
+  question: {
+    type: String,
+  },
   imageUrl: {
     type: String,
     default: "",
@@ -23,15 +31,17 @@ const questionSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  answers: { type: [answerSchema], required: true },
-  questionIndex: { type: Number, default: 0, required: true },
+  answers: {
+    type: [answerSchema],
+    required: true,
+  },
 });
-const Questions = mongoose.model("Questions", questionSchema);
+const Questions = mongoose.model("Questions", questionSchema); // används ej
 
 const interactionSchema = new mongoose.Schema({
   name: {
     type: String,
-    default: "Anonymous", // Or connect to username
+    /* default: "Anonymous", */ // Or connect to username
     maxlength: 30,
   },
   comment: {
@@ -49,8 +59,15 @@ const interactionSchema = new mongoose.Schema({
 const Interaction = mongoose.model("Interaction", interactionSchema);
 
 const quizSchema = new mongoose.Schema({
-  title: { type: String, trim: true, maxlength: 40 },
-  creator: { type: String }, // connect this to username
+  title: {
+    type: String,
+    trim: true,
+    maxlength: 40,
+  },
+  creator: {
+    // connect this to username
+    type: String,
+  },
   createdAt: {
     type: Date,
     default: () => new Date(),
@@ -122,7 +139,7 @@ const Quiz = mongoose.model("Quiz", quizSchema);
 // create
 // personalpage (login) visar ens egna quizes antingen på en gång eller om det är via att man trycker på en knapp
 
-// GET Quiz //
+// GET all Quiz //
 const getQuiz = async (req, res) => {
   try {
     const quiz = await Quiz.find();
@@ -136,10 +153,9 @@ const getQuiz = async (req, res) => {
 const singleQuiz = async (req, res) => {
   try {
     const oneQuiz = await Quiz.findById(req.params.id);
-    console.log(oneQuiz);
-    console.log(req.params.id);
+
     if (oneQuiz) {
-      res.status(200).json({ success: true, response: oneQuiz }); //returns all quizes
+      res.status(200).json({ success: true, response: oneQuiz });
     } else {
       res.status(404).json({ error: "Quiz not found" });
     }
@@ -148,32 +164,19 @@ const singleQuiz = async (req, res) => {
   }
 };
 
-// http://localhost:8080/quiz/
-
 // POST //
 const createQuiz = async (req, res) => {
   // const { userId } = req.params;
-  const { title, author, questions } = req.body;
-  console.log("POST quiz: req.body", req.body);
+  const { title, author, questions, tags, interaction } = req.body;
 
   try {
-    /*     const quizObject = {
-      title: title,
-      author: author,
-    };
-    questions.foreach(async (singleQuestion) => {
-      const answers = [];
-      singleQuestion.answers.foreach(async (answer) => {
-        const singleAnswer = await new Answers(answer);
-        answers.push(singleAnswer).save();
-      });
-      const question = await new Questions({
-        question: singleQuestion.question,
-        answers: answers,
-      }).save();
-      quizObject.questions.push(question);
-    }); */
-    const newQuiz = await new Quiz({ title, author, questions });
+    const newQuiz = await new Quiz({
+      title,
+      author,
+      questions,
+      tags,
+      interaction,
+    });
     newQuiz.save();
     res.status(201).json({ success: true, response: newQuiz });
   } catch (error) {
@@ -185,9 +188,9 @@ const createQuiz = async (req, res) => {
 
 // DELETE //
 const deleteQuiz = async (req, res) => {
-  console.log("deleteQuiz req.params", req.params); //does not work
+  console.log("deleteQuiz req.params", req.params);
   try {
-    const deletedQuiz = await Quiz.findOneAndDelete(req.params.id);
+    const deletedQuiz = await Quiz.findOneAndDelete(req.params._id);
     if (deletedQuiz) {
       res.status(200).json({ success: true, response: "Quiz deleted" });
     } else {
@@ -197,9 +200,6 @@ const deleteQuiz = async (req, res) => {
     res.status(400).json({ success: false, response: error });
   }
 };
-
-/* await Project.findByIdAndUpdate({ _id: projectId}, { $push:{
-  guestList: guestList},  $set: {name: name} }) */
 
 // PATCH //
 const editQuiz = async (req, res) => {
@@ -223,13 +223,11 @@ const editQuiz = async (req, res) => {
   }
 };
 
-///// COMMENT AND LIKES /////////
-
 module.exports = {
+  Quiz,
   getQuiz,
   singleQuiz,
   createQuiz,
   deleteQuiz,
   editQuiz,
-  Quiz,
 };
