@@ -43,15 +43,15 @@ app.get("/", (req, res) => {
   res.send("Hello Technigo!");
 });
 
+// * Registration * //
 app.post("/register", registerUser);
 app.post("/login", logInUser);
 
+// * Quiz * //
 app.get("/quiz", authenticateUser);
 app.get("/quiz", getQuiz);
-app.get("/quiz/:id", singleQuiz); // Not filtering for single quiz
+app.get("/quiz/:id", singleQuiz);
 app.post("/quiz", createQuiz);
-
-// these are not working
 app.delete("/quiz/:id", deleteQuiz);
 app.patch("/quiz/edit/:id", editQuiz);
 
