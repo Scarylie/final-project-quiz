@@ -5,8 +5,9 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import user from 'reducers/user';
 import { StartPage } from 'components/StartPage';
-import LogIn from 'components/user/LogIn';
-import Register from 'components/user/Register';
+import LogIn from 'components/auth/LogIn';
+import Register from 'components/auth/Register';
+import Profile from 'components/profile';
 import { NotFound } from 'components/NotFound';
 
 const reducer = combineReducers({
@@ -23,6 +24,7 @@ export const App = () => {
           <Route path="/" element={<StartPage />} />
           <Route path="/login" element={<LogIn />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/profile/:userId" element={<Profile />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>
