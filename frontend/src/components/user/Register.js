@@ -4,7 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { API_URL } from 'utils/user';
 import user from 'reducers/user';
 
-const LogIn = () => {
+const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
@@ -62,20 +62,16 @@ const LogIn = () => {
 
   return (
     <section>
-      {/* Sign in */}
       <div>
-        <h1>Welcome Back!</h1>
-        <p>Sign in to start quizzing.</p>
+        <h1>Don't have an account?</h1>
+        <p>Register and start your journey with us!</p>
       </div>
-
       <div>
-        <form className="signup-form" action="#" onSubmit={onFormSubmit}>
-          <h1>Sign in</h1>
-          <div className="social-container"></div>
+        <form onSubmit={onFormSubmit}>
+          <h1>Create Account</h1>
 
           <input
             className="signup-input"
-            id="username"
             type="text"
             value={username}
             placeholder="Username"
@@ -83,22 +79,27 @@ const LogIn = () => {
           />
           <input
             className="signup-input"
-            id="password"
+            type="email"
+            value={email}
+            placeholder="Email"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+
+          <input
+            className="signup-input"
             type="password"
             value={password}
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
           />
-
-          <button type="submit">Sign In</button>
+          <button type="submit">Sign Up</button>
         </form>
-
         <p>
-          Don´t have an account? <Link to={`/register`}>Sign up here!</Link>
+          Already have an account? <Link to={`/login`}>Log in here!</Link>
         </p>
       </div>
     </section>
   );
 };
 
-export default LogIn;
+export default Register;
