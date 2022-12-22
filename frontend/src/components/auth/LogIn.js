@@ -4,6 +4,13 @@ import { useNavigate, Link } from 'react-router-dom';
 import { API_URL } from 'utils/user';
 import user from 'reducers/user';
 
+import {
+  Container,
+  PageHeading,
+  PageSubHeading,
+} from 'components/styles/GlobalStyles';
+import { Form, FormHeading, Input, Button } from 'components/styles/Forms';
+
 const LogIn = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -61,43 +68,44 @@ const LogIn = () => {
   };
 
   return (
-    <section>
-      {/* Sign in */}
-      <div>
-        <h1>Welcome Back!</h1>
-        <p>Sign in to start quizzing.</p>
-      </div>
+    <Container>
+      <section>
+        {/* Sign in */}
+        <div>
+          <PageHeading>Welcome Back!</PageHeading>
+          <PageSubHeading>Sign in to start quizzing.</PageSubHeading>
+        </div>
 
-      <div>
-        <form className="signup-form" action="#" onSubmit={onFormSubmit}>
-          <h1>Sign in</h1>
-          <div className="social-container"></div>
+        <div>
+          <Form className="signup-form" action="#" onSubmit={onFormSubmit}>
+            <FormHeading>Sign in</FormHeading>
 
-          <input
-            className="signup-input"
-            id="username"
-            type="text"
-            value={username}
-            placeholder="Username"
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <input
-            className="signup-input"
-            id="password"
-            type="password"
-            value={password}
-            placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
+            <Input
+              className="signup-input"
+              id="username"
+              type="text"
+              value={username}
+              placeholder="Username"
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <Input
+              className="signup-input"
+              id="password"
+              type="password"
+              value={password}
+              placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
 
-          <button type="submit">Sign In</button>
-        </form>
+            <Button type="submit">Sign In</Button>
+          </Form>
 
-        <p>
-          Don´t have an account? <Link to={`/register`}>Sign up here!</Link>
-        </p>
-      </div>
-    </section>
+          <p>
+            Don´t have an account? <Link to={`/register`}>Sign up here!</Link>
+          </p>
+        </div>
+      </section>
+    </Container>
   );
 };
 

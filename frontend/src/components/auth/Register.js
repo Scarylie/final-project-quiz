@@ -3,6 +3,13 @@ import { useDispatch, useSelector, batch } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { API_URL } from 'utils/user';
 import user from 'reducers/user';
+// Styles
+import {
+  Container,
+  PageHeading,
+  PageSubHeading,
+} from 'components/styles/GlobalStyles';
+import { Form, FormHeading, Input, Button } from 'components/styles/Forms';
 
 const Register = () => {
   const [username, setUsername] = useState('');
@@ -61,44 +68,48 @@ const Register = () => {
   };
 
   return (
-    <section>
-      <div>
-        <h1>Don't have an account?</h1>
-        <p>Register and start your journey with us!</p>
-      </div>
-      <div>
-        <form onSubmit={onFormSubmit}>
-          <h1>Create Account</h1>
+    <Container>
+      <section>
+        <div>
+          <PageHeading>Don't have an account?</PageHeading>
+          <PageSubHeading>
+            Register and start your journey with us!
+          </PageSubHeading>
+        </div>
+        <div>
+          <Form onSubmit={onFormSubmit}>
+            <FormHeading>Create Account</FormHeading>
 
-          <input
-            className="signup-input"
-            type="text"
-            value={username}
-            placeholder="Username"
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <input
-            className="signup-input"
-            type="email"
-            value={email}
-            placeholder="Email"
-            onChange={(e) => setEmail(e.target.value)}
-          />
+            <Input
+              className="signup-input"
+              type="text"
+              value={username}
+              placeholder="Username"
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <Input
+              className="signup-input"
+              type="email"
+              value={email}
+              placeholder="Email"
+              onChange={(e) => setEmail(e.target.value)}
+            />
 
-          <input
-            className="signup-input"
-            type="password"
-            value={password}
-            placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <button type="submit">Sign Up</button>
-        </form>
-        <p>
-          Already have an account? <Link to={`/login`}>Log in here!</Link>
-        </p>
-      </div>
-    </section>
+            <Input
+              className="signup-input"
+              type="password"
+              value={password}
+              placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Button type="submit">Sign Up</Button>
+          </Form>
+          <p>
+            Already have an account? <Link to={`/login`}>Log in here!</Link>
+          </p>
+        </div>
+      </section>
+    </Container>
   );
 };
 
