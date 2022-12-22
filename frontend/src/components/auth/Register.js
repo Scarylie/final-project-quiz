@@ -15,7 +15,7 @@ const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
-  const [mode, setMode] = useState('login');
+  const [mode, setMode] = useState('register');
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
