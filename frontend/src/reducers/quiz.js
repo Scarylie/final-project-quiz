@@ -1,4 +1,7 @@
+import React from 'react'
 import { createSlice } from '@reduxjs/toolkit';
+import { API_URL } from 'utils/user';
+import { ui } from './ui';
 
 const quiz = createSlice({
   name: 'quiz',
@@ -59,4 +62,17 @@ const quiz = createSlice({
   },
 });
 
+export const fetchQuizList = () => {
+  return (dispatch) => {
+    dispatch(ui.actions.setLoading(true))
+    fetch(API_URL)
+    .then((res) = res.json())
+    .then((json) => {
+      dispatch(quiz.actions.setItems(json))
+      dispatch(ui.actions.setLoading(false))
+    })
+  }
+} // needs to be changed with POST/GET ?
+
 export default quiz;
+

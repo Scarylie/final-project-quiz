@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch, batch } from "react-redux";
-import { API_URL } from 'utils/user';
 
 const AddQuiz = () => {
     const id = useSelector((store) => store.user.userId);
