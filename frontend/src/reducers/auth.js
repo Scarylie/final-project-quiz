@@ -24,7 +24,7 @@ const user = createSlice({
       store.accessToken = action.payload;
     },
     setError: (store, action) => {
-      store.accessToken = action.payload;
+      store.error = action.payload;
     },
   },
 });
