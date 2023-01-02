@@ -4,6 +4,8 @@ import { Provider } from 'react-redux';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import user from 'reducers/auth';
+import quiz from 'reducers/quiz';
+
 import { StartPage } from 'components/StartPage';
 import LogIn from 'components/auth/LogIn';
 import Register from 'components/auth/Register';
@@ -14,6 +16,7 @@ import { NotFound } from 'components/NotFound';
 
 const reducer = combineReducers({
   user: user.reducer,
+  quiz: quiz.reducer,
 });
 
 const store = configureStore({ reducer });
