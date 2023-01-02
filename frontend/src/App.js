@@ -8,15 +8,11 @@ import { StartPage } from 'components/StartPage';
 import LogIn from 'components/auth/LogIn';
 import Register from 'components/auth/Register';
 import Profile from 'components/profile';
-import AddQuiz from 'components/AddQuiz'
+// import AddQuiz from 'components/AddQuiz'
 import { NotFound } from 'components/NotFound';
-import quiz from 'reducers/quiz';
-import { ui } from 'reducers/ui';
 
 const reducer = combineReducers({
   user: user.reducer,
-  quiz: quiz.reducer,
-  ui: ui.reducer
 });
 
 const store = configureStore({ reducer });
@@ -30,7 +26,6 @@ export const App = () => {
           <Route path="/login" element={<LogIn />} />
           <Route path="/register" element={<Register />} />
           <Route path="/profile/:userId" element={<Profile />} />
-          <Route path="/quiz" element={<AddQuiz />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>

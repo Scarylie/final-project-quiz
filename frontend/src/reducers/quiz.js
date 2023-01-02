@@ -61,10 +61,11 @@ const quiz = createSlice({
   },
 });
 
-export const postQuiz = () => {
+// thunk för start quiz
+export const startQuiz = () => {
     return (dispatch, getState) => {
       dispatch(ui.actions.setLoading(true))
-      fetch(API_URL, {
+      fetch(API_URL(slug), { //singlequiz eller liknande + id 
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
