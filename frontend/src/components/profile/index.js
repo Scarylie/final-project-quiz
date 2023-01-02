@@ -4,6 +4,7 @@ import MyQuizFeed from 'components/quiz/MyQuizFeed';
 
 const Profile = () => {
   const { username, userId } = useSelector((store) => store.user);
+  console.log(store.user);
   return (
     <section>
       <h1>Welcome {username}</h1>
