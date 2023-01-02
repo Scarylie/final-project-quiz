@@ -88,7 +88,7 @@ const quizSchema = new mongoose.Schema({
   interaction: {
     type: [interactionSchema],
   },
-  cathegory: [
+  category: [
     {
       type: String,
       maxlength: 15,
@@ -156,7 +156,7 @@ const Quiz = mongoose.model("Quiz", quizSchema);
       "comment":"comment"
   }
   ],
-  "cathegory": ["cathegory" , "second tag"],
+  "category": ["category" , "second tag"],
   "level": "easy"
 }
 
@@ -196,13 +196,13 @@ const singleQuiz = async (req, res) => {
 // POST //
 export const createQuiz = async (req, res) => {
   /*   const { _id } = req.params; */
-  const { title, questions, cathegory, level, interaction } = req.body;
+  const { title, questions, category, level, interaction } = req.body;
 
   try {
     const newQuiz = await new Quiz({
       title,
       questions,
-      cathegory,
+      category,
       level,
       interaction,
     });
