@@ -1,4 +1,3 @@
-import React from 'react'
 import { createSlice } from '@reduxjs/toolkit';
 import { API_URL } from 'utils/user';
 import { ui } from './ui';
@@ -24,10 +23,10 @@ const quiz = createSlice({
       store.items = action.payload;
     },
     addItem: (store, action) => {
-      store.items = [action.payload, ...store.items]
+      store.items = [action.payload, ...store.items] // ska hantera när man addar en fråga
     },
     setQuizId: (store, action) => {
-      store.quizId = action.payload; // kolla upp denna 
+      store.quizId = action.payload;
     },
     setTitle: (store, action) => {
       store.title = action.payload;
@@ -50,7 +49,7 @@ const quiz = createSlice({
     setInteractions: (store, action) => {
       store.interactions = action.payload;
     },
-    setCathegory: (store, action) => {
+    setCategory: (store, action) => {
       store.cathegory = action.payload;
     },
     setLevel: (store, action) => {
@@ -62,17 +61,55 @@ const quiz = createSlice({
   },
 });
 
-export const fetchQuizList = () => {
+export const postQuiz = () => {
+    return (dispatch, getState) => {
+      dispatch(ui.actions.setLoading(true))
+      fetch(API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: accessToken
+        },
+        body: JSON.stringify({ items: getState().quiz.items })
+      })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+        dispatch(quiz.actions.setItems(data))
+        dispatch(ui.actions.setLoading(false))
+        dispatch(quiz.actions.setError(null))
+      } else {
+        dispatch(quiz.actions.setItems([]));
+        dispatch(quiz.actions.setError(data.response))
+      }
+      })
+    }
+}
+
+export const getPersonalQuizList = (/* id/accessToken */) => {
+  const options = {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: accessToken
+    }
+  }
   return (dispatch) => {
     dispatch(ui.actions.setLoading(true))
-    fetch(API_URL)
+    fetch(API_URL(`/profile/${data.response.id}`), options)
     .then((res) = res.json())
-    .then((json) => {
-      dispatch(quiz.actions.setItems(json))
-      dispatch(ui.actions.setLoading(false))
+    .then((data) => {
+      if(data.success) {
+        dispatch(quiz.actions.setItems(data.response))
+        dispatch(ui.actions.setLoading(false))
+        dispatch(quiz.actions.setError(null))
+      } else {
+        dispatch(quiz.actions.setItems([]));
+        dispatch(quiz.actions.setError(data.response))
+      }
     })
   }
-} // needs to be changed with POST/GET ?
+}
 
 export default quiz;
 

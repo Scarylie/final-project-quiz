@@ -1,26 +1,60 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch, batch } from "react-redux";
+import { postQuiz } from 'reducers/quiz'
+import { API_URL } from 'utils/user';
 
 const AddQuiz = () => {
     const id = useSelector((store) => store.user.userId);
-    const accessToken = useSelector((store) => store.user.accessToken);
-    const [input, setInput] = useState('')
+    const accessToken = useSelector((store) => store.user.accessToken); 
+    const [isCorrect, setIsCorrect] = useState("Correct")
+    const [title, setTitle] = useState("")
+    const [input, setInput] = useState({
+      question: "",
+      answer: "",
+      answer: "",
+      answer: "",
+      answer: "",
+    })
 
-    const onAddQuiz = (event) => {
+    const dispatch = useDispatch();
+
+    const onFormSubmit = (event) => {
         event.preventDefault();
-        if (input !== '') {
-          dispatch(todos.actions.addQuiz(input))
-          setInput('')
-        } /* else {
-          alert('You have to write a To Do before adding');
-        } */
+        dispatch(postQuiz());
+        /* const options = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: accessToken
+          },
+          body: JSON.stringify({ ...items, isCorrect})
+        }
+        fetch(API_URL(`${quiz}`), options)
+        .then((res) => res.json())
+        .then((data) => {
+          batch(() => {
+          dispatch(quiz.actions.addQuiz(data.response))
+          dispatch(quiz.actions.setError(null))
+        })
+        })
+        .catch((error) => {
+          dispatch(quiz.actions.setError(error.response))
+        })
+        .finally(() => {
+          setTitle({title: ""}),
+          setInput({
+            question: "",
+            answer: "",
+            answer: "",
+            answer: "",
+            answer: "",
+          })
+        }) */
       };
-      const onInputChange = (event) => {
-        setInput(event.target.value)
-      };
+      
 
     return (
-        <form >
+        <form onSubmit={onFormSubmit}>
             <input
             className="quiz-title"
             type="text"
