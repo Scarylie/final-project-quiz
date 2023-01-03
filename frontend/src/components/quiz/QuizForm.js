@@ -1,30 +1,31 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch, batch } from 'react-redux';
 import { API_QUIZ } from 'utils/user';
+import quiz from 'reducers/quiz'
 
 const QuizForm = () => {
-  const id = useSelector((store) => store.user.userId);
-  const accessToken = useSelector((store) => store.user.accessToken);
+ /*  const id = useSelector((store) => store.user.userId);
+  const accessToken = useSelector((store) => store.user.accessToken); */
   const [title, setTitle] = useState('');
+  const [newTitle, setNewTitle] = useState('');
 
   const dispatch = useDispatch();
 
-  const onFormSubmit = (event) => {
+  const handleFormSubmit = (event) => {
     event.preventDefault();
-    dispatch(postQuiz());
-    /* const options = {
+    const options = {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: accessToken
+            /* Authorization: accessToken */
           },
-          body: JSON.stringify({ ...items, isCorrect})
+          body: JSON.stringify({ title: newTitle })
         }
-        fetch(API_QUIZ(`${quiz}`), options)
+        fetch(API_QUIZ, options)
         .then((res) => res.json())
         .then((data) => {
           batch(() => {
-          dispatch(quiz.actions.addQuiz(data.response))
+          dispatch(quiz.actions.setNewTitle(data.response))
           dispatch(quiz.actions.setError(null))
         })
         })
@@ -32,30 +33,43 @@ const QuizForm = () => {
           dispatch(quiz.actions.setError(error.response))
         })
         .finally(() => {
-          setTitle({title: ""}),
-          setInput({
-            question: "",
-            answer: "",
-            answer: "",
-            answer: "",
-            answer: "",
-          })
-        }) */
+          setNewTitle('')
+        })
   };
 
+  const handleNewTitleChange = (event) => {
+    setNewTitle(event.target.value)
+  };
+
+  const titleList = useSelector((store) => store.quiz.items);
+// displayes on /quiz (tror ej det är kopplat till specifik användare)
   return (
-    <form onSubmit={onFormSubmit}>
-      <input
-        className="quiz-title"
-        type="text"
-        // value={input}
-        // onChange=
-        placeholder="Add Quiz name"
-        autoComplete="off"
-      />
-      <button type="submit">save</button>
-    </form>
+    <>
+    <div>
+      <form onSubmit={handleFormSubmit}>
+        <input
+          className="quiz-title"
+          type="text"
+          value={newTitle}
+          onChange={handleNewTitleChange}
+          placeholder="Add Quiz name"
+          autoComplete="off" />
+        <button type="submit">save</button>
+      </form>
+    </div>
+    <div 
+      className="title-list"> 
+        {titleList.map((quiz) => {
+          return (
+            <article key={quiz._id}>
+              <p>{quiz.title}</p>
+            </article>
+          )
+        })}
+      </div>
+    
+    </> 
   );
 };
 
-export default AddQuiz;
+export default QuizForm;

@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react';
-/* import { useSelector } from 'react-redux'; */
-/* import { useParams } from 'react-router-dom'; */
 import { API_QUIZ } from 'utils/user';
-import { useDispatch, useSelector, batch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 const QuizFeed = () => {
@@ -12,13 +9,16 @@ const QuizFeed = () => {
     const options = {
       method: 'GET',
     };
-    fetch(API_QUIZ, options)
+    fetch(API_QUIZ, options) // add loading?
       .then((res) => res.json())
       .then((json) => {
         console.log(API_QUIZ);
         setQuizList(json.response);
-      });
-  }, []);
+      })
+      .catch((error) => console.error(error))
+      .finally(() => console.log('All good!'));
+      
+  }, []); // behöver vi något mer felmeddelande i frontend här?
 
   return (
     <section>
