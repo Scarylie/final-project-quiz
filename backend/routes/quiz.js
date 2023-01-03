@@ -65,7 +65,7 @@ const quizSchema = new mongoose.Schema({
     maxlength: 40,
   },
   creator: {
-    // connect to username
+    // connect to username denna syns inte i consolen
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
@@ -95,9 +95,9 @@ const quizSchema = new mongoose.Schema({
     },
   ],
   level: {
-    type: String,
+    type: String, // syns ej i console
     enum: ["easy", "medium", "hard"],
-  },
+  }, // tror vi vill ha nån automatisk question index
 });
 const Quiz = mongoose.model("Quiz", quizSchema);
 /* module.exports = mongoose.model("Quiz", quizSchema); */

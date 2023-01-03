@@ -16,7 +16,7 @@ const MyQuizFeed = () => {
     fetch(API_QUIZ_ID, options) // add loading?
       .then((res) => res.json())
       .then((json) => {
-        console.log(API_QUIZ_ID);
+        console.log(API_QUIZ_ID); // not working
         setMyQuizList(json.response.quiz);
       })
       .catch((error) => console.error(error))

@@ -2,13 +2,17 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch, batch } from 'react-redux';
 import { API_QUIZ } from 'utils/user';
 import quiz from 'reducers/quiz'
-import QuizFormQuestions from './QuizFormQuestions';
 
-const QuizForm = () => {
+//////////////////////// Not working yet 
+
+
+const QuizFormQuestions = () => {
  /*  const id = useSelector((store) => store.user.userId);
   const accessToken = useSelector((store) => store.user.accessToken); */
-  /* const [title, setTitle] = useState(''); */
-  const [title, setTitle] = useState('');
+  const [newQuestion, setNewQuestion] = useState({
+    question: "",
+    answer: [],
+  })
 
   const dispatch = useDispatch();
 
@@ -20,13 +24,13 @@ const QuizForm = () => {
             'Content-Type': 'application/json',
             /* Authorization: accessToken */
           },
-          body: JSON.stringify({ title: title })
+          body: JSON.stringify({ ...newQuestion })
         }
         fetch(API_QUIZ, options)
         .then((res) => res.json())
         .then((data) => {
           batch(() => {
-          dispatch(quiz.actions.setTitle(data.response))
+          dispatch(quiz.actions.addQuestion(data.response))
           dispatch(quiz.actions.setError(null))
         })
         })
@@ -34,18 +38,19 @@ const QuizForm = () => {
           dispatch(quiz.actions.setError(error.response))
         })
         .finally(() => {
-          setTitle('')
+          setNewQuestion({
+            question: "",
+            answer: []
+          })
         })
   };
 
-  const handleTitleChange = (event) => {
-    setTitle(event.target.value)
+  const handleNewQuestionChange = (event) => {
+    setNewQuestion(event.target.value)
   };
 
-  const titleList = useSelector((store) => store.quiz.items);
+  const questionList = useSelector((store) => store.quiz.items);
 
-
-// displayes on /quiz - borde ligga på profile/id också
   return (
     <>
     <div>
@@ -53,28 +58,26 @@ const QuizForm = () => {
         <input
           className="quiz-title"
           type="text"
-          value={title}
-          onChange={handleTitleChange}
-          placeholder="Add Quiz name"
+          value={newQuestion}
+          onChange={handleNewQuestionChange}
+          placeholder="Add Question"
           autoComplete="off" />
         <button type="submit">save</button>
       </form>
     </div>
     <div 
       className="title-list"> 
-        {titleList.map((quiz) => {
+        {questionList.map((quiz) => {
           return (
             <article key={quiz._id}>
-              <p>{quiz.title}</p> 
-              {/* LINK to edit/delete quiz när man trycker på titeln */}
+              <p>{quiz.question}</p> 
             </article>
           )
         })} 
       </div>
-      <QuizFormQuestions />
     
     </> 
   );
 };
 
-export default QuizForm;
+export default QuizFormQuestions;

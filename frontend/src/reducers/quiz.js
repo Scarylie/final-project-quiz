@@ -6,6 +6,8 @@ const quiz = createSlice({
     items: [], // gets an array from the backend (anteckning från tidigare project)
     _id: null,
     title: null,
+    questions: null,
+    answer: [],
     error: null,
   },
 
@@ -19,13 +21,14 @@ const quiz = createSlice({
     setTitle: (store, action) => {
       store.title = action.payload;
     },
-    addQuiz: (store, action) => {
-      const newQuiz = {
-        id: uniqid(), // do we need?
-        text: action.payload,
-        postedTime: moment().format('MMM Do YY') // do we need?
-      };
-      store.items = [newQuiz, ...store.items]
+    addQuestion: (store, action) => {
+      store.items = [action.payload, ...store.items]
+    },
+    setQuestions: (store, action) => {
+      store.questions = action.payload;
+    },
+    setAnswer: (store, action) => {
+      store.answer = action.payload;
     },
     deleteQuiz: (store, action) => {
       const deleteItems = store.items.filter((item) => item.id !== action.payload)
