@@ -37,9 +37,9 @@ const Profile = () => {
 
   return (
     <section>
-      <h1>
-        Welcome {username} {accessToken} {userId}
-      </h1>
+      <p>Username {username}</p>
+      <p>userId {userId}</p>
+      <p>accessToken {accessToken}</p>
     </section>
   );
 };
