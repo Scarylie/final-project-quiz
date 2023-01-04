@@ -65,7 +65,7 @@ const quizSchema = new mongoose.Schema({
     maxlength: 40,
   },
   creator: {
-    // connect to username
+    // connect to username denna syns inte i consolen
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
@@ -88,16 +88,16 @@ const quizSchema = new mongoose.Schema({
   interaction: {
     type: [interactionSchema],
   },
-  cathegory: [
+  category: [
     {
       type: String,
       maxlength: 15,
     },
   ],
   level: {
-    type: String,
+    type: String, // syns ej i console
     enum: ["easy", "medium", "hard"],
-  },
+  }, // tror vi vill ha nån automatisk question index
 });
 const Quiz = mongoose.model("Quiz", quizSchema);
 /* module.exports = mongoose.model("Quiz", quizSchema); */
@@ -156,7 +156,7 @@ const Quiz = mongoose.model("Quiz", quizSchema);
       "comment":"comment"
   }
   ],
-  "cathegory": ["cathegory" , "second tag"],
+  "category": ["category" , "second tag"],
   "level": "easy"
 }
 
@@ -196,13 +196,13 @@ const singleQuiz = async (req, res) => {
 // POST //
 export const createQuiz = async (req, res) => {
   /*   const { _id } = req.params; */
-  const { title, questions, cathegory, level, interaction } = req.body;
+  const { title, questions, category, level, interaction } = req.body;
 
   try {
     const newQuiz = await new Quiz({
       title,
       questions,
-      cathegory,
+      category,
       level,
       interaction,
     });

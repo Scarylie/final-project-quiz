@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+
 import { Navigate } from 'react-router-dom';
 import { API_URL } from 'utils/user';
 
@@ -20,7 +21,7 @@ const Profile = () => {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: accessToken,
+          'Authorization': accessToken,
         },
       };
       fetch(API_URL('quiz'), options)
@@ -40,6 +41,7 @@ const Profile = () => {
       <p>Username {username}</p>
       <p>userId {userId}</p>
       <p>accessToken {accessToken}</p>
+
     </section>
   );
 };

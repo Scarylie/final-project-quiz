@@ -48,7 +48,7 @@ app.post("/register", registerUser);
 app.post("/login", logInUser);
 
 // * Quiz * //
-app.get("/quiz", authenticateUser);
+// app.get("/quiz", authenticateUser);
 app.get("/quiz", getQuiz);
 app.get("/quiz/:id", singleQuiz);
 app.post("/quiz", createQuiz);
