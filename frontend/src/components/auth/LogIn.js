@@ -23,12 +23,6 @@ const LogIn = () => {
   const navigate = useNavigate();
   const accessToken = useSelector((store) => store.user.accessToken);
 
-  // useEffect(() => {
-  //   if (accessToken) {
-  //     navigate('/profile');
-  //   }
-  // }, [accessToken]);
-
   const onFormSubmit = (event) => {
     console.log('onFormSubmit in Login.js');
     event.preventDefault();
@@ -76,10 +70,11 @@ const LogIn = () => {
     }
   };
 
-  if (accessToken) {
-    console.log('if accessToken, navigate to profile in Login.js');
-    return <Navigate to="/profile" />;
-  }
+  // This is not being used...
+  // if (accessToken) {
+  //   console.log('if accessToken, navigate to profile in Login.js');
+  //   return <Navigate to="/profile" />;
+  // }
 
   return (
     <Container>
