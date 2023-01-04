@@ -1,19 +1,22 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Provider, batch, useDispatch } from 'react-redux';
+import { Provider } from 'react-redux';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import user from 'reducers/auth';
 import quiz from 'reducers/quiz';
 
-import { StartPage } from 'components/StartPage';
+import StartPage from 'components/pages/StartPage';
 import LogIn from 'components/auth/LogIn';
 import Register from 'components/auth/Register';
-import Profile from 'components/profile';
+import Profile from 'components/pages/Profile';
+import About from 'components/pages/About';
 import QuizFeed from 'components/quiz/QuizFeed';
-import PlayQuiz from 'components/quiz/PlayQuiz';
+import PlayQuiz from 'components/quiz/playquiz/Overview';
 import { NotFound } from 'components/NotFound';
 import Navbar from 'components/Navbar';
+import Hero from 'components/Hero';
+import QuizForm from 'components/quiz/createquiz/QuizForm';
 
 const reducer = combineReducers({
   user: user.reducer,
@@ -26,15 +29,17 @@ export const App = () => {
   return (
     <Provider store={store}>
       <BrowserRouter>
+        <Hero />
         <Navbar />
         <Routes>
           <Route path="/" element={<StartPage />} />
           <Route path="/login" element={<LogIn />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/quiz" element={<QuizFeed />} />
-          <Route path="/quiz/:id" element={<PlayQuiz />} />
+          <Route path="/home" element={<QuizFeed />} />
+          <Route path="/home/:id" element={<PlayQuiz />} />
           <Route path="/profile" element={<Profile />} />
-
+          <Route path="/about" element={<About />} />
+          <Route path="/create" element={<QuizForm />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>

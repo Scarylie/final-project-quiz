@@ -12,6 +12,7 @@ const Navbar = () => {
   const onLogOut = () => {
     dispatch(user.actions.logout());
     console.log('Log out');
+    location.href = '/';
   };
 
   // automatically authenticate user if token is found
@@ -25,6 +26,27 @@ const Navbar = () => {
     <StyledNavbar>
       <NavbarContainer>
         <div>Logo</div>
+        <div>
+          {accessToken ? (
+            <Link to={`/home`}>Home</Link>
+          ) : (
+            <Link to={`/`}>Home</Link>
+          )}
+        </div>
+        <div>
+          {accessToken ? (
+            <Link to={`/profile`}>Profile</Link>
+          ) : (
+            <Link to={`/about`}>About</Link>
+          )}
+        </div>
+        <div>
+          {accessToken ? (
+            <Link to={`/create`}>Create</Link>
+          ) : (
+            <Link to={`/register`}>Register</Link>
+          )}
+        </div>
         <div>
           {accessToken ? (
             <button type="button" onClick={onLogOut}>
