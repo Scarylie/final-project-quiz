@@ -234,11 +234,21 @@ const deleteQuiz = async (req, res) => {
 const editQuiz = async (req, res) => {
   const { _id } = req.params;
   const {} = req.body;
+  // optional
+  const { valuesToUpdate } = req.body;
+
   try {
     const quizToUpdate = await Quiz.findByIdAndUpdate(
       { _id }
       /* {$inc: {hearts: 1}} */
     );
+    // optional approach
+    // const arrayOfPropertyNames = Object.keys(valuesToUpdate);
+    // arrayOfPropertyNames.map((singlePropertyName) => {
+    //   await Quiz.updateOne({_id: _id},{ $set: { singlePropertyName: valuesToUpdate[singlePropertyName] }})
+    //   quizToUpdate[singlePropertyName] = valuesToUpdate[singlePropertyName];
+    // });
+    quizToUpdate.save();
     if (quizToUpdate) {
       res.status(200).json({
         success: true,
