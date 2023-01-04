@@ -18,3 +18,14 @@ export const PageSubHeading = styled.p`
   font-size: 16px;
   text-align: center;
 `;
+
+export const ErrorText = styled.p`
+  color: red;
+  font-size: 12px;
+  font-style: italic;
+`;
+
+export const StyledNavbar = styled.header`
+  border-bottom: 1px solid;
+  padding: 10px;
+`;

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector, batch } from 'react-redux';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, Navigate } from 'react-router-dom';
 import { API_URL } from 'utils/user';
 import user from 'reducers/auth';
-
 import {
   Container,
   PageHeading,
   PageSubHeading,
+  ErrorText,
 } from 'components/styles/GlobalStyles';
 import { Form, FormHeading, Input, Button } from 'components/styles/Forms';
 
@@ -16,19 +16,15 @@ const LogIn = () => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [mode, setMode] = useState('login');
+  const [inputError, setInputError] = useState(false);
+  const [inputErrorMessage, setInputErrorMessage] = useState('');
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const accessToken = useSelector((store) => store.user.accessToken);
 
-  useEffect(() => {
-    if (accessToken) {
-      const userId = useSelector((store) => store.user.userId);
-      navigate(`/profile/${userId}`);
-    }
-  }, [accessToken]);
-
   const onFormSubmit = (event) => {
+    console.log('onFormSubmit in Login.js');
     event.preventDefault();
 
     const options = {
@@ -42,30 +38,43 @@ const LogIn = () => {
         email: email,
       }),
     };
-
-    fetch(API_URL(mode), options)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.success) {
-          batch(() => {
-            dispatch(user.actions.setUsername(data.response.username));
-            dispatch(user.actions.setUserId(data.response.id));
-            dispatch(user.actions.setEmail(data.response.email));
-            dispatch(user.actions.setAccessToken(data.response.accessToken));
-            dispatch(user.actions.setError(null));
-            navigate(`/profile/${data.response.id}`);
-          });
-        } else {
-          batch(() => {
-            dispatch(user.actions.setUsername(null));
-            dispatch(user.actions.setUserId(null));
-            dispatch(user.actions.setEmail(null));
-            dispatch(user.actions.setAccessToken(null));
-            dispatch(user.actions.setError(data.response));
-          });
-        }
-      });
+    if (username && password) {
+      fetch(API_URL(mode), options)
+        .then((response) => response.json())
+        .then((response) => {
+          localStorage.setItem(
+            'accessToken',
+            JSON.stringify(response.response.accessToken)
+          );
+          return response;
+        })
+        .then((data) => {
+          if (data.success) {
+            batch(() => {
+              dispatch(user.actions.setUsername(data.response.username));
+              dispatch(user.actions.setUserId(data.response.id));
+              dispatch(user.actions.setAccessToken(data.response.accessToken));
+              //email is not sent back from backend
+              dispatch(user.actions.setEmail(data.response.email));
+              dispatch(user.actions.setError(null));
+              navigate('/profile');
+              window.location.reload();
+            });
+          } else {
+            setInputErrorMessage(data.response);
+          }
+        });
+    } else {
+      setInputError(true);
+      setInputErrorMessage('Fill in your credentials');
+    }
   };
+
+  // This is not being used...
+  // if (accessToken) {
+  //   console.log('if accessToken, navigate to profile in Login.js');
+  //   return <Navigate to="/profile" />;
+  // }
 
   return (
     <Container>
@@ -96,6 +105,7 @@ const LogIn = () => {
               placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
             />
+            {inputError && <ErrorText>{inputErrorMessage}</ErrorText>}
 
             <Button type="submit">Sign In</Button>
           </Form>

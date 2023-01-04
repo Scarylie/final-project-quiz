@@ -8,6 +8,7 @@ import {
   Container,
   PageHeading,
   PageSubHeading,
+  ErrorText,
 } from 'components/styles/GlobalStyles';
 import { Form, FormHeading, Input, Button } from 'components/styles/Forms';
 
@@ -16,17 +17,19 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [mode, setMode] = useState('register');
+  const [inputError, setInputError] = useState(false);
+  const [inputErrorMessage, setInputErrorMessage] = useState('');
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const accessToken = useSelector((store) => store.user.accessToken);
 
-  useEffect(() => {
-    if (accessToken) {
-      const userId = useSelector((store) => store.user.userId);
-      navigate(`/profile/${userId}`);
-    }
-  }, [accessToken]);
+  // useEffect(() => {
+  //   if (accessToken) {
+  //     const userId = useSelector((store) => store.user.userId);
+  //     navigate(`/profile`);
+  //   }
+  // }, [accessToken]);
 
   const onFormSubmit = (event) => {
     event.preventDefault();
@@ -53,16 +56,12 @@ const Register = () => {
             dispatch(user.actions.setEmail(data.response.email));
             dispatch(user.actions.setAccessToken(data.response.accessToken));
             dispatch(user.actions.setError(null));
-            navigate(`/profile/${data.response.id}`);
+            navigate(`/login`);
+            window.location.reload();
           });
         } else {
-          batch(() => {
-            dispatch(user.actions.setUsername(null));
-            dispatch(user.actions.setUserId(null));
-            dispatch(user.actions.setEmail(null));
-            dispatch(user.actions.setAccessToken(null));
-            dispatch(user.actions.setError(data.response));
-          });
+          setInputErrorMessage(data.response);
+          setInputError(true);
         }
       });
   };
@@ -102,6 +101,8 @@ const Register = () => {
               placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
             />
+            {inputError && <ErrorText>{inputErrorMessage}</ErrorText>}
+
             <Button type="submit">Sign Up</Button>
           </Form>
           <p>
