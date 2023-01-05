@@ -18,13 +18,7 @@ const QuizFeed = () => {
       .catch((error) => console.error(error))
       .finally(() => console.log('All good!'));
   }, []); // behöver vi något mer felmeddelande i frontend här?
-  quizList.map((singleQuiz) => {
-    /////
-    singleQuiz.questions.map((singleQuestion) => {
-      ////
-      singleQuestion.answers.map((singleAnswer) => {});
-    });
-  });
+
   return (
     <section>
       <h1>Page of quizfeed</h1>
