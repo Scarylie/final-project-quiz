@@ -3,6 +3,7 @@ import styled from 'styled-components/macro';
 import { StyledNavbar } from './styles/GlobalStyles';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Logo from '../utils/img/quizzies-logo.png';
 import user from 'reducers/auth';
 
 const Navbar = () => {
@@ -25,7 +26,11 @@ const Navbar = () => {
   return (
     <StyledNavbar>
       <NavbarContainer>
-        <div>Logo</div>
+        <div>
+          <Link to={`/`}>
+            <Img src={Logo} alt="Quizzies logo" />
+          </Link>
+        </div>
         <div>
           {accessToken ? (
             <Link to={`/home`}>Home</Link>
@@ -67,4 +72,8 @@ const NavbarContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
+
+const Img = styled.img`
+  width: 40px;
 `;
