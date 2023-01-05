@@ -1,8 +1,14 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 
-export const Container = styled.div`
+export const SignInContainer = styled.div`
   max-width: 400px;
+  margin: 0 auto;
+  padding: 25px 0;
+`;
+
+export const Container = styled.div`
+  max-width: 80vw;
   margin: 0 auto;
   padding: 25px 0;
 `;
