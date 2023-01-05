@@ -6,6 +6,11 @@ import { Link } from 'react-router-dom';
 import Logo from '../utils/img/quizzies-logo.png';
 import user from 'reducers/auth';
 
+import { AiOutlineHome } from 'react-icons/ai';
+import { CgProfile } from 'react-icons/cg';
+import { MdOutlineCreateNewFolder } from 'react-icons/md';
+import { GrContactInfo } from 'react-icons/gr';
+
 const Navbar = () => {
   const { accessToken } = useSelector((store) => store.user);
   const dispatch = useDispatch();
@@ -15,6 +20,8 @@ const Navbar = () => {
     console.log('Log out');
     location.href = '/';
   };
+
+  let iconStyles = { fontSize: '1.5em' };
 
   // automatically authenticate user if token is found
   //   useEffect(() => {
@@ -27,29 +34,41 @@ const Navbar = () => {
     <StyledNavbar>
       <NavbarContainer>
         <div>
-          <Link to={`/`}>
+          {!accessToken ? (
             <Img src={Logo} alt="Quizzies logo" />
-          </Link>
-        </div>
-        <div>
-          {accessToken ? (
-            <Link to={`/home`}>Home</Link>
           ) : (
-            <Link to={`/`}>Home</Link>
+            <Link to={`/`}>
+              <Img src={Logo} alt="Quizzies logo" />
+            </Link>
           )}
         </div>
         <div>
           {accessToken ? (
-            <Link to={`/profile`}>Profile</Link>
+            <Link to={`/home`}>
+              <AiOutlineHome style={iconStyles} />
+            </Link>
           ) : (
-            <Link to={`/about`}>About</Link>
+            <div></div>
           )}
         </div>
         <div>
           {accessToken ? (
-            <Link to={`/create`}>Create</Link>
+            <Link to={`/profile`}>
+              <CgProfile style={iconStyles} />
+            </Link>
           ) : (
-            <Link to={`/register`}>Register</Link>
+            <div></div>
+          )}
+        </div>
+        <div>
+          {accessToken ? (
+            <Link to={`/create`}>
+              <MdOutlineCreateNewFolder style={iconStyles} />
+            </Link>
+          ) : (
+            <Link to={`/about`}>
+              <GrContactInfo style={iconStyles} />
+            </Link>
           )}
         </div>
         <div>
@@ -58,7 +77,10 @@ const Navbar = () => {
               Log out
             </button>
           ) : (
-            <Link to={`/login`}>Log in</Link>
+            <Link to={`/`}>
+              {' '}
+              <AiOutlineHome style={iconStyles} />
+            </Link>
           )}
         </div>
       </NavbarContainer>
@@ -72,6 +94,7 @@ const NavbarContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-right: 20px;
 `;
 
 const Img = styled.img`
