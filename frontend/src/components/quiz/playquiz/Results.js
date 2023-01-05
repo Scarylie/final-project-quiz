@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
@@ -22,7 +21,7 @@ export const Results = () => {
 
   const handleRestart = () => {
     dispatch(quiz.actions.restart());
-    navigate('/');
+    navigate('/'); // what route do we want?
   };
 
   return (

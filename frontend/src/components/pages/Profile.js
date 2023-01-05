@@ -16,7 +16,7 @@ const Profile = () => {
   useEffect(() => {
     if (accessToken) {
       // REQUEST USER DATA
-      console.log('Reguest user data', accessToken);
+      console.log('Request user data', accessToken);
       const options = {
         method: 'GET',
         headers: {

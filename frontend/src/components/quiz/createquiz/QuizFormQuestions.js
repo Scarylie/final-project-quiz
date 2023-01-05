@@ -3,20 +3,44 @@ import { useSelector, useDispatch, batch } from 'react-redux';
 import { API_QUIZ } from 'utils/user';
 import quiz from 'reducers/quiz'
 
-//////////////////////// Not working yet 
-
-
 const QuizFormQuestions = () => {
- /*  const id = useSelector((store) => store.user.userId);
-  const accessToken = useSelector((store) => store.user.accessToken); */
-  const [newQuestion, setNewQuestion] = useState({
+  const [isCorrect, setIsCorrect] = useState()
+  /* const [newQuestion, setNewQuestion] = useState({
     question: "",
-    answer: [],
-  })
+    answers: [],
+  }) */
 
-  const dispatch = useDispatch();
+ /*  const [newQuestion, setNewQuestion] = useState('') */
+/*   const [newAnswers, setNewAnswers] = useState([{
+    answers: [
+      answer
+    ] 
+  }])
 
-  const handleFormSubmit = (event) => {
+  const [newQuestion, setNewQuestion] = useState([{ 
+    questions: [
+      question
+    ] }]) */
+
+    // !! Just nu displayas inget, jag har försökt få till att allt ska kunna synas, men inte lyckats.
+    const [questionsList, setQuestionsList] = useState({
+        questions: []
+    })
+    const [oneQuestion, setOneQuestion] = useState({
+        question: "",
+        answers: []
+    });
+    const [answersList, setAnswersList] = useState({
+        answers: answer
+    })
+    const [answer, setAnswer] = useState('')
+/* 
+    const newQuestion = {
+      question: question,
+      answers: [answer]
+    }
+ */
+  const onFormQuestionSubmit = (event) => {
     event.preventDefault();
     const options = {
           method: 'POST',
@@ -24,13 +48,15 @@ const QuizFormQuestions = () => {
             'Content-Type': 'application/json',
             /* 'Authorization': accessToken */
           },
-          body: JSON.stringify({ ...newQuestion })
+          body: JSON.stringify({ ...newQuestion, isCorrect })
+          /* body: JSON.stringify({ ...newQuestion, answers: {answer: event.target.value}, isCorrect }) */
         }
         fetch(API_QUIZ, options)
         .then((res) => res.json())
         .then((data) => {
           batch(() => {
           dispatch(quiz.actions.addQuestion(data.response))
+          dispatch(quiz.actions.setIsCorrect(data.response))
           dispatch(quiz.actions.setError(null))
         })
         })
@@ -39,43 +65,96 @@ const QuizFormQuestions = () => {
         })
         .finally(() => {
           setNewQuestion({
+            /* ...newQuestion, answers: {answer: event.target.value}, isCorrect */
             question: "",
-            answer: []
+            answers: []
           })
         })
   };
 
-  const handleNewQuestionChange = (event) => {
-    setNewQuestion(event.target.value)
-  };
-
-  const questionList = useSelector((store) => store.quiz.items);
+  /* const questionList = useSelector((store) => store.quiz.items); */
 
   return (
     <>
-    <div>
-      <form onSubmit={handleFormSubmit}>
-        <input
+    <form onSubmit={onFormQuestionSubmit}>
+      <textarea
           className="quiz-title"
-          type="text"
-          value={newQuestion}
-          onChange={handleNewQuestionChange}
+          value={newQuestion.question}
+          onChange={(e) =>
+            setNewQuestion({ ...newQuestion, question: e.target.value })
+          }
           placeholder="Add Question"
           autoComplete="off" />
-        <button type="submit">save</button>
+      <div id="div1">
+        <input 
+          className="answer" 
+          type="radio" // not possible to click yet
+          value="isCorrect" 
+          checked={isCorrect === "Correct answer"}
+          onChange={(e) => setIsCorrect(e.target.value)} />
+        <input
+          className="answer"  
+          type="text" 
+          value={newQuestion.answer}
+          onChange={(e) =>
+            setNewQuestion({ ...newQuestion, answers: e.target.value }) // when writing in one input, its the same in all
+          }
+          placeholder="Answer"
+          autoComplete="off" />
+          </div>
+      <div id="div1">
+        <input 
+          className="answer" 
+          type="radio" 
+          value="isCorrect" 
+          checked={isCorrect === "Correct answer"}
+          onChange={(e) => setIsCorrect(e.target.value)} />
+        <input
+          className="answer"  
+          type="text" 
+          value={newQuestion.answer}
+          onChange={(e) =>
+            setNewQuestion({ ...newQuestion, answers: e.target.value })
+          }
+          placeholder="Answer"
+          autoComplete="off" />
+          </div>
+      <div id="div1">
+        <input 
+          className="answer"  
+          type="radio"
+          value="isCorrect"  
+          checked={isCorrect === "Correct answer"}
+          onChange={(e) => setIsCorrect(e.target.value)} />
+        <input 
+          className="answer"
+          type="text" 
+          value={newQuestion.answer}
+          onChange={(e) =>
+            setNewQuestion({ ...newQuestion, answers: e.target.value })
+          }
+          placeholder="Answer"
+          autoComplete="off" />
+          </div>
+      <div id="div1">
+        <input 
+          className="answer" 
+          type="radio"
+          value="isCorrect"  
+          checked={isCorrect === "Correct answer"}
+          onChange={(e) => setIsCorrect(e.target.value)} />
+        <input 
+          className="answer"
+          type="text" 
+          value={newQuestion.answer}
+          onChange={(e) =>
+            setNewQuestion({ ...newQuestion, answers: e.target.value })
+          }
+          placeholder="Answer"
+          autoComplete="off" />
+          </div>
+          <button className="addQuestionBtn">save</button>
       </form>
-    </div>
-    <div 
-      className="title-list"> 
-        {questionList.map((quiz) => {
-          return (
-            <article key={quiz._id}>
-              <p>{quiz.question}</p> 
-            </article>
-          )
-        })} 
-      </div>
-    
     </> 
   );
 };
