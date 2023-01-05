@@ -42,47 +42,49 @@ const Navbar = () => {
             </Link>
           )}
         </div>
-        <div>
-          {accessToken ? (
-            <Link to={`/home`}>
-              <AiOutlineHome style={iconStyles} />
-            </Link>
-          ) : (
-            <div></div>
-          )}
-        </div>
-        <div>
-          {accessToken ? (
-            <Link to={`/profile`}>
-              <CgProfile style={iconStyles} />
-            </Link>
-          ) : (
-            <div></div>
-          )}
-        </div>
-        <div>
-          {accessToken ? (
-            <Link to={`/create`}>
-              <MdOutlineCreateNewFolder style={iconStyles} />
-            </Link>
-          ) : (
-            <Link to={`/about`}>
-              <GrContactInfo style={iconStyles} />
-            </Link>
-          )}
-        </div>
-        <div>
-          {accessToken ? (
-            <button type="button" onClick={onLogOut}>
-              Log out
-            </button>
-          ) : (
-            <Link to={`/`}>
-              {' '}
-              <AiOutlineHome style={iconStyles} />
-            </Link>
-          )}
-        </div>
+        <Logos>
+          <div>
+            {accessToken ? (
+              <Link to={`/home`}>
+                <AiOutlineHome style={iconStyles} />
+              </Link>
+            ) : (
+              <div></div>
+            )}
+          </div>
+          <div>
+            {accessToken ? (
+              <Link to={`/profile`}>
+                <CgProfile style={iconStyles} />
+              </Link>
+            ) : (
+              <div></div>
+            )}
+          </div>
+          <div>
+            {accessToken ? (
+              <Link to={`/create`}>
+                <MdOutlineCreateNewFolder style={iconStyles} />
+              </Link>
+            ) : (
+              <Link to={`/about`}>
+                <GrContactInfo style={iconStyles} />
+              </Link>
+            )}
+          </div>
+          <div>
+            {accessToken ? (
+              <button type="button" onClick={onLogOut}>
+                Log out
+              </button>
+            ) : (
+              <Link to={`/`}>
+                {' '}
+                <AiOutlineHome style={iconStyles} />
+              </Link>
+            )}
+          </div>
+        </Logos>
       </NavbarContainer>
     </StyledNavbar>
   );
@@ -97,6 +99,11 @@ const NavbarContainer = styled.div`
   margin-right: 20px;
 `;
 
+const Logos = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+
 const Img = styled.img`
-  width: 40px;
+  width: 30px;
 `;

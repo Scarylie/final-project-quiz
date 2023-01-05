@@ -33,5 +33,6 @@ export const ErrorText = styled.p`
 
 export const StyledNavbar = styled.header`
   border-bottom: 1px solid;
-  padding: 10px;
+  padding: 5px;
+  background-color: orange;
 `;
