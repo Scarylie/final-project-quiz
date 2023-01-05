@@ -4,7 +4,7 @@ import { useNavigate, Link, Navigate } from 'react-router-dom';
 import { API_URL } from 'utils/user';
 import user from 'reducers/auth';
 import {
-  Container,
+  SignInContainer,
   PageHeading,
   PageSubHeading,
   ErrorText,
@@ -77,7 +77,7 @@ const LogIn = () => {
   // }
 
   return (
-    <Container>
+    <SignInContainer>
       <section>
         {/* Sign in */}
         <div>
@@ -115,7 +115,7 @@ const LogIn = () => {
           </p>
         </div>
       </section>
-    </Container>
+    </SignInContainer>
   );
 };
 

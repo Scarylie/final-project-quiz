@@ -5,7 +5,7 @@ import { API_URL } from 'utils/user';
 import user from 'reducers/auth';
 // Styles
 import {
-  Container,
+  SignInContainer,
   PageHeading,
   PageSubHeading,
   ErrorText,
@@ -67,7 +67,7 @@ const Register = () => {
   };
 
   return (
-    <Container>
+    <SignInContainer>
       <section>
         <div>
           <PageHeading>Don't have an account?</PageHeading>
@@ -110,7 +110,7 @@ const Register = () => {
           </p>
         </div>
       </section>
-    </Container>
+    </SignInContainer>
   );
 };
 
