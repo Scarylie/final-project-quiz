@@ -7,7 +7,7 @@ import QuizAnswer from './QuizAnswer';
 import { Form } from 'components/styles/Forms';
 
 const QuizFormQuestions = () => {
-  const [answers, setAnswers] = useState([{answerText: 'testing', isCorrect: true}])
+  const [answers, setAnswers] = useState([{}])
   const [questionTitle, setQuestionTitle] = useState('')
 
 
@@ -36,8 +36,8 @@ const onFormQuestionSubmit = (event) => {
             <QuizAnswer answerText={answer.answerText} isCorrect={answer.isCorrect}/>
          </div>
         ))}
-
-          <button type="submit" className="addQuestionBtn">save</button>
+          
+          <button type="submit" className="addQuestionBtn">Next Question</button>
     </Form>
     
   );
