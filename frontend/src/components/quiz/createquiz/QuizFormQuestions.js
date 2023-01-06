@@ -1,162 +1,48 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch, batch } from 'react-redux';
 import { API_QUIZ } from 'utils/user';
-import quiz from 'reducers/quiz'
+/* import quiz from 'reducers/quiz' */
+import QuizAnswer from './QuizAnswer';
+
+import { Form } from 'components/styles/Forms';
 
 const QuizFormQuestions = () => {
-  const [isCorrect, setIsCorrect] = useState()
-  /* const [newQuestion, setNewQuestion] = useState({
-    question: "",
-    answers: [],
-  }) */
+  const [answers, setAnswers] = useState([{answerText: 'testing', isCorrect: true}])
+  const [questionTitle, setQuestionTitle] = useState('')
 
- /*  const [newQuestion, setNewQuestion] = useState('') */
-/*   const [newAnswers, setNewAnswers] = useState([{
-    answers: [
-      answer
-    ] 
-  }])
 
-  const [newQuestion, setNewQuestion] = useState([{ 
-    questions: [
-      question
-    ] }]) */
+console.log('QuizFormQuestions answers', answers)
+console.log('QuizFormQuestions setAnswers', setAnswers)
+console.log('QuizFormQuestions questionTitle', questionTitle)
+console.log('setQuestionTitle', setQuestionTitle)
 
-    // !! Just nu displayas inget, jag har försökt få till att allt ska kunna synas, men inte lyckats.
-    const [questionsList, setQuestionsList] = useState({
-        questions: []
-    })
-    const [oneQuestion, setOneQuestion] = useState({
-        question: "",
-        answers: []
-    });
-    const [answersList, setAnswersList] = useState({
-        answers: answer
-    })
-    const [answer, setAnswer] = useState('')
-/* 
-    const newQuestion = {
-      question: question,
-      answers: [answer]
-    }
- */
-  const onFormQuestionSubmit = (event) => {
-    event.preventDefault();
-    const options = {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            /* 'Authorization': accessToken */
-          },
-          body: JSON.stringify({ ...newQuestion, isCorrect })
-          /* body: JSON.stringify({ ...newQuestion, answers: {answer: event.target.value}, isCorrect }) */
-        }
-        fetch(API_QUIZ, options)
-        .then((res) => res.json())
-        .then((data) => {
-          batch(() => {
-          dispatch(quiz.actions.addQuestion(data.response))
-          dispatch(quiz.actions.setIsCorrect(data.response))
-          dispatch(quiz.actions.setError(null))
-        })
-        })
-        .catch((error) => {
-          dispatch(quiz.actions.setError(error.response))
-        })
-        .finally(() => {
-          setNewQuestion({
-            /* ...newQuestion, answers: {answer: event.target.value}, isCorrect */
-            question: "",
-            answers: []
-          })
-        })
-  };
-
-  /* const questionList = useSelector((store) => store.quiz.items); */
+const onFormQuestionSubmit = (event) => {
+  event.preventDefault();
+}; 
 
   return (
-    <>
-    <form onSubmit={onFormQuestionSubmit}>
-      <textarea
-          className="quiz-title"
-          value={newQuestion.question}
-          onChange={(e) =>
-            setNewQuestion({ ...newQuestion, question: e.target.value })
-          }
-          placeholder="Add Question"
-          autoComplete="off" />
-      <div id="div1">
-        <input 
-          className="answer" 
-          type="radio" // not possible to click yet
-          value="isCorrect" 
-          checked={isCorrect === "Correct answer"}
-          onChange={(e) => setIsCorrect(e.target.value)} />
+ 
+    <Form onSubmit={onFormQuestionSubmit}>
         <input
-          className="answer"  
+          className="question"  
           type="text" 
-          value={newQuestion.answer}
-          onChange={(e) =>
-            setNewQuestion({ ...newQuestion, answers: e.target.value }) // when writing in one input, its the same in all
-          }
-          placeholder="Answer"
+          value={questionTitle}
+          onChange={(e) => setQuestionTitle(e.target.value)} 
+          placeholder="question title"
           autoComplete="off" />
-          </div>
-      <div id="div1">
-        <input 
-          className="answer" 
-          type="radio" 
-          value="isCorrect" 
-          checked={isCorrect === "Correct answer"}
-          onChange={(e) => setIsCorrect(e.target.value)} />
-        <input
-          className="answer"  
-          type="text" 
-          value={newQuestion.answer}
-          onChange={(e) =>
-            setNewQuestion({ ...newQuestion, answers: e.target.value })
-          }
-          placeholder="Answer"
-          autoComplete="off" />
-          </div>
-      <div id="div1">
-        <input 
-          className="answer"  
-          type="radio"
-          value="isCorrect"  
-          checked={isCorrect === "Correct answer"}
-          onChange={(e) => setIsCorrect(e.target.value)} />
-        <input 
-          className="answer"
-          type="text" 
-          value={newQuestion.answer}
-          onChange={(e) =>
-            setNewQuestion({ ...newQuestion, answers: e.target.value })
-          }
-          placeholder="Answer"
-          autoComplete="off" />
-          </div>
-      <div id="div1">
-        <input 
-          className="answer" 
-          type="radio"
-          value="isCorrect"  
-          checked={isCorrect === "Correct answer"}
-          onChange={(e) => setIsCorrect(e.target.value)} />
-        <input 
-          className="answer"
-          type="text" 
-          value={newQuestion.answer}
-          onChange={(e) =>
-            setNewQuestion({ ...newQuestion, answers: e.target.value })
-          }
-          placeholder="Answer"
-          autoComplete="off" />
-          </div>
-          <button className="addQuestionBtn">save</button>
-      </form>
-    </> 
+
+          {answers.map((answer) => (
+          <div key={answer.answerText}>
+            <QuizAnswer answerText={answer.answerText} isCorrect={answer.isCorrect}/>
+         </div>
+        ))}
+
+          <button type="submit" className="addQuestionBtn">save</button>
+    </Form>
+    
   );
 };
 
 export default QuizFormQuestions;
+
+

@@ -4,6 +4,7 @@ import { API_QUIZ } from 'utils/user';
 import quiz from 'reducers/quiz'
 import QuizForm from './QuizForm';
 import QuizFormQuestions from './QuizFormQuestions';
+import { Container } from 'components/styles/GlobalStyles';
 
 const Overview = () => {
  /*  const id = useSelector((store) => store.user.userId);
@@ -45,7 +46,7 @@ const Overview = () => {
   const titleList = useSelector((store) => store.quiz.items);
 
   return (
-    <>
+    <Container>
   <QuizForm 
     newTitle={newTitle}
     onNewTitleChange={handleNewTitleChange}
@@ -55,7 +56,7 @@ const Overview = () => {
     // onNewQuestionChange={handleNewQuestionChange}
     // onFormQuestionSubmit={handleFormQuestionSubmit}
   />
-    </> 
+    </Container> 
   );
 };
 
