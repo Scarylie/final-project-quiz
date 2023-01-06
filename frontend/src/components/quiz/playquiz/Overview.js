@@ -8,11 +8,8 @@ const PlayQuiz = () => {
   //do a GET here
 
   return <p>Play this quiz {title}</p>;
-
   quizList.map((singleQuiz) => {
-    /////
     singleQuiz.questions.map((singleQuestion) => {
-      ////
       singleQuestion.answers.map((singleAnswer) => {});
     });
   });

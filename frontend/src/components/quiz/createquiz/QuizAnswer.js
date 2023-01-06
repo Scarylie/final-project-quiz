@@ -1,17 +1,17 @@
 import React from "react";
 import { useState } from "react";
-import AddAnswer from "./AddAnswer"
 
 const QuizAnswer = ({ answerText, isCorrect }) => {
     console.log('QuizAnswer', answerText)
     console.log('QuizAnswer', isCorrect)
 
     const [isCorrectData, setIsCorrectData] = useState(false)
-    const [answerTextData, setAnswerTextData] = useState('')
+    /* const [answerTextData, setAnswerTextData] = useState('') */
     const [answerList, setAnswerList] = useState([ { answer: "" }])
 
-    console.log('QuizAnswer answerTextData', answerTextData)
-    console.log('QuizAnswer isCorrectData', isCorrectData)
+    console.log(answerList)
+   /*  console.log('QuizAnswer answerTextData', answerTextData)
+    console.log('QuizAnswer isCorrectData', isCorrectData) */
 
 // behöver denna wrappas i form? Hur får vi ett text area? och ska vi ha knapp för att lägga till fler frågor här också?
 // https://reactjs.org/docs/lifting-state-up.html
@@ -26,6 +26,13 @@ const handleAnswerRemove = (index) => {
     setAnswerList(list)
 }
 
+const handleAnswerChange = (e, index) => {
+    const {name, value} = e.target
+    const list = [...answerList]
+    list[index][name] = value
+    setAnswerList(list)
+}
+
 return(
    <div>
    <div id="answerInput" >
@@ -36,16 +43,18 @@ return(
       {answerList.map((singleAnswer, index) => (
         <div key={index}>
         <input
+          name="answer"
           id="answer"
           type="radio" 
           value="isCorrect"
           checked={isCorrectData === true}
           onChange={() => setIsCorrectData(true)} />
         <input 
+          name="answer"
           id="answer"
           type="text" 
-          value={answerTextData}
-          onChange={(e) => setAnswerTextData(e.target.value)} 
+          value={singleAnswer.answer}
+          onChange={(e) => handleAnswerChange(e, index)}
           placeholder="answer"
           autoComplete="off" /> 
           {answerList.length - 1 === index && answerList.length < 4 && 
@@ -68,3 +77,6 @@ return(
 }
 
 export default QuizAnswer
+
+/* value={answerTextData}
+          onChange={(e) => setAnswerTextData(e.target.value)} */

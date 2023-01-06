@@ -5,20 +5,15 @@ const quizzes = () => {};
 const quiz = createSlice({
   name: 'quiz',
   initialState: {
-    items: [], // gets an array from the backend (anteckning från tidigare project)
     _id: null,
     title: null,
-    questions: null,
-    answers: [],
+    /* questions: [], */
     quizOver: false,
     error: null,
     // maybe isCorrect?
   },
 
   reducers: {
-    setAllItems: (store, action) => {
-      store.items = action.payload;
-    },
     setQuizId: (store, action) => {
       store.addId = action.payload;
     },
