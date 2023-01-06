@@ -53,7 +53,7 @@ app.get("/quiz", getQuiz);
 app.get("/quiz/:id", singleQuiz);
 app.post("/quiz", createQuiz);
 app.delete("/quiz/:id", deleteQuiz);
-app.patch("/quiz/:id", editQuiz);
+app.patch("/quiz/:_id", editQuiz);
 
 // Start the server
 app.listen(port, () => {

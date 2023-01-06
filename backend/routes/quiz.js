@@ -233,26 +233,26 @@ const deleteQuiz = async (req, res) => {
 // PATCH //
 const editQuiz = async (req, res) => {
   const { _id } = req.params;
-  const {} = req.body;
-  // optional
-  const { valuesToUpdate } = req.body;
-
+  console.log(`Before updating quiz ${_id}`)
+  const {updateQuestions} = req.body;
+  console.log(JSON.stringify(updateQuestions))
   try {
-    const quizToUpdate = await Quiz.findByIdAndUpdate(
-      { _id }
-      /* {$inc: {hearts: 1}} */
-    );
+
+    const updatedQuiz = await Quiz.updateOne({_id: _id},{ $set: { questions: updateQuestions }})
+  
+    console.log(JSON.stringify(updatedQuiz))
+    console.log(`After updating quiz ${_id}`)
     // optional approach
     // const arrayOfPropertyNames = Object.keys(valuesToUpdate);
     // arrayOfPropertyNames.map((singlePropertyName) => {
     //   await Quiz.updateOne({_id: _id},{ $set: { singlePropertyName: valuesToUpdate[singlePropertyName] }})
     //   quizToUpdate[singlePropertyName] = valuesToUpdate[singlePropertyName];
     // });
-    quizToUpdate.save();
-    if (quizToUpdate) {
+    // quizToUpdate.save();
+    if (updatedQuiz) {
       res.status(200).json({
         success: true,
-        response: `Quiz ${quizToUpdate._id} has been updated`,
+        response: `Quiz ${_id} has been updated`,
       });
     } else {
       res.status(404).json({ success: false, error: "Quiz not found" });
