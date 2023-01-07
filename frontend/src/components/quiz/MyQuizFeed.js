@@ -21,10 +21,10 @@ const MyQuizFeed = () => {
       })
       .catch((error) => console.error(error))
       .finally(() => console.log('All good!'));
-  }
+  };
   useEffect(() => {
     fetchMyQuizFeed();
-  }, [id, myQuizList._id]); 
+  }, [id, myQuizList._id]);
 
   return (
     <section>

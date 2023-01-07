@@ -1,82 +1,81 @@
-import React from "react";
-import { useState } from "react";
+import React from 'react';
+import { useState } from 'react';
 
 const QuizAnswer = ({ answerText, isCorrect }) => {
-    console.log('QuizAnswer', answerText)
-    console.log('QuizAnswer', isCorrect)
+  console.log('QuizAnswer', answerText);
+  console.log('QuizAnswer', isCorrect);
 
-    const [isCorrectData, setIsCorrectData] = useState(false)
-    /* const [answerTextData, setAnswerTextData] = useState('') */
-    const [answerList, setAnswerList] = useState([ { answer: "" }])
+  const [isCorrectData, setIsCorrectData] = useState(false);
+  /* const [answerTextData, setAnswerTextData] = useState('') */
+  const [answerList, setAnswerList] = useState([{ answer: '' }]);
 
-    console.log(answerList)
-   /*  console.log('QuizAnswer answerTextData', answerTextData)
-    console.log('QuizAnswer isCorrectData', isCorrectData) */
+  console.log(isCorrectData);
+  console.log(answerList);
 
-// behöver denna wrappas i form? Hur får vi ett text area? och ska vi ha knapp för att lägga till fler frågor här också?
-// https://reactjs.org/docs/lifting-state-up.html
+  // https://reactjs.org/docs/lifting-state-up.html
 
-const handleAnswerAdd = () => {
-    setAnswerList([...answerList, { answer: "" }])
-}
+  const handleAnswerAdd = () => {
+    setAnswerList([...answerList, { answer: '' }]);
+  };
 
-const handleAnswerRemove = (index) => {
-    const list = [...answerList]
+  const handleAnswerRemove = (index) => {
+    const list = [...answerList];
     list.splice(index, 1);
-    setAnswerList(list)
-}
+    setAnswerList(list);
+  };
 
-const handleAnswerChange = (e, index) => {
-    const {name, value} = e.target
-    const list = [...answerList]
-    list[index][name] = value
-    setAnswerList(list)
-}
+  const handleAnswerChange = (e, index) => {
+    const { name, value } = e.target;
+    const list = [...answerList];
+    list[index][name] = value;
+    setAnswerList(list);
+  };
 
-return(
-   <div>
-   <div id="answerInput" >
-    <label 
-    className="addAnswerLabel"
-      htmlFor="answer"> 
-      <p>Answers</p>
-      {answerList.map((singleAnswer, index) => (
-        <div key={index}>
-        <input
-          name="answer"
-          id="answer"
-          type="radio" 
-          value="isCorrect"
-          checked={isCorrectData === true}
-          onChange={() => setIsCorrectData(true)} />
-        <input 
-          name="answer"
-          id="answer"
-          type="text" 
-          value={singleAnswer.answer}
-          onChange={(e) => handleAnswerChange(e, index)}
-          placeholder="answer"
-          autoComplete="off" /> 
-          {answerList.length - 1 === index && answerList.length < 4 && 
-            (<button 
-      className="addAnswerBtn"
-      type="button"
-      onClick={handleAnswerAdd}
-      >
-      <span>Add Answer</span>
-      </button>)}
-          {answerList.length > 2 && (
-            <button className="removeBtn"
-            onClick={() => handleAnswerRemove(index)}>🆇</button>)}
-        </div>
-      ))}
-    </label>
+  return (
+    <div>
+      <div id="answerInput">
+        <label className="addAnswerLabel" htmlFor="answer">
+          <p>Answers</p>
+          {answerList.map((singleAnswer, index) => (
+            <div key={index}>
+              <input
+                name="answer"
+                id="answer"
+                type="radio"
+                value="isCorrect"
+                checked={isCorrectData === true}
+                onChange={() => setIsCorrectData(true)}
+              />
+              <input
+                name="answer"
+                id="answer"
+                type="text"
+                value={singleAnswer.answer}
+                onChange={(e) => handleAnswerChange(e, index)}
+                placeholder="answer"
+                autoComplete="off"
+              />
+              {answerList.length - 1 === index && answerList.length < 4 && (
+                <button
+                  className="addAnswerBtn"
+                  type="button"
+                  onClick={handleAnswerAdd}>
+                  <span>Add Answer</span>
+                </button>
+              )}
+              {answerList.length > 2 && (
+                <button
+                  className="removeBtn"
+                  onClick={() => handleAnswerRemove(index)}>
+                  🆇
+                </button>
+              )}
+            </div>
+          ))}
+        </label>
+      </div>
     </div>
-    </div>
-)
-}
+  );
+};
 
-export default QuizAnswer
-
-/* value={answerTextData}
-          onChange={(e) => setAnswerTextData(e.target.value)} */
+export default QuizAnswer;
