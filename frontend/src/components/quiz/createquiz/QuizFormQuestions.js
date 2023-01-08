@@ -4,8 +4,6 @@ import { API_QUIZ } from 'utils/user';
 /* import quiz from 'reducers/quiz' */
 import QuizAnswer from './QuizAnswer';
 
-import { Form } from 'components/styles/Forms';
-
 const QuizFormQuestions = () => {
   const [questionList, setQuestionList] = useState([
     {
@@ -40,11 +38,11 @@ const QuizFormQuestions = () => {
     setQuestionList(list);
   };
 
-  console.log(questionList);
+  console.log('QuizFormQuestions questionList', questionList);
 
   return (
     <div id="questionForm">
-      <Form>
+      <div>
         {questionList.map((singleQuestion, index) => (
           <div key={index}>
             <p>Question</p>
@@ -77,12 +75,12 @@ const QuizFormQuestions = () => {
         ))}
 
         <button
-          type="submit"
+          type="button"
           className="addQuestionBtn"
           onClick={handleQuestionAdd}>
           Add Question
         </button>
-      </Form>
+      </div>
     </div>
   );
 };
