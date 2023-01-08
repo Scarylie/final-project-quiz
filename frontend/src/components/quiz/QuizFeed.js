@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { API_QUIZ } from 'utils/user';
 import { Link } from 'react-router-dom';
+import {
+  Container,
+  PageHeading,
+  PageSubHeading,
+} from 'components/styles/GlobalStyles';
+import { CardContainer, Card } from 'components/styles/cards';
 
 const QuizFeed = () => {
   const [quizList, setQuizList] = useState([]);
@@ -18,25 +24,19 @@ const QuizFeed = () => {
       .catch((error) => console.error(error))
       .finally(() => console.log('All good!'));
   }, []); // behöver vi något mer felmeddelande i frontend här?
-  quizList.map((singleQuiz) => {
-    /////
-    singleQuiz.questions.map((singleQuestion) => {
-      ////
-      singleQuestion.answers.map((singleAnswer) => {});
-    });
-  });
+
   return (
-    <section>
-      <h1>Page of quizfeed</h1>
-      <p>Quiztitle with link to play quiz</p>
-      <div>
+    <Container>
+      <PageHeading>What do you want to play today?</PageHeading>
+      <PageSubHeading>Click on a card to start a game</PageSubHeading>
+      <CardContainer>
         {quizList.map((quiz) => (
-          <div key={quiz._id}>
-            <Link to={`/quiz/${quiz._id}`}>{quiz.title}</Link>
-          </div>
+          <Card key={quiz._id}>
+            <Link to={`/play/${quiz._id}`}>{quiz.title}</Link>
+          </Card>
         ))}
-      </div>
-    </section>
+      </CardContainer>
+    </Container>
   );
 };
 

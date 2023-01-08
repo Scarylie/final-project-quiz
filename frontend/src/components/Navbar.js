@@ -3,7 +3,13 @@ import styled from 'styled-components/macro';
 import { StyledNavbar } from './styles/GlobalStyles';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Logo from '../utils/img/quizzies-logo.png';
 import user from 'reducers/auth';
+
+import { AiOutlineHome } from 'react-icons/ai';
+import { CgProfile } from 'react-icons/cg';
+import { MdOutlineCreateNewFolder } from 'react-icons/md';
+import { GrContactInfo } from 'react-icons/gr';
 
 const Navbar = () => {
   const { accessToken } = useSelector((store) => store.user);
@@ -15,6 +21,8 @@ const Navbar = () => {
     location.href = '/';
   };
 
+  let iconStyles = { fontSize: '1.5em' };
+
   // automatically authenticate user if token is found
   //   useEffect(() => {
   //     if (accessToken) {
@@ -25,37 +33,58 @@ const Navbar = () => {
   return (
     <StyledNavbar>
       <NavbarContainer>
-        <div>Logo</div>
         <div>
-          {accessToken ? (
-            <Link to={`/home`}>Home</Link>
+          {!accessToken ? (
+            <Img src={Logo} alt="Quizzies logo" />
           ) : (
-            <Link to={`/`}>Home</Link>
+            <Link to={`/`}>
+              <Img src={Logo} alt="Quizzies logo" />
+            </Link>
           )}
         </div>
-        <div>
-          {accessToken ? (
-            <Link to={`/profile`}>Profile</Link>
-          ) : (
-            <Link to={`/about`}>About</Link>
-          )}
-        </div>
-        <div>
-          {accessToken ? (
-            <Link to={`/create`}>Create</Link>
-          ) : (
-            <Link to={`/register`}>Register</Link>
-          )}
-        </div>
-        <div>
-          {accessToken ? (
-            <button type="button" onClick={onLogOut}>
-              Log out
-            </button>
-          ) : (
-            <Link to={`/login`}>Log in</Link>
-          )}
-        </div>
+        <Logos>
+          <div>
+            {accessToken ? (
+              <Link to={`/home`}>
+                <AiOutlineHome style={iconStyles} />
+              </Link>
+            ) : (
+              <div></div>
+            )}
+          </div>
+          <div>
+            {accessToken ? (
+              <Link to={`/profile`}>
+                <CgProfile style={iconStyles} />
+              </Link>
+            ) : (
+              <div></div>
+            )}
+          </div>
+          <div>
+            {accessToken ? (
+              <Link to={`/create`}>
+                <MdOutlineCreateNewFolder style={iconStyles} />
+              </Link>
+            ) : (
+              <Link to={`/about`}>
+                <GrContactInfo style={iconStyles} />
+              </Link>
+            )}
+          </div>
+          <div>
+            {accessToken ? (
+              <button type="button" onClick={onLogOut}>
+                Log out
+              </button>
+            ) : (
+              <Link to={`/`}>
+                {' '}
+                <AiOutlineHome style={iconStyles} />
+              </Link>
+            )}
+          </div>
+        </Logos>
       </NavbarContainer>
     </StyledNavbar>
   );
@@ -67,4 +96,14 @@ const NavbarContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-right: 20px;
+`;
+
+const Logos = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+
+const Img = styled.img`
+  width: 30px;
 `;

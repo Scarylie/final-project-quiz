@@ -1,82 +1,87 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch, batch } from 'react-redux';
 import { API_QUIZ } from 'utils/user';
-import quiz from 'reducers/quiz'
-
-//////////////////////// Not working yet 
-
+/* import quiz from 'reducers/quiz' */
+import QuizAnswer from './QuizAnswer';
 
 const QuizFormQuestions = () => {
- /*  const id = useSelector((store) => store.user.userId);
-  const accessToken = useSelector((store) => store.user.accessToken); */
-  const [newQuestion, setNewQuestion] = useState({
-    question: "",
-    answer: [],
-  })
+  const [questionList, setQuestionList] = useState([
+    {
+      question: '',
+      answers: [{}],
+    },
+  ]);
+  const [answers, setAnswers] = useState([{}]);
+  const [questionTitle, setQuestionTitle] = useState('');
 
-  const dispatch = useDispatch();
+  console.log('QuizFormQuestions answers', answers);
+  console.log('QuizFormQuestions setAnswers', setAnswers);
+  console.log('QuizFormQuestions questionTitle', questionTitle);
+  console.log('QuizFormQuestions setQuestionTitle', setQuestionTitle);
 
-  const handleFormSubmit = (event) => {
-    event.preventDefault();
-    const options = {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            /* 'Authorization': accessToken */
-          },
-          body: JSON.stringify({ ...newQuestion })
-        }
-        fetch(API_QUIZ, options)
-        .then((res) => res.json())
-        .then((data) => {
-          batch(() => {
-          dispatch(quiz.actions.addQuestion(data.response))
-          dispatch(quiz.actions.setError(null))
-        })
-        })
-        .catch((error) => {
-          dispatch(quiz.actions.setError(error.response))
-        })
-        .finally(() => {
-          setNewQuestion({
-            question: "",
-            answer: []
-          })
-        })
+  const handleQuestionAdd = (e) => {
+    e.preventDefault();
+    console.log('QuizFormQuestions onFormQuestionSubmit ha');
+    setQuestionList([...questionList, { question: '', answers: [{}] }]);
   };
 
-  const handleNewQuestionChange = (event) => {
-    setNewQuestion(event.target.value)
+  const handleQuestionRemove = (index) => {
+    const list = [...questionList];
+    list.splice(index, 1);
+    setQuestionList(list);
   };
 
-  const questionList = useSelector((store) => store.quiz.items);
+  const handleQuestionChange = (e, index) => {
+    const { name, value } = e.target;
+    const list = [...questionList];
+    list[index][name] = value;
+    setQuestionList(list);
+  };
+
+  console.log('QuizFormQuestions questionList', questionList);
 
   return (
-    <>
-    <div>
-      <form onSubmit={handleFormSubmit}>
-        <input
-          className="quiz-title"
-          type="text"
-          value={newQuestion}
-          onChange={handleNewQuestionChange}
-          placeholder="Add Question"
-          autoComplete="off" />
-        <button type="submit">save</button>
-      </form>
-    </div>
-    <div 
-      className="title-list"> 
-        {questionList.map((quiz) => {
-          return (
-            <article key={quiz._id}>
-              <p>{quiz.question}</p> 
-            </article>
-          )
-        })} 
+    <div id="questionForm">
+      <div>
+        {questionList.map((singleQuestion, index) => (
+          <div key={index}>
+            <p>Question</p>
+            <input
+              name="question"
+              id="question"
+              type="text"
+              value={singleQuestion.questionTitle}
+              onChange={(e) => handleQuestionChange(e, index)}
+              placeholder="question title"
+              autoComplete="off"
+            />
+            {questionList.length > 1 && (
+              <button
+                className="removeBtn"
+                onClick={() => handleQuestionRemove(index)}>
+                🆇
+              </button>
+            )}
+
+            {answers.map((answer) => (
+              <div key={answer.answerList}>
+                <QuizAnswer
+                  answerList={answer.answerList}
+                  isCorrect={answer.isCorrect}
+                />
+              </div>
+            ))}
+          </div>
+        ))}
+
+        <button
+          type="button"
+          className="addQuestionBtn"
+          onClick={handleQuestionAdd}>
+          Add Question
+        </button>
       </div>
-    
-    </> 
+    </div>
   );
 };
 
