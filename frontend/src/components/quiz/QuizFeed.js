@@ -24,13 +24,7 @@ const QuizFeed = () => {
       .catch((error) => console.error(error))
       .finally(() => console.log('All good!'));
   }, []); // behöver vi något mer felmeddelande i frontend här?
-  quizList.map((singleQuiz) => {
-    /////
-    singleQuiz.questions.map((singleQuestion) => {
-      ////
-      singleQuestion.answers.map((singleAnswer) => {});
-    });
-  });
+
   return (
     <Container>
       <PageHeading>What do you want to play today?</PageHeading>
