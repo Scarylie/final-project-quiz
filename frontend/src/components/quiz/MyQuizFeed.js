@@ -9,6 +9,7 @@ const MyQuizFeed = () => {
   /* const userId = useSelector((store) => store.user.userId); */
   const { id } = useParams();
 
+  console.log('MyQuizFeed myQuizList', myQuizList);
   const fetchMyQuizFeed = () => {
     const options = {
       method: 'GET',

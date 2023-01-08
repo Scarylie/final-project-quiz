@@ -12,7 +12,7 @@ import Register from 'components/auth/Register';
 import Profile from 'components/pages/Profile';
 import About from 'components/pages/About';
 import QuizFeed from 'components/quiz/QuizFeed';
-import PlayQuiz from 'components/quiz/playquiz/Overview';
+import PlayQuiz from 'components/quiz/playquiz';
 import { NotFound } from 'components/NotFound';
 import Navbar from 'components/Navbar';
 import Hero from 'components/Hero';
@@ -23,6 +23,7 @@ const reducer = combineReducers({
   user: user.reducer,
   quiz: quiz.reducer,
 });
+console.log('App quiz.recuser', quiz);
 
 const store = configureStore({ reducer });
 
