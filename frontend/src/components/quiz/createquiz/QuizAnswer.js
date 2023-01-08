@@ -2,15 +2,14 @@ import React from 'react';
 import { useState } from 'react';
 
 const QuizAnswer = ({ answerText, isCorrect }) => {
-  console.log('QuizAnswer', answerText);
-  console.log('QuizAnswer', isCorrect);
+  console.log('QuizAnswer answerText', answerText);
+  console.log('QuizAnswer isCorrect', isCorrect);
 
   const [isCorrectData, setIsCorrectData] = useState(false);
-  /* const [answerTextData, setAnswerTextData] = useState('') */
   const [answerList, setAnswerList] = useState([{ answer: '' }]);
 
-  console.log(isCorrectData);
-  console.log(answerList);
+  console.log('QuizAnswer isCorrectData', isCorrectData);
+  console.log('QuizAnswer answerList', answerList);
 
   // https://reactjs.org/docs/lifting-state-up.html
 
@@ -35,7 +34,7 @@ const QuizAnswer = ({ answerText, isCorrect }) => {
     <div>
       <div id="answerInput">
         <label className="addAnswerLabel" htmlFor="answer">
-          <p>Answers</p>
+          <p>Answer</p>
           {answerList.map((singleAnswer, index) => (
             <div key={index}>
               <input
@@ -55,19 +54,19 @@ const QuizAnswer = ({ answerText, isCorrect }) => {
                 placeholder="answer"
                 autoComplete="off"
               />
+              {answerList.length > 2 && (
+                <button
+                  className="removeBtn"
+                  onClick={() => handleAnswerRemove(index)}>
+                  🆇
+                </button>
+              )}
               {answerList.length - 1 === index && answerList.length < 4 && (
                 <button
                   className="addAnswerBtn"
                   type="button"
                   onClick={handleAnswerAdd}>
                   <span>Add Answer</span>
-                </button>
-              )}
-              {answerList.length > 2 && (
-                <button
-                  className="removeBtn"
-                  onClick={() => handleAnswerRemove(index)}>
-                  🆇
                 </button>
               )}
             </div>
