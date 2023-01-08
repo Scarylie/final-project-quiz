@@ -8,8 +8,8 @@ import user from 'reducers/auth';
 
 import { AiOutlineHome } from 'react-icons/ai';
 import { CgProfile } from 'react-icons/cg';
+import { VscInfo } from 'react-icons/vsc';
 import { MdOutlineCreateNewFolder } from 'react-icons/md';
-import { GrContactInfo } from 'react-icons/gr';
 
 const Navbar = () => {
   const { accessToken } = useSelector((store) => store.user);
@@ -68,7 +68,7 @@ const Navbar = () => {
               </Link>
             ) : (
               <Link to={`/about`}>
-                <GrContactInfo style={iconStyles} />
+                <VscInfo style={iconStyles} />
               </Link>
             )}
           </div>
