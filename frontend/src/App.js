@@ -23,7 +23,7 @@ const reducer = combineReducers({
   user: user.reducer,
   quiz: quiz.reducer,
 });
-console.log('App quiz.recuser', quiz);
+// console.log('App quiz.recuser', quiz);
 
 const store = configureStore({ reducer });
 

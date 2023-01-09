@@ -12,30 +12,41 @@ import quizData from './quiz.json';
 
 const PlayQuiz = () => {
   const [step, setStep] = useState(0);
+  const [activeAnswer, setActiveAnswer] = useState(null);
   const [results, setResults] = useState([]);
 
   // console.log('PlayQuizData: quizData', quizData);
   // console.log('PlayQuizData: quizData._id', quizData._id);
 
-  const mapQArray = [quizData.questions];
-  // console.log('mapQArray', mapQArray);
-
   const handleSetStep = (event, currentQuestion) => {
     event.preventDefault();
-    console.log('currentQuestion: ', currentQuestion);
+    // console.log('currentQuestion: ', currentQuestion);
     setStep(step + 1);
     if (step > 0) {
-      setResults([...results, { question: currentQuestion?.question }]);
+      setResults([
+        ...results,
+        { question: currentQuestion?.question, activeAnswer },
+      ]);
     }
   };
+
+  const handleSetActiveAnswer = (event, answer) => {
+    // console.log('handleSetActiveAnswer', event.target.value);
+    setActiveAnswer(answer);
+  };
+
   const handleFinishQuiz = (event, currentQuestion) => {
     event.preventDefault();
     console.log('Quiz is done!');
+
+    // console.log('activeAnswer: ', activeAnswer);
+    setResults([
+      ...results,
+      { question: currentQuestion?.question, activeAnswer },
+    ]);
+    // console.log('activeAnswer: ', activeAnswer);
     console.log('Results', results);
-
-    setResults([...results, { question: currentQuestion?.question }]);
-
-    // navigate to scoreboard or summary
+    // TODO navigate to scoreboard or summary
   };
 
   return (
@@ -61,6 +72,22 @@ const PlayQuiz = () => {
                 step - 1 === index && (
                   <div key={currentQuestion._id}>
                     {currentQuestion.question}
+
+                    {currentQuestion.answers.map((answer) => {
+                      return (
+                        <div key={answer._id}>
+                          <input
+                            type="radio"
+                            value={answer.answer}
+                            onChange={(event) =>
+                              handleSetActiveAnswer(event, answer)
+                            }
+                            checked={answer._id === activeAnswer?._id}
+                          />
+                          {answer.answer}
+                        </div>
+                      );
+                    })}
                     <div>
                       {index === quizData.questions.length - 1 ? (
                         <button
