@@ -1,12 +1,17 @@
 import React from 'react';
 import { useState } from 'react';
 
+//importera QuixAnswerInput + QuizCorrectAnswer + props?
+//answerList ska bara vara lista på svar för en fråga som ska mappas över
+
 const QuizAnswer = ({ answerText, isCorrect }) => {
   console.log('QuizAnswer answerText', answerText);
   console.log('QuizAnswer isCorrect', isCorrect);
 
-  const [isCorrectData, setIsCorrectData] = useState(false);
-  const [answerList, setAnswerList] = useState([{ answer: '' }]);
+  /*  const [isCorrectData, setIsCorrectData] = useState(false); */
+  const [answerList, setAnswerList] = useState([
+    { answer: '', isCorrect: false },
+  ]);
 
   console.log('QuizAnswer isCorrectData', isCorrectData);
   console.log('QuizAnswer answerList', answerList);
@@ -14,7 +19,7 @@ const QuizAnswer = ({ answerText, isCorrect }) => {
   // https://reactjs.org/docs/lifting-state-up.html
 
   const handleAnswerAdd = () => {
-    setAnswerList([...answerList, { answer: '' }]);
+    setAnswerList([...answerList, { answer: '', isCorrect: false }]);
   };
 
   const handleAnswerRemove = (index) => {
@@ -30,6 +35,32 @@ const QuizAnswer = ({ answerText, isCorrect }) => {
     setAnswerList(list);
   };
 
+  const RadioInput = ({ label, value, checked, setter }) => {
+    return (
+      <label>
+        <input
+          type="radio"
+          checked={checked == value}
+          onChange={() => setter(value)}
+        />
+        <span>{label}</span>
+      </label>
+    );
+  };
+
+  const QuizCorrectAnswer = () => {
+    return (
+      <input
+        name="answer"
+        id="answer"
+        type="radio"
+        value="isCorrect"
+        checked={isCorrect === true}
+        onChange={() => setIsCorrect(true)}
+      />
+    );
+  };
+
   return (
     <div>
       <div id="answerInput">
@@ -37,6 +68,7 @@ const QuizAnswer = ({ answerText, isCorrect }) => {
           <p>Answer</p>
           {answerList.map((singleAnswer, index) => (
             <div key={index}>
+              <QuizCorrectAnswer />
               <input
                 name="answer"
                 id="answer"
