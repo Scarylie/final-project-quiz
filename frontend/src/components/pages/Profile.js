@@ -16,18 +16,18 @@ const Profile = () => {
   useEffect(() => {
     if (accessToken) {
       // REQUEST USER DATA
-      console.log('Request user data', accessToken);
+      console.log('Request user data accessToken', accessToken);
       const options = {
         method: 'GET',
         headers: {
+          Authorization: accessToken,
           'Content-Type': 'application/json',
-          'Authorization': accessToken,
         },
       };
-      fetch(API_URL('quiz'), options)
+      fetch(API_URL, options)
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
+          console.log('data', data);
         });
     }
   }, [accessToken]);
@@ -41,7 +41,6 @@ const Profile = () => {
       <p>Username {username}</p>
       <p>userId {userId}</p>
       <p>accessToken {accessToken}</p>
-
     </section>
   );
 };

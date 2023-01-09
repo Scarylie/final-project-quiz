@@ -51,6 +51,7 @@ const LogIn = () => {
         .then((data) => {
           if (data.success) {
             batch(() => {
+              console.log(data);
               dispatch(user.actions.setUsername(data.response.username));
               dispatch(user.actions.setUserId(data.response.id));
               dispatch(user.actions.setAccessToken(data.response.accessToken));
@@ -58,7 +59,7 @@ const LogIn = () => {
               dispatch(user.actions.setEmail(data.response.email));
               dispatch(user.actions.setError(null));
               navigate('/profile');
-              window.location.reload();
+              // window.location.reload();
             });
           } else {
             setInputErrorMessage(data.response);
