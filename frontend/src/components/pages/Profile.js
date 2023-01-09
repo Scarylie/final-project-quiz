@@ -15,16 +15,18 @@ const Profile = () => {
   // automatically authenticate user if token is found
   useEffect(() => {
     if (accessToken) {
+      const withoutFirstAndLast = accessToken.slice(1, -1);
       // REQUEST USER DATA
-      console.log('Request user data', accessToken);
+      console.log('Request user data', withoutFirstAndLast);
       const options = {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': accessToken,
+          // prettier-ignore
+          'Authorization': withoutFirstAndLast,
         },
       };
-      fetch(API_URL('quiz'), options)
+      fetch(API_URL('user'), options)
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
@@ -41,7 +43,6 @@ const Profile = () => {
       <p>Username {username}</p>
       <p>userId {userId}</p>
       <p>accessToken {accessToken}</p>
-
     </section>
   );
 };
