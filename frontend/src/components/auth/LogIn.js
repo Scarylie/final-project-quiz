@@ -42,7 +42,10 @@ const LogIn = () => {
       fetch(API_URL(mode), options)
         .then((response) => response.json())
         .then((response) => {
-          localStorage.setItem('accessToken', response.response.accessToken);
+          localStorage.setItem(
+            'accessToken',
+            JSON.stringify(response.response.accessToken)
+          );
           return response;
         })
         .then((data) => {
@@ -55,7 +58,7 @@ const LogIn = () => {
               dispatch(user.actions.setEmail(data.response.email));
               dispatch(user.actions.setError(null));
               navigate('/profile');
-              // window.location.reload();
+              window.location.reload();
             });
           } else {
             setInputErrorMessage(data.response);

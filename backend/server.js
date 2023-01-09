@@ -46,7 +46,6 @@ app.get("/", (req, res) => {
 // * Registration * //
 app.post("/register", registerUser);
 app.post("/login", logInUser);
-app.get("/user", authenticateUser);
 
 // * Quiz * //
 // app.get("/quiz", authenticateUser);
