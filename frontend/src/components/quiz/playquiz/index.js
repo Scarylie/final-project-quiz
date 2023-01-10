@@ -15,39 +15,37 @@ const PlayQuiz = () => {
   const API_URL = `${API_QUIZ}/${params.id}`;
   const navigate = useNavigate();
 
+  const [quiz, setQuiz] = useState([]);
   const [step, setStep] = useState(0);
   const [activeAnswer, setActiveAnswer] = useState(null);
   const [results, setResults] = useState([]);
-  const [quiz, setQuiz] = useState([]);
-
-  const handleSetStep = (event, currentQuestion) => {
-    event.preventDefault();
-    // console.log('currentQuestion: ', currentQuestion);
-    setStep(step + 1);
-    if (step > 0) {
-      setResults([
-        ...results,
-        { question: currentQuestion?.question, activeAnswer },
-      ]);
-    }
-  };
+  const [play, setPlay] = useState(false);
 
   const handleSetActiveAnswer = (event, answer) => {
-    // console.log('handleSetActiveAnswer', event.target.value);
+    console.log('handleSetActiveAnswer', event.target.value);
     setActiveAnswer(answer);
   };
 
-  const handleFinishQuiz = (event, currentQuestion) => {
-    event.preventDefault();
-    console.log('Quiz is done!');
-
+  const handleSetStep = (event, currentQuestion) => {
     setResults([
       ...results,
       { question: currentQuestion?.question, activeAnswer },
     ]);
-    // console.log('activeAnswer: ', activeAnswer);
-    console.log('Results', results);
+    setStep(step + 1);
+  };
 
+  const handleFinishQuiz = (event, currentQuestion) => {
+    console.log('Quiz is done!');
+    if (step <= quiz.questions.length - 1) {
+      setResults([
+        ...results,
+        { question: currentQuestion?.question, activeAnswer },
+      ]);
+      /*  setStep(step + 1); */
+      console.log('results', results);
+    }
+    // console.log('activeAnswer: ', activeAnswer);
+    // if quiz restart reset play variable to false
     // Remove comment and navigate when result is not delayed
     // navigate('/score');
   };
@@ -68,25 +66,25 @@ const PlayQuiz = () => {
 
   return (
     <Container>
-      {step === 0 && (
+      {!play && (
         <IntroContainer>
           <IntroContent>
             <PageHeading>Start game</PageHeading>
             <PageSubHeading>{quiz.title}</PageSubHeading>
             <p>{quiz.creator}</p>
-            <button type="button" onClick={handleSetStep}>
+            <button type="button" onClick={() => setPlay(true)}>
               Play
             </button>
           </IntroContent>
         </IntroContainer>
       )}
 
-      {step > 0 && (
+      {play && (
         <IntroContainer>
           <IntroContent>
             {quiz.questions.map((currentQuestion, index) => {
               return (
-                step - 1 === index && (
+                step === index && (
                   <div key={currentQuestion._id}>
                     <div>
                       <PageHeading>{currentQuestion.question}</PageHeading>
