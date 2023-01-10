@@ -194,7 +194,7 @@ const singleQuiz = async (req, res) => {
 };
 
 // POST //
-export const createQuiz = async (req, res) => {
+const createQuiz = async (req, res) => {
   /*   const { _id } = req.params; */
   const { title, questions, category, level, interaction } = req.body;
 
