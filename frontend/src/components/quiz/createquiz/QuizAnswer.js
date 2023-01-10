@@ -8,13 +8,13 @@ const QuizAnswer = ({ answerText, isCorrect }) => {
   console.log('QuizAnswer answerText', answerText);
   console.log('QuizAnswer isCorrect', isCorrect);
 
-  /*  const [isCorrectData, setIsCorrectData] = useState(false); */
+  // const [isCorrectData, setIsCorrectData] = useState(false);
   const [answerList, setAnswerList] = useState([
     { answer: '', isCorrect: false },
   ]);
 
-  console.log('QuizAnswer isCorrectData', isCorrectData);
-  console.log('QuizAnswer answerList', answerList);
+  // console.log('QuizAnswer isCorrectData', isCorrectData);
+  // console.log('QuizAnswer answerList', answerList);
 
   // https://reactjs.org/docs/lifting-state-up.html
 
@@ -22,11 +22,11 @@ const QuizAnswer = ({ answerText, isCorrect }) => {
     setAnswerList([...answerList, { answer: '', isCorrect: false }]);
   };
 
-  const handleAnswerRemove = (index) => {
-    const list = [...answerList];
-    list.splice(index, 1);
-    setAnswerList(list);
-  };
+  // const handleAnswerRemove = (index) => {
+  //   const list = [...answerList];
+  //   list.splice(index, 1);
+  //   setAnswerList(list);
+  // };
 
   const handleAnswerChange = (e, index) => {
     const { name, value } = e.target;
@@ -34,7 +34,12 @@ const QuizAnswer = ({ answerText, isCorrect }) => {
     list[index][name] = value;
     setAnswerList(list);
   };
-
+  const handleIsCorrectChange = (answer) => {
+    const list = [...answerList];
+    const index = list.findIndex((element) => element.answer === answer);
+    list[index].isCorrect = !list[index].isCorrect;
+    setAnswerList(list);
+  };
   const RadioInput = ({ label, value, checked, setter }) => {
     return (
       <label>
@@ -56,7 +61,7 @@ const QuizAnswer = ({ answerText, isCorrect }) => {
         type="radio"
         value="isCorrect"
         checked={isCorrect === true}
-        onChange={() => setIsCorrect(true)}
+        onChange={() => {}}
       />
     );
   };
@@ -68,14 +73,14 @@ const QuizAnswer = ({ answerText, isCorrect }) => {
           <p>Answer</p>
           {answerList.map((singleAnswer, index) => (
             <div key={index}>
-              <QuizCorrectAnswer />
+              {/* <QuizCorrectAnswer /> */}
               <input
                 name="answer"
                 id="answer"
                 type="radio"
                 value="isCorrect"
-                checked={isCorrectData === true}
-                onChange={() => setIsCorrectData(true)}
+                checked={singleAnswer.isCorrect}
+                onChange={() => handleIsCorrectChange(singleAnswer.answer)}
               />
               <input
                 name="answer"
