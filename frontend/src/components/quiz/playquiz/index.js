@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import {
@@ -16,6 +16,7 @@ import { API_QUIZ } from 'utils/user';
 const PlayQuiz = () => {
   const params = useParams();
   const API_URL = `${API_QUIZ}/${params.id}`;
+  const navigate = useNavigate();
 
   const [step, setStep] = useState(0);
   const [activeAnswer, setActiveAnswer] = useState(null);
@@ -53,7 +54,7 @@ const PlayQuiz = () => {
     ]);
     // console.log('activeAnswer: ', activeAnswer);
     console.log('Results', results);
-    // TODO navigate to scoreboard or summary
+    navigate('/score');
   };
 
   useEffect(() => {
