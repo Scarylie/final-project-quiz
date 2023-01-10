@@ -2,15 +2,14 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch, batch } from 'react-redux';
 import { API_QUIZ } from 'utils/user';
 import quiz from 'reducers/quiz';
-import { Form } from 'components/styles/Forms';
-
-import QuizFormQuestions from './QuizFormQuestions';
+import { Form, FormHeading } from 'components/styles/Forms';
 
 const QuizForm = ({ newTitle, onNewTitleChange, onFormSubmit }) => {
   return (
     <>
       <div>
-        <Form onSubmit={onFormSubmit}>
+        <FormHeading>Quiz title</FormHeading>
+        <form onSubmit={onFormSubmit}>
           <input
             className="quiz-title"
             type="text"
@@ -19,13 +18,7 @@ const QuizForm = ({ newTitle, onNewTitleChange, onFormSubmit }) => {
             placeholder="Add Quiz Title"
             autoComplete="off"
           />
-          <QuizFormQuestions
-          // newQuestion={newQuestion}
-          // onNewQuestionChange={handleNewQuestionChange}
-          // onFormQuestionSubmit={handleFormQuestionSubmit}
-          />
-          <button type="submit">save</button>
-        </Form>
+        </form>
       </div>
     </>
   );
