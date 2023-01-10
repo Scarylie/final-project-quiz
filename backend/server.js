@@ -13,6 +13,7 @@ const {
   deleteQuiz,
   editQuiz,
 } = require("./routes/quiz");
+const { addScore, getScore } = require("./routes/score");
 
 dotenv.config();
 
@@ -46,6 +47,7 @@ app.get("/", (req, res) => {
 // * Registration * //
 app.post("/register", registerUser);
 app.post("/login", logInUser);
+app.get("/user", authenticateUser);
 
 // * Quiz * //
 // app.get("/quiz", authenticateUser);
@@ -54,6 +56,10 @@ app.get("/quiz/:id", singleQuiz);
 app.post("/quiz", createQuiz);
 app.delete("/quiz/:id", deleteQuiz);
 app.patch("/quiz/:id", editQuiz);
+
+// * Quiz * //
+app.get("/score/:id", getScore);
+app.post("/score", addScore);
 
 // Start the server
 app.listen(port, () => {
