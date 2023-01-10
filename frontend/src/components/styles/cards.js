@@ -29,3 +29,18 @@ export const Card = styled.div`
     border-style: solid;
   }
 `;
+
+export const QuestionCard = styled.div`
+  background: rgba(0, 0, 0, 0.05);
+  padding: 20px 10px;
+  margin-bottom: 5px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.05);
+  border-style: solid;
+
+  :hover & {
+    border-style: solid;
+  }
+`;

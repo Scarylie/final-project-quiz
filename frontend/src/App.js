@@ -17,7 +17,7 @@ import { NotFound } from 'components/NotFound';
 import Navbar from 'components/Navbar';
 import Hero from 'components/Hero';
 import QuizForm from 'components/quiz/createquiz/QuizForm';
-import Overview from 'components/quiz/createquiz/Overview';
+import CreateQuiz from 'components/quiz/createquiz/';
 
 const reducer = combineReducers({
   user: user.reducer,
@@ -40,7 +40,7 @@ export const App = () => {
           <Route path="/play/:id" element={<PlayQuiz />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/about" element={<About />} />
-          <Route path="/create" element={<Overview />} />
+          <Route path="/create" element={<CreateQuiz />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>
