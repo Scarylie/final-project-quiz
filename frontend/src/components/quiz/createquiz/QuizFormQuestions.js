@@ -12,12 +12,14 @@ import { QuestionCard } from 'components/styles/cards';
 // lägga till för img
 // endast ett correct
 
-const QuizFormQuestions = ({
-  questionList,
+const QuizFormQuestions = (
+  {
+    /* questionList,
   setQuestionList,
   questionTitle,
-  setQuestionTitle,
-}) => {
+  setQuestionTitle, */
+  }
+) => {
   const [questionList, setQuestionList] = useState([
     {
       question: '',
