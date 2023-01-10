@@ -20,7 +20,8 @@ const Profile = () => {
       const options = {
         method: 'GET',
         headers: {
-          Authorization: accessToken,
+          // prettier-ignore
+          'Authorization': accessToken,
           'Content-Type': 'application/json',
         },
       };

@@ -17,7 +17,9 @@ const { addScore, getScore } = require("./routes/score");
 
 dotenv.config();
 
-const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/final-project";
+const mongoUrl =
+  process.env.MONGO_URL ||
+  `mongodb+srv://MongoSaralie:${process.env.STRING_PW}@projectmongoapi.weegxnh.mongodb.net/finalprojectquiz?retryWrites=true&w=majority`;
 
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.Promise = Promise;
