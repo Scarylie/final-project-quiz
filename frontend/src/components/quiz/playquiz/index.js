@@ -1,19 +1,26 @@
-import React, { useState } from 'react';
-// import { useSelector } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
 import {
   Container,
-  /*   PageHeading,
-  PageSubHeading, */
+  PageHeading,
+  PageSubHeading,
 } from 'components/styles/GlobalStyles';
 import styled from 'styled-components';
+import { API_QUIZ } from 'utils/user';
 
 // TODO: quizData temporary data. Get correct data from backend
-import quizData from './quiz.json';
+// import quizData from './quiz.json';
 
 const PlayQuiz = () => {
+  const params = useParams();
+  const API_URL = `${API_QUIZ}/${params.id}`;
+
   const [step, setStep] = useState(0);
   const [activeAnswer, setActiveAnswer] = useState(null);
   const [results, setResults] = useState([]);
+  const [quiz, setQuiz] = useState([]);
 
   // console.log('PlayQuizData: quizData', quizData);
   // console.log('PlayQuizData: quizData._id', quizData._id);
@@ -49,14 +56,28 @@ const PlayQuiz = () => {
     // TODO navigate to scoreboard or summary
   };
 
+  useEffect(() => {
+    const options = {
+      method: 'GET',
+    };
+    fetch(API_URL, options)
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(API_URL);
+        setQuiz(json.response);
+      })
+      .catch((error) => console.error(error))
+      .finally(() => console.log('Quiz ready to play'));
+  }, []);
+
   return (
     <Container>
       {step === 0 && (
         <IntroContainer>
           <IntroContent>
-            <h1>Start game</h1>
-            <h1>{quizData.title}</h1>
-            <p>{quizData.creator}</p>
+            <PageHeading>Start game</PageHeading>
+            <PageSubHeading>{quiz.title}</PageSubHeading>
+            <p>{quiz.creator}</p>
             <button type="button" onClick={handleSetStep}>
               Play
             </button>
@@ -67,11 +88,11 @@ const PlayQuiz = () => {
       {step > 0 && (
         <IntroContainer>
           <IntroContent>
-            {quizData.questions.map((currentQuestion, index) => {
+            {quiz.questions.map((currentQuestion, index) => {
               return (
                 step - 1 === index && (
                   <div key={currentQuestion._id}>
-                    {currentQuestion.question}
+                    <PageHeading>{currentQuestion.question}</PageHeading>
 
                     {currentQuestion.answers.map((answer) => {
                       return (
@@ -89,7 +110,7 @@ const PlayQuiz = () => {
                       );
                     })}
                     <div>
-                      {index === quizData.questions.length - 1 ? (
+                      {index === quiz.questions.length - 1 ? (
                         <button
                           type="button"
                           onClick={(event) =>
@@ -121,7 +142,7 @@ const PlayQuiz = () => {
 export default PlayQuiz;
 
 const IntroContainer = styled.div`
-  width: 100%;
+  /*   width: 100%;
   height: 100%;
   z-index: 10;
   position: absolute;
@@ -129,7 +150,7 @@ const IntroContainer = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: lightgrey;
+  background-color: lightgrey; */
   display: flex;
   justify-content: center;
   align-items: center;
