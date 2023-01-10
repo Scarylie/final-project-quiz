@@ -4,8 +4,11 @@ import {
   PageHeading,
   PageSubHeading,
 } from 'components/styles/GlobalStyles';
+import { SlSocialLinkedin } from 'react-icons/sl';
+import { VscGithub } from 'react-icons/vsc';
+import { BsGithub } from 'react-icons/bs';
 
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
 import Saralie from '../../utils/img/saralie.jpg';
 
@@ -16,6 +19,7 @@ const presentation = [
     descrition:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam consequat elit vel pharetra mattis. Integer eu risus lacus. Curabitur sit amet nulla eget orci fringilla scelerisque. Suspendisse potenti. Quisque ac efficitur dui. Nam convallis eros in malesuada maximus.',
     linkedIn: 'https://www.linkedin.com/',
+    github: 'https://www.linkedin.com/',
     portfolio: 'https://www.linkedin.com/',
   },
   {
@@ -24,6 +28,7 @@ const presentation = [
     descrition:
       'I am a Frontend Developer with a background as a Design Engineer who love to improve user experience for digital services that the users love while working with a modern tech stack. I have experience working as a team leader and enjoy enabling teams to collaborate and thrive while reaching their full potential.',
     linkedIn: 'https://www.linkedin.com/in/saralie-bognandi-439939b3/',
+    github: 'https://github.com/Scarylie',
     portfolio: 'https://saralie-bognandi.netlify.app/',
   },
   {
@@ -32,11 +37,14 @@ const presentation = [
     descrition:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam consequat elit vel pharetra mattis. Integer eu risus lacus. Curabitur sit amet nulla eget orci fringilla scelerisque. Suspendisse potenti. Quisque ac efficitur dui. Nam convallis eros in malesuada maximus.',
     linkedIn: 'https://www.linkedin.com/',
+    github: 'https://www.linkedin.com/',
     portfolio: 'https://www.linkedin.com/',
   },
 ];
 
 const About = () => {
+  let iconStyles = { fontSize: '1.5em' };
+
   return (
     <Container>
       <Card>
@@ -44,6 +52,18 @@ const About = () => {
         <PageSubHeading>
           This page is made as a final project at Technigo web developer
           bootcamp 2022
+          <div>
+            <p>👇🏼Have a look at our code here👇🏼</p>
+            <a
+              href="https://github.com/Scarylie/final-project-quiz"
+              role="button"
+              aria-pressed="false"
+              aria-label="linkedin"
+              target="_blank"
+              rel="noreferrer">
+              <BsGithub style={iconStyles} />
+            </a>
+          </div>
         </PageSubHeading>
       </Card>
       <CardContainer>
@@ -53,29 +73,43 @@ const About = () => {
               <PageHeading>{person.name}</PageHeading>
               <InfoWrapper>
                 <div>
-                  <Img src={person.profileImg} alt="profile picture" />
-                  <a
-                    href={person.linkedIn}
-                    role="button"
-                    aria-pressed="false"
-                    aria-label="linkedin"
-                    target="_blank"
-                    rel="noreferrer">
-                    LinkedIn
-                  </a>
-                  <a
-                    href={person.portfolio}
-                    role="button"
-                    aria-pressed="false"
-                    aria-label="linkedin"
-                    target="_blank"
-                    rel="noreferrer">
-                    portfolio
-                  </a>
+                  <ImgWrapper>
+                    <a
+                      href={person.portfolio}
+                      role="button"
+                      aria-pressed="false"
+                      aria-label="linkedin"
+                      target="_blank"
+                      rel="noreferrer">
+                      <p>{person.descrition}</p>
+                      <Img src={person.profileImg} alt="profile picture" />
+                    </a>
+                  </ImgWrapper>
+                  <Links>
+                    <div>
+                      <a
+                        href={person.linkedIn}
+                        role="button"
+                        aria-pressed="false"
+                        aria-label="linkedin"
+                        target="_blank"
+                        rel="noreferrer">
+                        <SlSocialLinkedin style={iconStyles} />
+                      </a>
+                    </div>
+                    <div>
+                      <a
+                        href={person.github}
+                        role="button"
+                        aria-pressed="false"
+                        aria-label="linkedin"
+                        target="_blank"
+                        rel="noreferrer">
+                        <VscGithub style={iconStyles} />
+                      </a>
+                    </div>
+                  </Links>
                 </div>
-                <p>{person.descrition}</p>
-
-                <div></div>
               </InfoWrapper>
             </Card>
           );
@@ -109,12 +143,11 @@ const Card = styled.div`
 `;
 const InfoWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
-  gap: 10px;
 `;
 const Img = styled.img`
   border: 2px solid black;
   width: 100px;
+  border-radius: 100vw;
 
   @media (min-width: 600px) {
     width: 150px;
@@ -122,4 +155,14 @@ const Img = styled.img`
   @media (min-width: 1300px) {
     width: 200px;
   }
+`;
+const ImgWrapper = styled.div`
+  margin: 0 auto;
+`;
+
+const Links = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-top: 10px;
 `;

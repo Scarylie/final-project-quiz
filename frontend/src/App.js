@@ -12,17 +12,20 @@ import Register from 'components/auth/Register';
 import Profile from 'components/pages/Profile';
 import About from 'components/pages/About';
 import QuizFeed from 'components/quiz/QuizFeed';
-import PlayQuiz from 'components/quiz/playquiz/Overview';
+import PlayQuiz from 'components/quiz/playquiz';
 import { NotFound } from 'components/NotFound';
 import Navbar from 'components/Navbar';
 import Hero from 'components/Hero';
 import QuizForm from 'components/quiz/createquiz/QuizForm';
 import CreateQuiz from 'components/quiz/createquiz/';
+import Score from 'components/quiz/playquiz/Score';
+
 
 const reducer = combineReducers({
   user: user.reducer,
   quiz: quiz.reducer,
 });
+// console.log('App quiz.recuser', quiz);
 
 const store = configureStore({ reducer });
 
@@ -41,6 +44,8 @@ export const App = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/about" element={<About />} />
           <Route path="/create" element={<CreateQuiz />} />
+          <Route path="/score" element={<Score />} />
+
 
           <Route path="*" element={<NotFound />} />
         </Routes>
