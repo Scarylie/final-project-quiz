@@ -10,9 +10,6 @@ import {
 import styled from 'styled-components';
 import { API_QUIZ } from 'utils/user';
 
-// TODO: quizData temporary data. Get correct data from backend
-// import quizData from './quiz.json';
-
 const PlayQuiz = () => {
   const params = useParams();
   const API_URL = `${API_QUIZ}/${params.id}`;
@@ -22,9 +19,6 @@ const PlayQuiz = () => {
   const [activeAnswer, setActiveAnswer] = useState(null);
   const [results, setResults] = useState([]);
   const [quiz, setQuiz] = useState([]);
-
-  // console.log('PlayQuizData: quizData', quizData);
-  // console.log('PlayQuizData: quizData._id', quizData._id);
 
   const handleSetStep = (event, currentQuestion) => {
     event.preventDefault();
@@ -47,14 +41,15 @@ const PlayQuiz = () => {
     event.preventDefault();
     console.log('Quiz is done!');
 
-    // console.log('activeAnswer: ', activeAnswer);
     setResults([
       ...results,
       { question: currentQuestion?.question, activeAnswer },
     ]);
     // console.log('activeAnswer: ', activeAnswer);
     console.log('Results', results);
-    navigate('/score');
+
+    // Remove comment and navigate when result is not delayed
+    // navigate('/score');
   };
 
   useEffect(() => {
@@ -93,8 +88,15 @@ const PlayQuiz = () => {
               return (
                 step - 1 === index && (
                   <div key={currentQuestion._id}>
-                    <PageHeading>{currentQuestion.question}</PageHeading>
-
+                    <div>
+                      <PageHeading>{currentQuestion.question}</PageHeading>
+                      {currentQuestion.imageUrl && (
+                        <Img
+                          src={currentQuestion.imageUrl}
+                          alt={currentQuestion.imageUrl}
+                        />
+                      )}
+                    </div>
                     {currentQuestion.answers.map((answer) => {
                       return (
                         <div key={answer._id}>
@@ -158,3 +160,14 @@ const IntroContainer = styled.div`
 `;
 
 const IntroContent = styled.div``;
+
+const Img = styled.img`
+  width: 300px;
+
+  @media (min-width: 600px) {
+    width: 400px;
+  }
+  @media (min-width: 1300px) {
+    width: 450px;
+  }
+`;
