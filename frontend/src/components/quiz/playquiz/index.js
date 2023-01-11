@@ -11,6 +11,9 @@ import styled from 'styled-components';
 import { API_URL } from 'utils/user';
 
 const PlayQuiz = () => {
+  const { username } = useSelector((store) => store.user);
+  console.log('Username in PlayQuiz: ', username);
+
   const params = useParams();
   const API_QUIZ = `${API_URL('quiz')}/${params.id}`;
   const API_SCORE = `${API_URL('score')}`;
@@ -21,25 +24,24 @@ const PlayQuiz = () => {
   const [step, setStep] = useState(0);
   const [activeAnswer, setActiveAnswer] = useState(null);
   const [results, setResults] = useState([]);
-  const [play, setPlay] = useState(false);
-  const [score, setScore] = useState({});
+  const [state, setState] = useState('intro');
+  const [score, setScore] = useState();
 
   const calculateScore = () => {
     const answeredOn = results.length;
-    const totalQuestions = quiz.questions.length;
+    const totalQuestions = quiz?.questions?.length;
 
     if (answeredOn === totalQuestions) {
       const filteredArray = results.filter(function (result) {
         return result.activeAnswer.isCorrect === true;
       });
       const numberOfCorrect = filteredArray.length;
-      console.log('numberOfCorrect', numberOfCorrect);
+      // console.log('numberOfCorrect', numberOfCorrect);
 
-      const correctOfTotal = numberOfCorrect / totalQuestions;
-      console.log('correctOfTotal', correctOfTotal);
+      const correctOfTotal = (numberOfCorrect / totalQuestions) * 100;
+      // console.log('correctOfTotal', correctOfTotal);
 
-      setScore(correctOfTotal);
-      console.log('setScore', setScore);
+      return correctOfTotal;
     }
   };
 
@@ -48,7 +50,7 @@ const PlayQuiz = () => {
     setActiveAnswer(answer);
   };
 
-  const handleSetStep = (event, currentQuestion) => {
+  const handleSetQuestion = (event, currentQuestion) => {
     setResults([
       ...results,
       { question: currentQuestion?.question, activeAnswer },
@@ -57,33 +59,43 @@ const PlayQuiz = () => {
   };
 
   const handleFinishQuiz = (event, currentQuestion) => {
-    console.log('Quiz is done!');
-
+    console.log('handleFinishQuiz()');
     setResults([
       ...results,
       { question: currentQuestion?.question, activeAnswer },
     ]);
-    calculateScore();
-    if (results.length === quiz.questions.length) {
+    const correctOfTotal = calculateScore();
+    console.log('correctOfTotal, ', correctOfTotal);
+    setScore(correctOfTotal);
+    console.log('player:', username, 'quizId:', params.id, 'score:', score);
+    if (
+      results.length === quiz.questions.length
+      // && username &&
+      // params.id &&
+      // correctOfTotal
+    ) {
       console.log('results', results);
       console.log('we have correct number of results');
 
       const options = {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          player: username,
+          quizId: params.id,
+          score: correctOfTotal,
+        }),
       };
       fetch(API_SCORE, options)
         .then((res) => res.json())
-        .then((json) => {
-          console.log(json);
-          setScore(json.response.status);
+        .then(() => {
+          setState('score');
         })
         .catch((error) => console.error(error))
         .finally(() => console.log('Score posted to database'));
     }
-    // console.log('activeAnswer: ', activeAnswer);
-    // if quiz restart reset play variable to false
-    // Remove comment and navigate when result is not delayed
-    // navigate('/score');
   };
 
   useEffect(() => {
@@ -99,22 +111,26 @@ const PlayQuiz = () => {
       .finally(() => console.log('Quiz ready to play'));
   }, []);
 
+  // useEffect(() => {
+  //   calculateScore();
+  // }, [score]);
+
   return (
     <Container>
-      {!play && (
+      {state === 'intro' && (
         <IntroContainer>
           <IntroContent>
             <PageHeading>Start game</PageHeading>
             <PageSubHeading>{quiz.title}</PageSubHeading>
             <p>{quiz.creator}</p>
-            <button type="button" onClick={() => setPlay(true)}>
+            <button type="button" onClick={() => setState('isPlaying')}>
               Play
             </button>
           </IntroContent>
         </IntroContainer>
       )}
 
-      {play && (
+      {state === 'isPlaying' && (
         <IntroContainer>
           <IntroContent>
             {quiz?.questions.map((currentQuestion, index) => {
@@ -158,7 +174,7 @@ const PlayQuiz = () => {
                         <button
                           type="button"
                           onClick={(event) =>
-                            handleSetStep(event, currentQuestion)
+                            handleSetQuestion(event, currentQuestion)
                           }>
                           next
                         </button>
@@ -168,6 +184,14 @@ const PlayQuiz = () => {
                 )
               );
             })}
+          </IntroContent>
+        </IntroContainer>
+      )}
+
+      {state === 'score' && (
+        <IntroContainer>
+          <IntroContent>
+            <div>You scored {score}% on this quiz!</div>
           </IntroContent>
         </IntroContainer>
       )}
