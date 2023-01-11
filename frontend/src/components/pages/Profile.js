@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-
+import { useDispatch, useSelector, batch } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { API_URL } from 'utils/user';
+import user from 'reducers/auth';
 
 const Profile = () => {
-  const { accessToken, username, userId } = useSelector((store) => store.user);
+  const { username, userId } = useSelector((store) => store.user);
+  const accessToken = localStorage.getItem('accessToken');
 
+  const dispatch = useDispatch();
   console.log('<Profile>');
   console.log('accessToken: ', accessToken);
   console.log('username: ', username);
@@ -17,18 +19,27 @@ const Profile = () => {
     if (accessToken) {
       // REQUEST USER DATA
       console.log('Request user data accessToken', accessToken);
+      // const withoutFirstAndLast = accessToken.slice(1, -1);
       const options = {
         method: 'GET',
         headers: {
-          Authorization: accessToken,
+          // prettier-ignore
+          'Authorization': accessToken,
           'Content-Type': 'application/json',
         },
       };
-      fetch(API_URL, options)
+      fetch(API_URL('user'), options)
         .then((response) => response.json())
-        .then((data) => {
-          console.log('data', data);
-        });
+        .then((data) =>
+          batch(() => {
+            console.log('user data: ', data);
+            dispatch(user.actions.setUsername(data.response.username));
+            dispatch(user.actions.setUserId(data.response.id));
+            dispatch(user.actions.setEmail(data.response.email));
+            dispatch(user.actions.setError(null));
+            // window.location.reload();
+          })
+        );
     }
   }, [accessToken]);
 
