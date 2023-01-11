@@ -10,8 +10,9 @@ import { BsGithub } from 'react-icons/bs';
 
 import styled from 'styled-components/macro';
 
-import Saralie from '../../utils/img/saralie.jpg';
-import Sarah from '../../assets/sarah.webp';
+import Saralie from '../../assets/saralie.jpg';
+import Sarah from '../../assets/sarah.jpg';
+// import Younas from '../../assets/younas';
 
 const presentation = [
   {
@@ -34,7 +35,7 @@ const presentation = [
   },
   {
     name: 'Younas Tesfamariam',
-    profileImg: Saralie,
+    profileImg: '',
     descrition:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam consequat elit vel pharetra mattis. Integer eu risus lacus. Curabitur sit amet nulla eget orci fringilla scelerisque. Suspendisse potenti. Quisque ac efficitur dui. Nam convallis eros in malesuada maximus.',
     linkedIn: 'https://www.linkedin.com/',
@@ -53,18 +54,18 @@ const About = () => {
         <PageSubHeading>
           This page is made as a final project at Technigo web developer
           bootcamp 2022
-          <div>
-            <p>👇🏼Have a look at our code here👇🏼</p>
-            <a
-              href="https://github.com/Scarylie/final-project-quiz"
-              role="button"
-              aria-pressed="false"
-              aria-label="linkedin"
-              target="_blank"
-              rel="noreferrer">
-              <BsGithub style={iconStyles} />
-            </a>
-          </div>
+        </PageSubHeading>
+        <PageSubHeading>
+          👇🏼Have a look at our code here👇🏼
+          <a
+            href="https://github.com/Scarylie/final-project-quiz"
+            role="button"
+            aria-pressed="false"
+            aria-label="linkedin"
+            target="_blank"
+            rel="noreferrer">
+            <BsGithub style={iconStyles} />
+          </a>
         </PageSubHeading>
       </Card>
       <CardContainer>

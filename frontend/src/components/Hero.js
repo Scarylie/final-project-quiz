@@ -9,7 +9,7 @@ const Hero = () => {
     <div>
       {!accessToken ? (
         <HeroBackground>
-          <HeroContainer>QUIZZIES</HeroContainer>
+          <HeroContainer>QUIZZIS</HeroContainer>
         </HeroBackground>
       ) : (
         <MiniHeroBackground>{''}</MiniHeroBackground>

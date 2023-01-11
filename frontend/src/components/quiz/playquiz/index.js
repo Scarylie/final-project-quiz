@@ -8,7 +8,7 @@ import {
   PageSubHeading,
 } from 'components/styles/GlobalStyles';
 import styled from 'styled-components/macro';
-import { API_URL } from 'utils/user';
+import { API_URL } from 'utils/urls';
 
 const PlayQuiz = () => {
   const { username } = useSelector((store) => store.user);

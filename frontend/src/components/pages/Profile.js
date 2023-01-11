@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector, batch } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import { API_URL } from 'utils/user';
+import { API_URL } from 'utils/urls';
 import user from 'reducers/auth';
 
 import MyQuizFeed from 'components/quiz/MyQuizFeed';

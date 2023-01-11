@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch, batch } from 'react-redux';
-import { API_QUIZ } from 'utils/user';
+import { API_QUIZ } from 'utils/urls';
 import { SingleAnswer } from './SingleAnswer';
 import { Input } from 'components/styles/Forms';
 import { FormHeading } from 'components/styles/Forms';

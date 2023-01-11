@@ -3,13 +3,14 @@ import styled from 'styled-components/macro';
 import { StyledNavbar } from './styles/GlobalStyles';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Logo from '../utils/img/quizzies-logo.png';
+import Logo from '../assets/quizzies-logo.png';
 import user from 'reducers/auth';
 
 import { AiOutlineHome } from 'react-icons/ai';
 import { CgProfile } from 'react-icons/cg';
 import { VscInfo } from 'react-icons/vsc';
 import { MdOutlineCreateNewFolder } from 'react-icons/md';
+import { RiLogoutBoxRLine } from 'react-icons/ri';
 
 const Navbar = () => {
   const accessToken = localStorage.getItem('accessToken');
@@ -23,13 +24,6 @@ const Navbar = () => {
   };
 
   let iconStyles = { fontSize: '1.5em' };
-
-  // automatically authenticate user if token is found
-  // useEffect(() => {
-  //   if (accessToken) {
-  //     dispatch(getUserDetails());
-  //   }
-  // }, [accessToken]);
 
   return (
     <StyledNavbar>
@@ -75,12 +69,11 @@ const Navbar = () => {
           </div>
           <div>
             {accessToken ? (
-              <button type="button" onClick={onLogOut}>
-                Log out
-              </button>
+              <GhostBtn type="button" onClick={onLogOut}>
+                <RiLogoutBoxRLine style={iconStyles} />
+              </GhostBtn>
             ) : (
               <Link to={`/`}>
-                {' '}
                 <AiOutlineHome style={iconStyles} />
               </Link>
             )}
@@ -107,4 +100,17 @@ const Logos = styled.div`
 
 const Img = styled.img`
   width: 30px;
+`;
+
+export const GhostBtn = styled.button`
+  background-color: inherit;
+  cursor: pointer;
+  border: none;
+  .submit-icon {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `;
