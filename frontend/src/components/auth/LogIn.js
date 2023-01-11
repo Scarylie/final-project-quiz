@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector, batch } from 'react-redux';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, Navigate } from 'react-router-dom';
 import { API_URL } from 'utils/user';
 import user from 'reducers/auth';
 import {
@@ -21,7 +21,7 @@ const LogIn = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const accessToken = useSelector((store) => store.user.accessToken);
+  const { accessToken } = useSelector((store) => store.user);
 
   const onFormSubmit = (event) => {
     console.log('onFormSubmit in Login.js');
@@ -42,10 +42,11 @@ const LogIn = () => {
       fetch(API_URL(mode), options)
         .then((response) => response.json())
         .then((response) => {
-          localStorage.setItem(
-            'accessToken',
-            JSON.stringify(response.response.accessToken)
+          console.log(
+            `response.response.accessToken`,
+            response.response.accessToken
           );
+          localStorage.setItem('accessToken', response.response.accessToken);
           return response;
         })
         .then((data) => {
@@ -54,12 +55,12 @@ const LogIn = () => {
               console.log(data);
               dispatch(user.actions.setUsername(data.response.username));
               dispatch(user.actions.setUserId(data.response.id));
-              dispatch(user.actions.setAccessToken(data.response.accessToken));
+              // dispatch(user.actions.setAccessToken(data.response.accessToken));
               //email is not sent back from backend
               dispatch(user.actions.setEmail(data.response.email));
               dispatch(user.actions.setError(null));
               navigate('/profile');
-              // window.location.reload();
+              window.location.reload();
             });
           } else {
             setInputErrorMessage(data.response);
@@ -71,11 +72,10 @@ const LogIn = () => {
     }
   };
 
-  // This is not being used...
-  // if (accessToken) {
-  //   console.log('if accessToken, navigate to profile in Login.js');
-  //   return <Navigate to="/profile" />;
-  // }
+  if (accessToken) {
+    console.log('if accessToken, navigate to profile in Login.js');
+    return <Navigate to="/profile" />;
+  }
 
   return (
     <SignInContainer>

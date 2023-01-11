@@ -13,7 +13,7 @@ import { API_URL } from 'utils/user';
 const PlayQuiz = () => {
   const params = useParams();
   const API_QUIZ = `${API_URL('quiz')}/${params.id}`;
-  const API_SCORE = `${API_URL('score')}`;
+  const API_SCORE = API_URL('score');
 
   const navigate = useNavigate();
 
