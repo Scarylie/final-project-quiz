@@ -11,7 +11,9 @@ import { QuestionCard } from 'components/styles/cards';
 // buggar i remove answer och när man förösker setcorrect efter att ha lagt till och tagit bort
 // lägga till för img
 // endast ett correct
-
+const generateKey = (pre) => {
+  return `${pre}_${new Date().getTime()}`;
+};
 const QuizFormQuestions = (
   {
     /* questionList,
@@ -23,8 +25,10 @@ const QuizFormQuestions = (
   const [questionList, setQuestionList] = useState([
     {
       question: '',
+      key: generateKey('question'),
       answers: [
         {
+          key: generateKey('answer'),
           answer: '',
           isCorrect: false,
         },
@@ -33,12 +37,16 @@ const QuizFormQuestions = (
   ]);
   const [questionTitle, setQuestionTitle] = useState('');
 
-  console.log('QuizFormQuestions questionTitle', questionTitle);
-  // console.log('QuizFormQuestions setQuestionTitle', setQuestionTitle);
-
   const handleQuestionAdd = (e) => {
     e.preventDefault();
-    setQuestionList([...questionList, { question: '', answers: [{}] }]);
+    setQuestionList([
+      ...questionList,
+      {
+        question: '',
+        key: generateKey('question'),
+        answers: [{ key: generateKey('answer'), answer: '', isCorrect: false }],
+      },
+    ]);
   };
 
   // This removes the last in the list. Not the one you clicked to remove.
@@ -54,11 +62,10 @@ const QuizFormQuestions = (
     setQuestionList(list);
   };
 
-  console.log('QuizFormQuestions questionList', questionList);
-
   const handleAnswerTextChange = (e, questionIndex, answerIndex) => {
-    const list = questionList;
-    list[questionIndex].answers[answerIndex].answer = e.target.value;
+    const { name, value } = e.target;
+    const list = [...questionList];
+    list[questionIndex].answers[answerIndex].answer = value;
     setQuestionList(list);
   };
   const handleIsCorrectChange = (questionIndex, answerIndex) => {
@@ -67,14 +74,9 @@ const QuizFormQuestions = (
       !list[questionIndex].answers[answerIndex].isCorrect;
     setQuestionList(list);
   };
-  const handleRemoveAnswer = (questionIndex, answerText) => {
-    const list = questionList;
-    const indexOfAnswerToRemove = list[questionIndex].answers.findIndex(
-      (answer) => answer.answer === answerText
-    );
-    const filtered = list[questionIndex].answers.filter(
-      (el) => el.answer !== answerText
-    );
+  const handleRemoveAnswer = (questionIndex, key) => {
+    const list = [...questionList];
+    const filtered = list[questionIndex].answers.filter((el) => el.key != key);
     list[questionIndex].answers = filtered;
     setQuestionList(list);
     console.log('list[questionIndex].answers', list[questionIndex].answers);
@@ -84,6 +86,7 @@ const QuizFormQuestions = (
     list[questionIndex].answers.push({
       answer: '',
       isCorrect: false,
+      key: generateKey('answer'),
     });
     setQuestionList(list);
   };
@@ -105,8 +108,8 @@ const QuizFormQuestions = (
     <div id="questionForm">
       <div>
         {questionList.map((singleQuestion, questionIndex) => (
-          <QuestionCard>
-            <div key={questionIndex}>
+          <QuestionCard key={singleQuestion.key}>
+            <div>
               <FormHeading>Question</FormHeading>
               <Input
                 name="question"
@@ -127,7 +130,7 @@ const QuizFormQuestions = (
               <FormHeading>Answers</FormHeading>
               {singleQuestion.answers.length > 0 &&
                 singleQuestion.answers.map((answer, answerIndex) => (
-                  <div key={answer.answer}>
+                  <div key={answer.key}>
                     <button
                       onClick={() =>
                         toggleAnswerCorrect(questionIndex, answerIndex)
@@ -149,7 +152,7 @@ const QuizFormQuestions = (
                     <button
                       className="removeBtn"
                       onClick={() =>
-                        handleRemoveAnswer(questionIndex, answer.answer)
+                        handleRemoveAnswer(questionIndex, answer.key)
                       }>
                       🆇
                     </button>
