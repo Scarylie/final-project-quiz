@@ -114,7 +114,7 @@ const PlayQuiz = () => {
   // useEffect(() => {
   //   calculateScore();
   // }, [score]);
-  const [buttonText, setButtonText] = useState("Finished");
+  const [buttonText, setButtonText] = useState('Finish');
   return (
     <Container>
       {state === 'intro' && (
@@ -122,10 +122,10 @@ const PlayQuiz = () => {
           <IntroContent>
             <PageHeading>Start game</PageHeading>
             <PageSubHeading>{quiz.title}</PageSubHeading>
-            <p>{quiz.creator}</p>
-            <PlayButton><button className='button' type="button" onClick={() => setState('isPlaying')}>
+            <p>Created by: {quiz.creator}</p>
+            <PlayButton type="button" onClick={() => setState('isPlaying')}>
               Play
-            </button></PlayButton>
+            </PlayButton>
           </IntroContent>
         </IntroContainer>
       )}
@@ -166,9 +166,9 @@ const PlayQuiz = () => {
                         <button
                           type="button"
                           onClick={(event) => {
-                            handleFinishQuiz(event, currentQuestion)
-                            
-                              setButtonText("Submit");
+                            handleFinishQuiz(event, currentQuestion);
+
+                            setButtonText('Submit');
                           }}>
                           {buttonText}
                         </button>
@@ -230,4 +230,3 @@ const Img = styled.img`
     width: 450px;
   }
 `;
-
