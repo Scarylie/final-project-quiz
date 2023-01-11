@@ -11,7 +11,9 @@ import { QuestionCard } from 'components/styles/cards';
 // buggar i remove answer och när man förösker setcorrect efter att ha lagt till och tagit bort
 // lägga till för img
 // endast ett correct
-
+const generateKey = (pre) => {
+  return `${pre}_${new Date().getTime()}`;
+};
 const QuizFormQuestions = (
   {
     /* questionList,
@@ -23,17 +25,28 @@ const QuizFormQuestions = (
   const [questionList, setQuestionList] = useState([
     {
       question: '',
-      answers: [{}],
+      key: generateKey('question'),
+      answers: [
+        {
+          key: generateKey('answer'),
+          answer: '',
+          isCorrect: false,
+        },
+      ],
     },
   ]);
   const [questionTitle, setQuestionTitle] = useState('');
 
-  console.log('QuizFormQuestions questionTitle', questionTitle);
-  console.log('QuizFormQuestions setQuestionTitle', setQuestionTitle);
-
   const handleQuestionAdd = (e) => {
     e.preventDefault();
-    setQuestionList([...questionList, { question: '', answers: [{}] }]);
+    setQuestionList([
+      ...questionList,
+      {
+        question: '',
+        key: generateKey('question'),
+        answers: [{ key: generateKey('answer'), answer: '', isCorrect: false }],
+      },
+    ]);
   };
 
   // This removes the last in the list. Not the one you clicked to remove.
@@ -49,11 +62,10 @@ const QuizFormQuestions = (
     setQuestionList(list);
   };
 
-  console.log('QuizFormQuestions questionList', questionList);
-
-  const handleAnswerTextChange = (questionIndex, answerIndex) => {
+  const handleAnswerTextChange = (e, questionIndex, answerIndex) => {
+    const { name, value } = e.target;
     const list = [...questionList];
-    list[questionIndex].answers[answerIndex].answer = e.target.value;
+    list[questionIndex].answers[answerIndex].answer = value;
     setQuestionList(list);
   };
   const handleIsCorrectChange = (questionIndex, answerIndex) => {
@@ -62,25 +74,42 @@ const QuizFormQuestions = (
       !list[questionIndex].answers[answerIndex].isCorrect;
     setQuestionList(list);
   };
-  const handleRemoveAnswer = (questionIndex, answerIndex) => {
+  const handleRemoveAnswer = (questionIndex, key) => {
     const list = [...questionList];
-    list[questionIndex].answers.splice(answerIndex, 1);
+    const filtered = list[questionIndex].answers.filter((el) => el.key != key);
+    list[questionIndex].answers = filtered;
     setQuestionList(list);
+    console.log('list[questionIndex].answers', list[questionIndex].answers);
   };
   const handleAnswerAdd = (questionIndex) => {
     const list = [...questionList];
     list[questionIndex].answers.push({
       answer: '',
       isCorrect: false,
+      key: generateKey('answer'),
     });
     setQuestionList(list);
   };
+  const toggleAnswerCorrect = (questionIndex, answerIndex) => {
+    const list = questionList;
+    list[questionIndex].answers.map((singleAnswer, index) => {
+      if (index !== answerIndex) {
+        list[questionIndex].answers[index] = false;
+      }
+      if (answerIndex === index) {
+        list[questionIndex].answers[answerIndex] =
+          !list[questionIndex].answers[answerIndex];
+      }
+    });
+    setQuestionList(list);
+  };
+
   return (
     <div id="questionForm">
       <div>
         {questionList.map((singleQuestion, questionIndex) => (
-          <QuestionCard>
-            <div key={questionIndex}>
+          <QuestionCard key={singleQuestion.key}>
+            <div>
               <FormHeading>Question</FormHeading>
               <Input
                 name="question"
@@ -99,23 +128,36 @@ const QuizFormQuestions = (
                 </button>
               )}
               <FormHeading>Answers</FormHeading>
-              {singleQuestion.answers.map((answer, answerIndex) => (
-                <div key={answer.answer}>
-                  <SingleAnswer
-                    answerText={answer.answerText}
-                    setAnswerText={() =>
-                      handleAnswerTextChange(questionIndex, answerIndex)
-                    }
-                    isCorrect={answer.isCorrect}
-                    setIsCorrect={() => {
-                      handleIsCorrectChange(questionIndex, answerIndex);
-                    }}
-                    handleAnswerRemove={() =>
-                      handleRemoveAnswer(questionIndex, answerIndex)
-                    }
-                  />
-                </div>
-              ))}
+              {singleQuestion.answers.length > 0 &&
+                singleQuestion.answers.map((answer, answerIndex) => (
+                  <div key={answer.key}>
+                    <button
+                      onClick={() =>
+                        toggleAnswerCorrect(questionIndex, answerIndex)
+                      }>
+                      {answer.isCorrect ? 'IsCorrect' : ''}
+                    </button>
+                    <Input
+                      name="answer"
+                      id="answer"
+                      type="text"
+                      value={answer.answer}
+                      onChange={(e) =>
+                        handleAnswerTextChange(e, questionIndex, answerIndex)
+                      }
+                      placeholder="answer"
+                      autoComplete="off"
+                    />
+
+                    <button
+                      className="removeBtn"
+                      onClick={() =>
+                        handleRemoveAnswer(questionIndex, answer.key)
+                      }>
+                      🆇
+                    </button>
+                  </div>
+                ))}
               {
                 <button
                   className="addAnswerBtn"

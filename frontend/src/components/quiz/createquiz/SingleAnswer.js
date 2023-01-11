@@ -6,7 +6,6 @@ export const SingleAnswer = ({
   setAnswerText,
   isCorrect,
   setIsCorrect,
-  handleAnswerRemove,
   answerIndex,
 }) => {
   const handleAnswerChange = (e) => {
@@ -28,12 +27,6 @@ export const SingleAnswer = ({
         placeholder="answer"
         autoComplete="off"
       />
-
-      <button
-        className="removeBtn"
-        onClick={() => handleAnswerRemove(answerIndex)}>
-        🆇
-      </button>
     </>
   );
 };
