@@ -23,13 +23,18 @@ const QuizFormQuestions = (
   const [questionList, setQuestionList] = useState([
     {
       question: '',
-      answers: [{}],
+      answers: [
+        {
+          answer: '',
+          isCorrect: false,
+        },
+      ],
     },
   ]);
   const [questionTitle, setQuestionTitle] = useState('');
 
   console.log('QuizFormQuestions questionTitle', questionTitle);
-  console.log('QuizFormQuestions setQuestionTitle', setQuestionTitle);
+  // console.log('QuizFormQuestions setQuestionTitle', setQuestionTitle);
 
   const handleQuestionAdd = (e) => {
     e.preventDefault();
@@ -51,8 +56,8 @@ const QuizFormQuestions = (
 
   console.log('QuizFormQuestions questionList', questionList);
 
-  const handleAnswerTextChange = (questionIndex, answerIndex) => {
-    const list = [...questionList];
+  const handleAnswerTextChange = (e, questionIndex, answerIndex) => {
+    const list = questionList;
     list[questionIndex].answers[answerIndex].answer = e.target.value;
     setQuestionList(list);
   };
@@ -62,10 +67,17 @@ const QuizFormQuestions = (
       !list[questionIndex].answers[answerIndex].isCorrect;
     setQuestionList(list);
   };
-  const handleRemoveAnswer = (questionIndex, answerIndex) => {
-    const list = [...questionList];
-    list[questionIndex].answers.splice(answerIndex, 1);
+  const handleRemoveAnswer = (questionIndex, answerText) => {
+    const list = questionList;
+    const indexOfAnswerToRemove = list[questionIndex].answers.findIndex(
+      (answer) => answer.answer === answerText
+    );
+    const filtered = list[questionIndex].answers.filter(
+      (el) => el.answer !== answerText
+    );
+    list[questionIndex].answers = filtered;
     setQuestionList(list);
+    console.log('list[questionIndex].answers', list[questionIndex].answers);
   };
   const handleAnswerAdd = (questionIndex) => {
     const list = [...questionList];
@@ -75,6 +87,20 @@ const QuizFormQuestions = (
     });
     setQuestionList(list);
   };
+  const toggleAnswerCorrect = (questionIndex, answerIndex) => {
+    const list = questionList;
+    list[questionIndex].answers.map((singleAnswer, index) => {
+      if (index !== answerIndex) {
+        list[questionIndex].answers[index] = false;
+      }
+      if (answerIndex === index) {
+        list[questionIndex].answers[answerIndex] =
+          !list[questionIndex].answers[answerIndex];
+      }
+    });
+    setQuestionList(list);
+  };
+
   return (
     <div id="questionForm">
       <div>
@@ -99,23 +125,36 @@ const QuizFormQuestions = (
                 </button>
               )}
               <FormHeading>Answers</FormHeading>
-              {singleQuestion.answers.map((answer, answerIndex) => (
-                <div key={answer.answer}>
-                  <SingleAnswer
-                    answerText={answer.answerText}
-                    setAnswerText={() =>
-                      handleAnswerTextChange(questionIndex, answerIndex)
-                    }
-                    isCorrect={answer.isCorrect}
-                    setIsCorrect={() => {
-                      handleIsCorrectChange(questionIndex, answerIndex);
-                    }}
-                    handleAnswerRemove={() =>
-                      handleRemoveAnswer(questionIndex, answerIndex)
-                    }
-                  />
-                </div>
-              ))}
+              {singleQuestion.answers.length > 0 &&
+                singleQuestion.answers.map((answer, answerIndex) => (
+                  <div key={answer.answer}>
+                    <button
+                      onClick={() =>
+                        toggleAnswerCorrect(questionIndex, answerIndex)
+                      }>
+                      {answer.isCorrect ? 'IsCorrect' : ''}
+                    </button>
+                    <Input
+                      name="answer"
+                      id="answer"
+                      type="text"
+                      value={answer.answer}
+                      onChange={(e) =>
+                        handleAnswerTextChange(e, questionIndex, answerIndex)
+                      }
+                      placeholder="answer"
+                      autoComplete="off"
+                    />
+
+                    <button
+                      className="removeBtn"
+                      onClick={() =>
+                        handleRemoveAnswer(questionIndex, answer.answer)
+                      }>
+                      🆇
+                    </button>
+                  </div>
+                ))}
               {
                 <button
                   className="addAnswerBtn"
