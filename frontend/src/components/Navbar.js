@@ -12,7 +12,8 @@ import { VscInfo } from 'react-icons/vsc';
 import { MdOutlineCreateNewFolder } from 'react-icons/md';
 
 const Navbar = () => {
-  const { accessToken } = useSelector((store) => store.user);
+  const accessToken = localStorage.getItem('accessToken');
+  const { username, userId } = useSelector((store) => store.user);
   const dispatch = useDispatch();
 
   const onLogOut = () => {
@@ -24,11 +25,11 @@ const Navbar = () => {
   let iconStyles = { fontSize: '1.5em' };
 
   // automatically authenticate user if token is found
-  //   useEffect(() => {
-  //     if (accessToken) {
-  //       dispatch(getUserDetails());
-  //     }
-  //   }, [accessToken, dispatch]);
+  // useEffect(() => {
+  //   if (accessToken) {
+  //     dispatch(getUserDetails());
+  //   }
+  // }, [accessToken]);
 
   return (
     <StyledNavbar>
