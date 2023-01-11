@@ -17,7 +17,8 @@ const QuizFeed = () => {
     const options = {
       method: 'GET',
     };
-    fetch(API_QUIZ, options) // add loading?
+    fetch(API_QUIZ, options)
+      // add loading here
       .then((res) => res.json())
       .then((json) => {
         console.log(API_QUIZ);
@@ -25,7 +26,7 @@ const QuizFeed = () => {
       })
       .catch((error) => console.error(error))
       .finally(() => console.log('All good!'));
-  }, []); // behöver vi något mer felmeddelande i frontend här?
+  }, []);
 
   return (
     <Container>
@@ -35,9 +36,13 @@ const QuizFeed = () => {
         className={quizList.length <= 0 ? 'no-items' : 'display-items'}>
         <CardContainer>
           {quizList.map((quiz) => (
-            <Card key={quiz._id}>
-              <Link to={`/play/${quiz._id}`}>{quiz.title}</Link>
-            </Card>
+            <Link to={`/play/${quiz._id}`} key={quiz._id}>
+              <Card>
+                {quiz.title}
+                {quiz.creator && <p>Created by: {quiz.creator}</p>}
+                <p>Created at: {quiz.createdAt}</p>
+              </Card>
+            </Link>
           ))}
         </CardContainer>
       </StyledFeed>
