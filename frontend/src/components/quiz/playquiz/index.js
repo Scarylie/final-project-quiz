@@ -111,6 +111,9 @@ const PlayQuiz = () => {
       .finally(() => console.log('Quiz ready to play'));
   }, []);
 
+  const totalQuestions = quiz?.questions?.length;
+  const timestamp = quiz.createdAt;
+
   // useEffect(() => {
   //   calculateScore();
   // }, [score]);
@@ -120,9 +123,14 @@ const PlayQuiz = () => {
       {state === 'intro' && (
         <IntroContainer>
           <IntroContent>
-            <PageHeading>Start game</PageHeading>
-            <PageSubHeading>{quiz.title}</PageSubHeading>
-            <p>{quiz.creator}</p>
+            <PageHeading>{quiz.title}</PageHeading>
+            <PageSubHeading>
+              This quiz has {totalQuestions} questions
+            </PageSubHeading>
+            {quiz.creator && (
+              <PageSubHeading>Created By: {quiz.creator}</PageSubHeading>
+            )}
+            <PageSubHeading>{timestamp}</PageSubHeading>
             <button type="button" onClick={() => setState('isPlaying')}>
               Play
             </button>
