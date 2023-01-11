@@ -4,6 +4,8 @@ import { Navigate } from 'react-router-dom';
 import { API_URL } from 'utils/user';
 import user from 'reducers/auth';
 
+import MyQuizFeed from 'components/quiz/MyQuizFeed';
+
 const Profile = () => {
   const { username, userId } = useSelector((store) => store.user);
   const accessToken = localStorage.getItem('accessToken');
@@ -48,11 +50,14 @@ const Profile = () => {
   }
 
   return (
-    <section>
-      <p>Username {username}</p>
-      <p>userId {userId}</p>
-      <p>accessToken {accessToken}</p>
-    </section>
+    <>
+      <section>
+        <p>Username {username}</p>
+        <p>userId {userId}</p>
+        <p>accessToken {accessToken}</p>
+      </section>
+      <MyQuizFeed />
+    </>
   );
 };
 

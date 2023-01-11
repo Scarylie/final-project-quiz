@@ -7,7 +7,7 @@ import {
   PageHeading,
   PageSubHeading,
 } from 'components/styles/GlobalStyles';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { API_URL } from 'utils/user';
 
 const PlayQuiz = () => {
