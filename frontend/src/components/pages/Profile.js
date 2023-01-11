@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { API_URL } from 'utils/user';
 
+import MyQuizFeed from 'components/quiz/MyQuizFeed';
+
 const Profile = () => {
   const { accessToken, username, userId } = useSelector((store) => store.user);
 
@@ -37,11 +39,14 @@ const Profile = () => {
   }
 
   return (
-    <section>
-      <p>Username {username}</p>
-      <p>userId {userId}</p>
-      <p>accessToken {accessToken}</p>
-    </section>
+    <>
+      <section>
+        <p>Username {username}</p>
+        <p>userId {userId}</p>
+        <p>accessToken {accessToken}</p>
+      </section>
+      <MyQuizFeed />
+    </>
   );
 };
 

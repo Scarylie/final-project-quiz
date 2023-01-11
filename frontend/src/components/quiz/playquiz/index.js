@@ -7,7 +7,7 @@ import {
   PageHeading,
   PageSubHeading,
 } from 'components/styles/GlobalStyles';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { API_URL } from 'utils/user';
 
 const PlayQuiz = () => {
@@ -107,9 +107,9 @@ const PlayQuiz = () => {
             <PageHeading>Start game</PageHeading>
             <PageSubHeading>{quiz.title}</PageSubHeading>
             <p>{quiz.creator}</p>
-            <button type="button" onClick={() => setPlay(true)}>
+            <StyledButton type="button" onClick={() => setPlay(true)}>
               Play
-            </button>
+            </StyledButton>
           </IntroContent>
         </IntroContainer>
       )}
@@ -147,21 +147,21 @@ const PlayQuiz = () => {
                     })}
                     <div>
                       {index === quiz.questions.length - 1 ? (
-                        <button
+                        <StyledButton
                           type="button"
                           onClick={(event) =>
                             handleFinishQuiz(event, currentQuestion)
                           }>
                           Finish
-                        </button>
+                        </StyledButton>
                       ) : (
-                        <button
+                        <StyledButton
                           type="button"
                           onClick={(event) =>
                             handleSetStep(event, currentQuestion)
                           }>
                           next
-                        </button>
+                        </StyledButton>
                       )}
                     </div>
                   </div>
@@ -202,5 +202,27 @@ const Img = styled.img`
   }
   @media (min-width: 1300px) {
     width: 450px;
+  }
+`;
+
+const StyledButton = styled.button`
+  display: inline-block;
+  background-color: #7b38d8;
+  padding: 20px;
+  width: 200px;
+  color: #ffffff;
+  text-align: center;
+  border: 4px double #cccccc;
+  border-radius: 10px;
+  font-size: 28px;
+  cursor: pointer;
+  margin: 5px;
+  -webkit-transition: all 0.5s; /* add this line, chrome, safari, etc */
+  -moz-transition: all 0.5s; /* add this line, firefox */
+  -o-transition: all 0.5s; /* add this line, opera */
+  transition: all 0.5s; /* add this line */
+
+  &:hover {
+    background-color: green;
   }
 `;

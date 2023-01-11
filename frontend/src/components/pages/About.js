@@ -11,16 +11,17 @@ import { BsGithub } from 'react-icons/bs';
 import styled from 'styled-components/macro';
 
 import Saralie from '../../utils/img/saralie.jpg';
+import Sarah from '../../assets/sarah.webp';
 
 const presentation = [
   {
     name: 'Sarah Kneedler',
-    profileImg: Saralie,
+    profileImg: Sarah,
     descrition:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam consequat elit vel pharetra mattis. Integer eu risus lacus. Curabitur sit amet nulla eget orci fringilla scelerisque. Suspendisse potenti. Quisque ac efficitur dui. Nam convallis eros in malesuada maximus.',
-    linkedIn: 'https://www.linkedin.com/',
-    github: 'https://www.linkedin.com/',
-    portfolio: 'https://www.linkedin.com/',
+      'Hi! I am a curios frontend developer with a background in social work. I am eager to continue learning and I am inspired and amazed by what can be done with code. My hope is to combine my new found love for coding with my previous work experience and bring a different insight in to the creative world of tech. I am a problem solver and used to collaborate and work in teams across different professions and roles.',
+    linkedIn: 'https://www.linkedin.com/in/sarah-kneedler/',
+    github: 'https://github.com/Kneedler',
+    portfolio: 'https://sarahkneedler-portfolio.netlify.app/',
   },
   {
     name: 'Saralie Bognandi',
