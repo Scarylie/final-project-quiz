@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-
+import { PlayButton } from 'components/styles/Buttons';
 import {
   Container,
   PageHeading,
@@ -117,7 +117,7 @@ const PlayQuiz = () => {
   // useEffect(() => {
   //   calculateScore();
   // }, [score]);
-
+  const [buttonText, setButtonText] = useState('Finish');
   return (
     <Container>
       {state === 'intro' && (
@@ -131,13 +131,12 @@ const PlayQuiz = () => {
               <PageSubHeading>Created By: {quiz.creator}</PageSubHeading>
             )}
             <PageSubHeading>{timestamp}</PageSubHeading>
-            <button type="button" onClick={() => setState('isPlaying')}>
+            <PlayButton type="button" onClick={() => setState('isPlaying')}>
               Play
-            </button>
+            </PlayButton>
           </IntroContent>
         </IntroContainer>
       )}
-
       {state === 'isPlaying' && (
         <IntroContainer>
           <IntroContent>
@@ -173,10 +172,12 @@ const PlayQuiz = () => {
                       {index === quiz.questions.length - 1 ? (
                         <button
                           type="button"
-                          onClick={(event) =>
-                            handleFinishQuiz(event, currentQuestion)
-                          }>
-                          Finish
+                          onClick={(event) => {
+                            handleFinishQuiz(event, currentQuestion);
+
+                            setButtonText('Submit');
+                          }}>
+                          {buttonText}
                         </button>
                       ) : (
                         <button
