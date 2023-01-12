@@ -7,6 +7,7 @@ import {
   PageHeading,
   PageSubHeading,
 } from 'components/styles/GlobalStyles';
+import { Input } from 'components/styles/Forms';
 import { Link } from 'react-router-dom';
 import { GrClose } from 'react-icons/gr';
 import styled from 'styled-components/macro';
@@ -112,7 +113,6 @@ const PlayQuiz = () => {
   }, []);
 
   const totalQuestions = quiz?.questions?.length;
-  const timestamp = quiz.createdAt;
 
   const [buttonText, setButtonText] = useState('Finish');
   return (
@@ -128,7 +128,7 @@ const PlayQuiz = () => {
               <PageSubHeading>Created By: {quiz.creator}</PageSubHeading>
             )}
             <PageSubHeading>
-              {timestamp && timestamp.substring(0, 10)}
+              {quiz.createdAt && quiz.createdAt.substring(0, 10)}
             </PageSubHeading>
 
             <PlayButton type="button" onClick={() => setState('isPlaying')}>
@@ -156,7 +156,7 @@ const PlayQuiz = () => {
                     {currentQuestion.answers.map((answer) => {
                       return (
                         <div key={answer._id}>
-                          <input
+                          <Input
                             type="radio"
                             value={answer.answer}
                             onChange={(event) =>
