@@ -4,6 +4,7 @@ export const GhostBtn = styled.button`
   background-color: inherit;
   cursor: pointer;
   border: none;
+  padding: 0;
   .submit-icon {
     width: 35px;
     height: 35px;
