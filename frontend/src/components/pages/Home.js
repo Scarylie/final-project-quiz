@@ -26,7 +26,17 @@ const QuizFeed = () => {
       .finally(() => console.log('All good!'));
   }, []);
 
-  const colors = ['yellow', 'lightblue', 'lightpink'];
+  const colors = [
+    '#BB5FF7',
+    '#FE734C',
+    '#D446FD',
+    '#21CBEC',
+    '#21CBEC',
+    '#FDDF1D',
+    '#05D1F4',
+    '#4E7CC7',
+    '#4E7CC7',
+  ];
   const getBgColor = () => {
     const color = Math.floor(Math.random() * colors.length);
     return colors[color];
@@ -45,9 +55,11 @@ const QuizFeed = () => {
                 style={{
                   background: getBgColor(),
                 }}>
-                {quiz.title}
-                {quiz.creator && <p>Created by: {quiz.creator}</p>}
-                <p>Created at: {quiz.createdAt.substring(0, 10)}</p>
+                <QuizTitle>{quiz.title}</QuizTitle>
+                {quiz.creator && (
+                  <QuizAuthor> Created by: {quiz.creator}</QuizAuthor>
+                )}
+                <QuizDate>{quiz.createdAt.substring(0, 10)}</QuizDate>
               </Card>
             </Link>
           ))}
@@ -85,4 +97,20 @@ const StyledFeed = styled.section`
     background-repeat: no-repeat;
     background-position: center;
   }
+`;
+
+const QuizTitle = styled.h6`
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: black;
+`;
+
+const QuizAuthor = styled.p`
+  font-weight: bold;
+  font-size: 12px;
+  text-transform: uppercase;
+`;
+
+const QuizDate = styled.p`
+  font-size: 12px;
 `;
