@@ -64,7 +64,6 @@ const LogIn = () => {
     }
   };
 
-  //This is not being used...
   if (accessToken) {
     console.log('if accessToken, navigate to profile in Login.js');
     return <Navigate to="/profile" />;
@@ -73,7 +72,6 @@ const LogIn = () => {
   return (
     <SignInContainer>
       <section>
-        {/* Sign in */}
         <div>
           <PageHeading>Welcome Back!</PageHeading>
           <PageSubHeading>Sign in to start quizzing.</PageSubHeading>
