@@ -27,15 +27,21 @@ const QuizFeed = () => {
   }, []);
 
   const colors = [
-    '#BB5FF7',
-    '#FE734C',
-    '#D446FD',
-    '#21CBEC',
-    '#21CBEC',
-    '#FDDF1D',
-    '#05D1F4',
-    '#4E7CC7',
-    '#4E7CC7',
+    '#5697fe',
+    '#2490d0',
+    '#20cced',
+    '#fff2f0',
+    '#ffe437',
+    '#ff4966',
+    '#d85dfb',
+    '#fd4472',
+    '#fd4472',
+    '#da43ff',
+    '#ff7e46',
+    '#7f60ff',
+    '#ffaf20',
+    '#ffcec2',
+    '#ffcec2',
   ];
   const getBgColor = () => {
     const color = Math.floor(Math.random() * colors.length);
@@ -45,7 +51,11 @@ const QuizFeed = () => {
   return (
     <Container>
       <PageHeading>What do you want to play today?</PageHeading>
-      <PageSubHeading>Click on a card to start a game</PageSubHeading>
+      {quizList.length > 0 ? (
+        <PageSubHeading>Click on a card to start a game</PageSubHeading>
+      ) : (
+        <PageSubHeading>No quizzes created yet!</PageSubHeading>
+      )}
       <StyledFeed
         className={quizList.length <= 0 ? 'no-items' : 'display-items'}>
         <CardContainer>
@@ -73,15 +83,6 @@ export default QuizFeed;
 
 const StyledFeed = styled.section`
   &.display-items {
-    /*   margin-bottom: 25px;
-    font-size: 16px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    margin: 10px auto;
-    height: 400px;
-    overflow-y: scroll; */
   }
   &.no-items {
     margin-bottom: 25px;
@@ -95,7 +96,6 @@ const StyledFeed = styled.section`
     width: 100%;
     object-fit: cover;
     background-repeat: no-repeat;
-    background-position: center;
   }
 `;
 

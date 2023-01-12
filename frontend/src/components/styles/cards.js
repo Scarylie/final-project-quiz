@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components/macro';
 
 export const CardContainer = styled.div`
@@ -6,7 +5,7 @@ export const CardContainer = styled.div`
   grid-template-columns: 1fr 1fr;
   grid-auto-rows: 1fr;
   gap: 10px;
-
+  font-family: 'Raleway', sans-serif;
   @media (min-width: 600px) {
     grid-template-columns: 1fr 1fr 1fr;
   }
@@ -24,6 +23,24 @@ export const Card = styled.div`
   border-radius: 10px;
   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.05);
   border-style: solid;
+  max-width: 650px;
+  font-family: 'Raleway', sans-serif;
+
+  :hover & {
+    border-style: solid;
+  }
+`;
+
+export const CreateCard = styled.div`
+  background: white;
+  padding: 20px 10px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.05);
+  border-style: solid;
+  max-width: 650px;
+  margin: 0 auto;
 
   :hover & {
     border-style: solid;
@@ -32,7 +49,7 @@ export const Card = styled.div`
 
 export const QuestionCard = styled.div`
   background: rgba(0, 0, 0, 0.05);
-  padding: 20px 10px;
+  padding: 10px 10px;
   margin-bottom: 5px;
   display: flex;
   flex-direction: column;
