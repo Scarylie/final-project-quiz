@@ -1,5 +1,18 @@
 import styled from 'styled-components/macro';
 
+export const GhostBtn = styled.button`
+  background-color: inherit;
+  cursor: pointer;
+  border: none;
+  .submit-icon {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`;
+
 export const PlayButton = styled.button`
   border-style: none;
   color: #fff;

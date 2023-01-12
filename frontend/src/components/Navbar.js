@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components/macro';
 import { StyledNavbar } from './styles/GlobalStyles';
+import { GhostBtn } from './styles/Buttons';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Logo from '../assets/quizzies-logo.png';
@@ -100,17 +101,4 @@ const Logos = styled.div`
 
 const Img = styled.img`
   width: 30px;
-`;
-
-export const GhostBtn = styled.button`
-  background-color: inherit;
-  cursor: pointer;
-  border: none;
-  .submit-icon {
-    width: 35px;
-    height: 35px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
 `;

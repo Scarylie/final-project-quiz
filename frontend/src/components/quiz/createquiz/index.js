@@ -5,7 +5,7 @@ import quiz from 'reducers/quiz';
 import QuizForm from './QuizForm';
 import QuizFormQuestions from './QuizFormQuestions';
 import { Container } from 'components/styles/GlobalStyles';
-import { Card } from 'components/styles/cards';
+import { Card } from 'components/styles/Cards';
 
 const CreateQuiz = () => {
   /*  const id = useSelector((store) => store.user.userId);

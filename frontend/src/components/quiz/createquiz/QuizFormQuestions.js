@@ -4,7 +4,8 @@ import { API_QUIZ } from 'utils/urls';
 import { SingleAnswer } from './SingleAnswer';
 import { Input } from 'components/styles/Forms';
 import { FormHeading } from 'components/styles/Forms';
-import { QuestionCard } from 'components/styles/cards';
+import { QuestionCard } from 'components/styles/Cards';
+import { GhostBtn } from 'components/styles/Buttons';
 /* import quiz from 'reducers/quiz' */
 
 // att det funkar med POST - databas
@@ -124,11 +125,11 @@ const QuizFormQuestions = (
               <Input type="url" placeholder="https://..." />
 
               {questionList.length > 1 && (
-                <button
+                <GhostBtn
                   className="removeBtn"
                   onClick={() => handleQuestionRemove(questionIndex)}>
                   🆇
-                </button>
+                </GhostBtn>
               )}
               <FormHeading>Answers</FormHeading>
               {singleQuestion.answers.length > 0 &&
@@ -152,13 +153,13 @@ const QuizFormQuestions = (
                       autoComplete="off"
                     />
 
-                    <button
+                    <GhostBtn
                       className="removeBtn"
                       onClick={() =>
                         handleRemoveAnswer(questionIndex, answer.key)
                       }>
                       🆇
-                    </button>
+                    </GhostBtn>
                   </div>
                 ))}
               {
