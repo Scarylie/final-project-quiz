@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch, batch } from 'react-redux';
-import { API_QUIZ } from 'utils/urls';
+import { API_URL } from 'utils/urls';
 import quiz from 'reducers/quiz';
 import QuizForm from './QuizForm';
 import QuizFormQuestions from './QuizFormQuestions';
@@ -26,7 +26,7 @@ const CreateQuiz = () => {
       },
       body: JSON.stringify({ title: newTitle }),
     };
-    fetch(API_QUIZ, options)
+    fetch(API_URL('quiz'), options)
       .then((res) => res.json())
       .then((data) => {
         batch(() => {

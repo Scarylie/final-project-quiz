@@ -3,6 +3,7 @@ import styled from 'styled-components/macro';
 export const CardContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-auto-rows: 1fr;
   gap: 10px;
 
   @media (min-width: 600px) {
@@ -17,7 +18,6 @@ export const CardContainer = styled.div`
 export const Card = styled.div`
   background: white;
   padding: 20px 10px;
-  margin-bottom: 5px;
   display: flex;
   flex-direction: column;
   border-radius: 10px;

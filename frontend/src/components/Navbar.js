@@ -24,7 +24,7 @@ const Navbar = () => {
     location.href = '/';
   };
 
-  let iconStyles = { fontSize: '1.5em' };
+  let iconStyles = { fontSize: '2em' };
 
   return (
     <StyledNavbar>

@@ -101,15 +101,35 @@ const Quiz = mongoose.model("Quiz", quizSchema);
 
 // ************ ENDPOINTS *************** //
 
-// GET all Quiz //
+// GET myQuiz //
 const getQuiz = async (req, res) => {
+  const { creator } = req.query;
+  console.log("getQuiz req", req);
+  const creatorQuery = creator ? creator : /.*/;
   try {
-    const quiz = await Quiz.find().sort({ createdAt: "desc" });
-    res.status(200).json({ success: true, response: quiz });
+    const quizzes = await Quiz.find({ creator: creatorQuery }).sort({
+      createdAt: "desc",
+    });
+    res.status(200).json({ success: true, response: quizzes });
   } catch (error) {
-    res.status(400).json({ success: false, response: error });
+    res.status(400).json({
+      success: false,
+      body: {
+        message: error,
+      },
+    });
   }
 };
+
+// GET all Quiz //
+// const getQuiz = async (req, res) => {
+//   try {
+//     const quiz = await Quiz.find().sort({ createdAt: "desc" });
+//     res.status(200).json({ success: true, response: quiz });
+//   } catch (error) {
+//     res.status(400).json({ success: false, response: error });
+//   }
+// };
 
 // GET Single Quiz //
 const singleQuiz = async (req, res) => {
@@ -166,10 +186,8 @@ const deleteQuiz = async (req, res) => {
 // PATCH //
 const editQuiz = async (req, res) => {
   const { _id } = req.params;
-
   try {
     const quizToUpdate = await Quiz.findByIdAndUpdate({ _id });
-
     quizToUpdate.save();
     if (quizToUpdate) {
       res.status(200).json({

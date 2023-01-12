@@ -39,12 +39,17 @@ const MiniHeroBackground = styled.section`
 
 const HeroContainer = styled.div`
   width: 100vw;
-  color: white;
-  font-size: 2em;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 3.5em;
   text-align: center;
-  padding: 10vh 0 10vh 0;
+  padding: 5vh 0 5vh 0;
+  font-weight: 800;
 
-  @media (min-width: 768px) {
+  @media (min-width: 600px) {
     font-size: 7em;
+  }
+
+  @media (min-width: 1200px) {
+    font-size: 10em;
   }
 `;

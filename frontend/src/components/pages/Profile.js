@@ -3,12 +3,12 @@ import { useDispatch, useSelector, batch } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { API_URL } from 'utils/urls';
 import user from 'reducers/auth';
+import styled from 'styled-components/macro';
 import { Container, PageHeading } from 'components/styles/GlobalStyles';
-
 import MyQuizFeed from 'components/quiz/MyQuizFeed';
 
 const Profile = () => {
-  const { username, userId } = useSelector((store) => store.user);
+  const { username } = useSelector((store) => store.user);
   const accessToken = localStorage.getItem('accessToken');
 
   const dispatch = useDispatch();
@@ -43,7 +43,9 @@ const Profile = () => {
   return (
     <Container>
       <section>
-        <PageHeading>Welcome {username}!</PageHeading>
+        <PageHeading>
+          <UserName>Welcome {username}!</UserName>
+        </PageHeading>
       </section>
       <MyQuizFeed />
     </Container>
@@ -51,3 +53,7 @@ const Profile = () => {
 };
 
 export default Profile;
+
+const UserName = styled.div`
+  text-transform: capitalize;
+`;

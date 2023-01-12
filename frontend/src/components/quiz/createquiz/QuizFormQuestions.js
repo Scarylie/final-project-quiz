@@ -1,7 +1,4 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch, batch } from 'react-redux';
-import { API_QUIZ } from 'utils/urls';
-import { SingleAnswer } from './SingleAnswer';
 import { Input } from 'components/styles/Forms';
 import { FormHeading } from 'components/styles/Forms';
 import { QuestionCard } from 'components/styles/cards';
@@ -11,10 +8,6 @@ import add from 'assets/addsmall.png';
 import remove from 'assets/removesmall.png';
 /* import quiz from 'reducers/quiz' */
 
-// att det funkar med POST - databas
-// buggar i remove answer och när man förösker setcorrect efter att ha lagt till och tagit bort
-// lägga till för img
-// endast ett correct
 const generateKey = (pre) => {
   return `${pre}_${new Date().getTime()}`;
 };

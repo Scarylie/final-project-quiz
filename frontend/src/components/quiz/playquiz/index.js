@@ -7,12 +7,15 @@ import {
   PageHeading,
   PageSubHeading,
 } from 'components/styles/GlobalStyles';
+import { Input } from 'components/styles/Forms';
+import { Link } from 'react-router-dom';
+import { GrClose } from 'react-icons/gr';
 import styled from 'styled-components/macro';
 import { API_URL } from 'utils/urls';
 
 const PlayQuiz = () => {
+  let iconStyles = { fontSize: '2em' };
   const { username } = useSelector((store) => store.user);
-  console.log('Username in PlayQuiz: ', username);
 
   const params = useParams();
   const API_QUIZ = `${API_URL('quiz')}/${params.id}`;
@@ -36,21 +39,18 @@ const PlayQuiz = () => {
         return result.activeAnswer.isCorrect === true;
       });
       const numberOfCorrect = filteredArray.length;
-      // console.log('numberOfCorrect', numberOfCorrect);
-
       const correctOfTotal = (numberOfCorrect / totalQuestions) * 100;
-      // console.log('correctOfTotal', correctOfTotal);
 
       return correctOfTotal;
     }
   };
 
   const handleSetActiveAnswer = (event, answer) => {
-    // console.log('handleSetActiveAnswer', event.target.value);
     setActiveAnswer(answer);
   };
 
   const handleSetQuestion = (event, currentQuestion) => {
+    alert(activeAnswer.isCorrect ? 'Correct answer' : 'Wrong answer');
     setResults([
       ...results,
       { question: currentQuestion?.question, activeAnswer },
@@ -59,7 +59,7 @@ const PlayQuiz = () => {
   };
 
   const handleFinishQuiz = (event, currentQuestion) => {
-    console.log('handleFinishQuiz()');
+    alert(activeAnswer.isCorrect ? 'Correct answer' : 'Wrong answer');
     setResults([
       ...results,
       { question: currentQuestion?.question, activeAnswer },
@@ -67,13 +67,15 @@ const PlayQuiz = () => {
     const correctOfTotal = calculateScore();
     console.log('correctOfTotal, ', correctOfTotal);
     setScore(correctOfTotal);
-    console.log('player:', username, 'quizId:', params.id, 'score:', score);
-    if (
-      results.length === quiz.questions.length
-      // && username &&
-      // params.id &&
-      // correctOfTotal
-    ) {
+    console.log(
+      'player:',
+      username,
+      'quizId:',
+      params.id,
+      'score:',
+      correctOfTotal
+    );
+    if (results.length === quiz.questions.length) {
       console.log('results', results);
       console.log('we have correct number of results');
 
@@ -112,25 +114,24 @@ const PlayQuiz = () => {
   }, []);
 
   const totalQuestions = quiz?.questions?.length;
-  const timestamp = quiz.createdAt;
 
-  // useEffect(() => {
-  //   calculateScore();
-  // }, [score]);
   const [buttonText, setButtonText] = useState('Finish');
   return (
     <Container>
       {state === 'intro' && (
         <IntroContainer>
           <IntroContent>
-            <PageHeading>{quiz.title}</PageHeading>
+            <PageHeading>{quiz?.title}</PageHeading>
             <PageSubHeading>
               This quiz has {totalQuestions} questions
             </PageSubHeading>
             {quiz.creator && (
               <PageSubHeading>Created By: {quiz.creator}</PageSubHeading>
             )}
-            <PageSubHeading>{timestamp}</PageSubHeading>
+            <PageSubHeading>
+              {quiz.createdAt && quiz.createdAt.substring(0, 10)}
+            </PageSubHeading>
+
             <PlayButton type="button" onClick={() => setState('isPlaying')}>
               Play
             </PlayButton>
@@ -156,7 +157,7 @@ const PlayQuiz = () => {
                     {currentQuestion.answers.map((answer) => {
                       return (
                         <div key={answer._id}>
-                          <input
+                          <Input
                             type="radio"
                             value={answer.answer}
                             onChange={(event) =>
@@ -204,6 +205,12 @@ const PlayQuiz = () => {
           </IntroContent>
         </IntroContainer>
       )}
+
+      <ExitGame>
+        <Link to={`/profile`}>
+          <GrClose style={iconStyles} />
+        </Link>
+      </ExitGame>
     </Container>
   );
 };
@@ -211,21 +218,32 @@ const PlayQuiz = () => {
 export default PlayQuiz;
 
 const IntroContainer = styled.div`
-  /*   width: 100%;
+  width: 100%;
   height: 100%;
-  z-index: 10;
+  z-index: 1;
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: lightgrey; */
+  background-color: lightgrey;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
+const IntroContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
-const IntroContent = styled.div``;
+const ExitGame = styled.div`
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
+`;
 
 const Img = styled.img`
   width: 300px;
