@@ -117,14 +117,16 @@ const PlayQuiz = () => {
       {state === 'intro' && (
         <IntroContainer>
           <IntroContent>
-            <PageHeading>{quiz.title}</PageHeading>
+            <PageHeading>{quiz?.title}</PageHeading>
             <PageSubHeading>
               This quiz has {totalQuestions} questions
             </PageSubHeading>
             {quiz.creator && (
               <PageSubHeading>Created By: {quiz.creator}</PageSubHeading>
             )}
-            <PageSubHeading>{timestamp}</PageSubHeading>
+            <PageSubHeading>
+              {timestamp && timestamp.substring(0, 10)}
+            </PageSubHeading>
             <PlayButton type="button" onClick={() => setState('isPlaying')}>
               Play
             </PlayButton>
