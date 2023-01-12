@@ -1,8 +1,5 @@
-import React, { useState } from 'react';
-import { useSelector, useDispatch, batch } from 'react-redux';
-import { API_QUIZ } from 'utils/urls';
-import quiz from 'reducers/quiz';
-import { Form, FormHeading } from 'components/styles/Forms';
+import React from 'react';
+import { FormHeading } from 'components/styles/Forms';
 
 const QuizForm = ({ newTitle, onNewTitleChange, onFormSubmit }) => {
   return (

@@ -4,11 +4,10 @@ import { Navigate } from 'react-router-dom';
 import { API_URL } from 'utils/urls';
 import user from 'reducers/auth';
 import { Container, PageHeading } from 'components/styles/GlobalStyles';
-
 import MyQuizFeed from 'components/quiz/MyQuizFeed';
 
 const Profile = () => {
-  const { username, userId } = useSelector((store) => store.user);
+  const { username } = useSelector((store) => store.user);
   const accessToken = localStorage.getItem('accessToken');
 
   const dispatch = useDispatch();

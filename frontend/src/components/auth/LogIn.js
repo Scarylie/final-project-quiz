@@ -15,14 +15,12 @@ const LogIn = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
-  const [mode, setMode] = useState('login');
   const [inputError, setInputError] = useState(false);
   const [inputErrorMessage, setInputErrorMessage] = useState('');
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const accessToken = localStorage.getItem('accessToken');
-  // const accessToken = useSelector((store) => store.user.accessToken);
 
   const onFormSubmit = (event) => {
     console.log('onFormSubmit in Login.js');
@@ -40,7 +38,7 @@ const LogIn = () => {
       }),
     };
     if (username && password) {
-      fetch(API_URL(mode), options)
+      fetch(API_URL('login'), options)
         .then((response) => response.json())
         .then((response) => {
           localStorage.setItem('accessToken', response.response.accessToken);
@@ -52,12 +50,9 @@ const LogIn = () => {
               console.log(data);
               dispatch(user.actions.setUsername(data.response.username));
               dispatch(user.actions.setUserId(data.response.id));
-              // dispatch(user.actions.setAccessToken());
-              //email is not sent back from backend
               dispatch(user.actions.setEmail(data.response.email));
               dispatch(user.actions.setError(null));
               navigate('/profile');
-              // window.location.reload();
             });
           } else {
             setInputErrorMessage(data.response);
