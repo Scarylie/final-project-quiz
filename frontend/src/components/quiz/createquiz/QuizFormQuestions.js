@@ -6,7 +6,10 @@ import { GhostBtn } from 'components/styles/Buttons';
 import styled from 'styled-components/macro';
 import add from 'assets/addsmall.png';
 import remove from 'assets/removesmall.png';
+
 import { RiDeleteBin6Line } from 'react-icons/ri';
+import { GrAddCircle } from 'react-icons/gr';
+
 /* import quiz from 'reducers/quiz' */
 
 const generateKey = (pre) => {
@@ -214,11 +217,12 @@ const QuizFormQuestions = (
                     className="addAnswerBtn"
                     type="button"
                     onClick={() => handleAnswerAdd(questionIndex)}>
-                    <img
+                    <GrAddCircle style={iconStyles} />
+                    {/*                     <img
                       className="addA-icon"
                       aria-label="add-button"
                       src={add}
-                    />
+                    /> */}
                   </GhostBtn>
                 }
               </AddABtnDiv>
