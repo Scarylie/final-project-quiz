@@ -26,6 +26,12 @@ const QuizFeed = () => {
       .finally(() => console.log('All good!'));
   }, []);
 
+  const colors = ['yellow', 'lightblue', 'lightpink'];
+  const getBgColor = () => {
+    const color = Math.floor(Math.random() * colors.length);
+    return colors[color];
+  };
+
   return (
     <Container>
       <PageHeading>What do you want to play today?</PageHeading>
@@ -35,7 +41,10 @@ const QuizFeed = () => {
         <CardContainer>
           {quizList.map((quiz) => (
             <Link to={`/play/${quiz._id}`} key={quiz._id}>
-              <Card>
+              <Card
+                style={{
+                  background: getBgColor(),
+                }}>
                 {quiz.title}
                 {quiz.creator && <p>Created by: {quiz.creator}</p>}
                 <p>Created at: {quiz.createdAt.substring(0, 10)}</p>
