@@ -50,6 +50,7 @@ const PlayQuiz = () => {
   };
 
   const handleSetQuestion = (event, currentQuestion) => {
+    alert(activeAnswer.isCorrect ? 'Correct answer' : 'Wrong answer');
     setResults([
       ...results,
       { question: currentQuestion?.question, activeAnswer },
@@ -58,7 +59,7 @@ const PlayQuiz = () => {
   };
 
   const handleFinishQuiz = (event, currentQuestion) => {
-    console.log('handleFinishQuiz()');
+    alert(activeAnswer.isCorrect ? 'Correct answer' : 'Wrong answer');
     setResults([
       ...results,
       { question: currentQuestion?.question, activeAnswer },
