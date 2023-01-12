@@ -111,10 +111,14 @@ const authenticateUser = async (req, res, next) => {
   console.log("authenticate user: ", accessToken);
   try {
     const user = await User.findOne({ accessToken: accessToken });
-    console.log("user: ", user);
+    console.log("user!!!!!!!! ", user);
     if (user) {
       res.status(200).json({
-        response: user,
+        response: {
+          username: user.username,
+          id: user._id,
+          accessToken: user.accessToken,
+        },
         success: true,
       });
       next();

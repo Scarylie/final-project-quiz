@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch, batch } from 'react-redux';
-import { API_QUIZ } from 'utils/user';
+import { API_QUIZ } from 'utils/urls';
 import { SingleAnswer } from './SingleAnswer';
 import { Input } from 'components/styles/Forms';
 import { FormHeading } from 'components/styles/Forms';
@@ -49,7 +49,6 @@ const QuizFormQuestions = (
     ]);
   };
 
-  // This removes the last in the list. Not the one you clicked to remove.
   const handleQuestionRemove = (index) => {
     const list = [...questionList];
     list.splice(index, 1);
@@ -117,9 +116,13 @@ const QuizFormQuestions = (
                 type="text"
                 value={singleQuestion.questionTitle}
                 onChange={(e) => handleQuestionChange(e, questionIndex)}
-                placeholder="question title"
+                placeholder="Question"
                 autoComplete="off"
               />
+
+              <FormHeading>Image url</FormHeading>
+              <Input type="url" placeholder="https://..." />
+
               {questionList.length > 1 && (
                 <button
                   className="removeBtn"
@@ -145,7 +148,7 @@ const QuizFormQuestions = (
                       onChange={(e) =>
                         handleAnswerTextChange(e, questionIndex, answerIndex)
                       }
-                      placeholder="answer"
+                      placeholder="Answer"
                       autoComplete="off"
                     />
 
@@ -173,7 +176,7 @@ const QuizFormQuestions = (
           type="button"
           className="addQuestionBtn"
           onClick={handleQuestionAdd}>
-          Add Question
+          <span>Add Question</span>
         </button>
       </div>
     </div>

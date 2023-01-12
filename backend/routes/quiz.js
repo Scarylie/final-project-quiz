@@ -1,4 +1,3 @@
-import express from "express";
 import mongoose from "mongoose";
 
 const { UserSchema } = require("./user");
@@ -65,9 +64,8 @@ const quizSchema = new mongoose.Schema({
     maxlength: 40,
   },
   creator: {
-    // connect to username denna syns inte i consolen
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    type: String,
+    maxlength: 15,
   },
   createdAt: {
     type: Date,
@@ -95,78 +93,13 @@ const quizSchema = new mongoose.Schema({
     },
   ],
   level: {
-    type: String, // syns ej i console
+    type: String,
     enum: ["easy", "medium", "hard"],
-  }, // tror vi vill ha nån automatisk question index
+  },
 });
 const Quiz = mongoose.model("Quiz", quizSchema);
-/* module.exports = mongoose.model("Quiz", quizSchema); */
-
-/* Template for POSTMAN */
-/* const ForPostmanTesting = 
-
-{
-  "title": "Template quiz",
-  "creator": "User name",
-  "questions": 
-    [{
-      "question": "Question one?",
-      "imageUrl":"http://image.com",
-      "answers":  [{
-        "answer": "answer one",
-        "isCorrect": true
-       }
-      ,
-        {
-        "answer": "answer two",
-        "isCorrect": false
-       }
-      ,
-        {
-        "answer": "answer three",
-        "isCorrect": false
-       }
-      ,
-       {
-        "answer": "answer four",
-        "isCorrect": false
-       }
-      ]
-    },
-    {
-      "question": "Question 2?",
-      "imageUrl":"http://image.com",
-      "answers":  [{
-        "answer": "answer one",
-        "isCorrect": true
-       }
-      ,
-        {
-        "answer": "answer two",
-        "isCorrect": false
-       }
-      ]
-    }
-  ],
-  "interaction":[{
-      "name":"username 1",
-      "comment":"comment"
-  },{
-      "name":"username 2",
-      "comment":"comment"
-  }
-  ],
-  "category": ["category" , "second tag"],
-  "level": "easy"
-}
-
-*/
 
 // ************ ENDPOINTS *************** //
-
-// allquizes
-// create
-// personalpage (login) visar ens egna quizes antingen på en gång eller om det är via att man trycker på en knapp
 
 // GET all Quiz //
 const getQuiz = async (req, res) => {
@@ -195,12 +128,12 @@ const singleQuiz = async (req, res) => {
 
 // POST //
 const createQuiz = async (req, res) => {
-  /*   const { _id } = req.params; */
-  const { title, questions, category, level, interaction } = req.body;
-
+  const { title, creator, questions, category, level, interaction } = req.body;
+  console.log("req.body", req.body);
   try {
     const newQuiz = await new Quiz({
       title,
+      creator,
       questions,
       category,
       level,
@@ -233,21 +166,10 @@ const deleteQuiz = async (req, res) => {
 // PATCH //
 const editQuiz = async (req, res) => {
   const { _id } = req.params;
-  const {} = req.body;
-  // optional
-  const { valuesToUpdate } = req.body;
 
   try {
-    const quizToUpdate = await Quiz.findByIdAndUpdate(
-      { _id }
-      /* {$inc: {hearts: 1}} */
-    );
-    // optional approach
-    // const arrayOfPropertyNames = Object.keys(valuesToUpdate);
-    // arrayOfPropertyNames.map((singlePropertyName) => {
-    //   await Quiz.updateOne({_id: _id},{ $set: { singlePropertyName: valuesToUpdate[singlePropertyName] }})
-    //   quizToUpdate[singlePropertyName] = valuesToUpdate[singlePropertyName];
-    // });
+    const quizToUpdate = await Quiz.findByIdAndUpdate({ _id });
+
     quizToUpdate.save();
     if (quizToUpdate) {
       res.status(200).json({

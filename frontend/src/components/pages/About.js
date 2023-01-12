@@ -10,17 +10,19 @@ import { BsGithub } from 'react-icons/bs';
 
 import styled from 'styled-components/macro';
 
-import Saralie from '../../utils/img/saralie.jpg';
+import Saralie from '../../assets/saralie.jpg';
+import Sarah from '../../assets/sarah.jpg';
+// import Younas from '../../assets/younas';
 
 const presentation = [
   {
     name: 'Sarah Kneedler',
-    profileImg: Saralie,
+    profileImg: Sarah,
     descrition:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam consequat elit vel pharetra mattis. Integer eu risus lacus. Curabitur sit amet nulla eget orci fringilla scelerisque. Suspendisse potenti. Quisque ac efficitur dui. Nam convallis eros in malesuada maximus.',
-    linkedIn: 'https://www.linkedin.com/',
-    github: 'https://www.linkedin.com/',
-    portfolio: 'https://www.linkedin.com/',
+      'Hi! I am a curios frontend developer with a background in social work. I am eager to continue learning and I am inspired and amazed by what can be done with code. My hope is to combine my new found love for coding with my previous work experience and bring a different insight in to the creative world of tech. I am a problem solver and used to collaborate and work in teams across different professions and roles.',
+    linkedIn: 'https://www.linkedin.com/in/sarah-kneedler/',
+    github: 'https://github.com/Kneedler',
+    portfolio: 'https://sarahkneedler-portfolio.netlify.app/',
   },
   {
     name: 'Saralie Bognandi',
@@ -33,7 +35,7 @@ const presentation = [
   },
   {
     name: 'Younas Tesfamariam',
-    profileImg: Saralie,
+    profileImg: '',
     descrition:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam consequat elit vel pharetra mattis. Integer eu risus lacus. Curabitur sit amet nulla eget orci fringilla scelerisque. Suspendisse potenti. Quisque ac efficitur dui. Nam convallis eros in malesuada maximus.',
     linkedIn: 'https://www.linkedin.com/',
@@ -52,18 +54,18 @@ const About = () => {
         <PageSubHeading>
           This page is made as a final project at Technigo web developer
           bootcamp 2022
-          <div>
-            <p>👇🏼Have a look at our code here👇🏼</p>
-            <a
-              href="https://github.com/Scarylie/final-project-quiz"
-              role="button"
-              aria-pressed="false"
-              aria-label="linkedin"
-              target="_blank"
-              rel="noreferrer">
-              <BsGithub style={iconStyles} />
-            </a>
-          </div>
+        </PageSubHeading>
+        <PageSubHeading>
+          👇🏼Have a look at our code here👇🏼
+          <a
+            href="https://github.com/Scarylie/final-project-quiz"
+            role="button"
+            aria-pressed="false"
+            aria-label="linkedin"
+            target="_blank"
+            rel="noreferrer">
+            <BsGithub style={iconStyles} />
+          </a>
         </PageSubHeading>
       </Card>
       <CardContainer>

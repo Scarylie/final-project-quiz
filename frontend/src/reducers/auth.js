@@ -1,17 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-// initialize accessToken from local storage
-const accessToken = localStorage.getItem('accessToken')
-  ? localStorage.getItem('accessToken')
-  : null;
-
 const user = createSlice({
   name: 'user',
   initialState: {
     userId: null,
     username: null,
     email: null,
-    accessToken,
     error: null,
   },
 
@@ -25,9 +19,6 @@ const user = createSlice({
     setEmail: (store, action) => {
       store.email = action.payload;
     },
-    setAccessToken: (store, action) => {
-      store.accessToken = action.payload;
-    },
     setError: (store, action) => {
       store.accessToken = action.payload;
     },
@@ -36,8 +27,7 @@ const user = createSlice({
       (store.userId = null),
         (store.username = null),
         (store.email = null),
-        (store.accessToken = null);
-      store.error = null;
+        (store.error = null);
     },
   },
 });

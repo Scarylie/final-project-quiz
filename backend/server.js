@@ -1,8 +1,6 @@
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
-// import crypto from "crypto";
-// import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 
 const { registerUser, logInUser, authenticateUser } = require("./routes/user");
@@ -17,8 +15,12 @@ const { addScore, getScore } = require("./routes/score");
 
 dotenv.config();
 
-const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/final-project";
+mongoose.set("strictQuery", false);
+const mongoUrl =
+  process.env.MONGO_URL ||
+  `mongodb+srv://MongoSaralie:${process.env.STRING_PW}@projectmongoapi.weegxnh.mongodb.net/finalprojectquiz?retryWrites=true&w=majority`;
 
+console.log("mongoUrl", mongoUrl);
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.Promise = Promise;
 
@@ -41,7 +43,7 @@ app.use((req, res, next) => {
 
 // Start defining your routes here
 app.get("/", (req, res) => {
-  res.send("Hello Technigo!");
+  res.send("Create quizzes");
 });
 
 // * Registration * //

@@ -1,34 +1,38 @@
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-
+import { useDispatch, useSelector, batch } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import { API_URL } from 'utils/user';
+import { API_URL } from 'utils/urls';
+import user from 'reducers/auth';
+import { Container, PageHeading } from 'components/styles/GlobalStyles';
+
+import MyQuizFeed from 'components/quiz/MyQuizFeed';
 
 const Profile = () => {
-  const { accessToken, username, userId } = useSelector((store) => store.user);
+  const { username, userId } = useSelector((store) => store.user);
+  const accessToken = localStorage.getItem('accessToken');
 
-  console.log('<Profile>');
-  console.log('accessToken: ', accessToken);
-  console.log('username: ', username);
-  console.log('setId: ', userId);
+  const dispatch = useDispatch();
 
-  // automatically authenticate user if token is found
   useEffect(() => {
     if (accessToken) {
-      // REQUEST USER DATA
-      console.log('Request user data accessToken', accessToken);
       const options = {
         method: 'GET',
         headers: {
-          Authorization: accessToken,
+          // prettier-ignore
+          'Authorization': accessToken,
           'Content-Type': 'application/json',
         },
       };
-      fetch(API_URL, options)
+      fetch(API_URL('user'), options)
         .then((response) => response.json())
-        .then((data) => {
-          console.log('data', data);
-        });
+        .then((data) =>
+          batch(() => {
+            dispatch(user.actions.setUsername(data.response.username));
+            dispatch(user.actions.setUserId(data.response.id));
+            dispatch(user.actions.setEmail(data.response.email));
+            dispatch(user.actions.setError(null));
+          })
+        );
     }
   }, [accessToken]);
 
@@ -37,11 +41,12 @@ const Profile = () => {
   }
 
   return (
-    <section>
-      <p>Username {username}</p>
-      <p>userId {userId}</p>
-      <p>accessToken {accessToken}</p>
-    </section>
+    <Container>
+      <section>
+        <PageHeading>Welcome {username}!</PageHeading>
+      </section>
+      <MyQuizFeed />
+    </Container>
   );
 };
 

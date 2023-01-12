@@ -7,8 +7,8 @@ import {
   PageHeading,
   PageSubHeading,
 } from 'components/styles/GlobalStyles';
-import styled from 'styled-components';
-import { API_URL } from 'utils/user';
+import styled from 'styled-components/macro';
+import { API_URL } from 'utils/urls';
 
 const PlayQuiz = () => {
   const { username } = useSelector((store) => store.user);
@@ -111,6 +111,9 @@ const PlayQuiz = () => {
       .finally(() => console.log('Quiz ready to play'));
   }, []);
 
+  const totalQuestions = quiz?.questions?.length;
+  const timestamp = quiz.createdAt;
+
   // useEffect(() => {
   //   calculateScore();
   // }, [score]);
@@ -120,16 +123,20 @@ const PlayQuiz = () => {
       {state === 'intro' && (
         <IntroContainer>
           <IntroContent>
-            <PageHeading>Start game</PageHeading>
-            <PageSubHeading>{quiz.title}</PageSubHeading>
-            <p>Created by: {quiz.creator}</p>
+            <PageHeading>{quiz.title}</PageHeading>
+            <PageSubHeading>
+              This quiz has {totalQuestions} questions
+            </PageSubHeading>
+            {quiz.creator && (
+              <PageSubHeading>Created By: {quiz.creator}</PageSubHeading>
+            )}
+            <PageSubHeading>{timestamp}</PageSubHeading>
             <PlayButton type="button" onClick={() => setState('isPlaying')}>
               Play
             </PlayButton>
           </IntroContent>
         </IntroContainer>
       )}
-
       {state === 'isPlaying' && (
         <IntroContainer>
           <IntroContent>
