@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Input } from 'components/styles/Forms';
 import { FormHeading } from 'components/styles/Forms';
-import { QuestionCard } from 'components/styles/Cards';
+import { QuestionCard } from 'components/styles/cards';
 import { GhostBtn } from 'components/styles/Buttons';
 
 const generateKey = (pre) => {

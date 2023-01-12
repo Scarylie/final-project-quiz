@@ -8,7 +8,7 @@ import {
   PageHeading,
   PageSubHeading,
 } from 'components/styles/GlobalStyles';
-import { CardContainer, Card } from 'components/styles/Cards';
+import { CardContainer, Card } from 'components/styles/cards';
 
 const QuizFeed = () => {
   const [quizList, setQuizList] = useState([]);
