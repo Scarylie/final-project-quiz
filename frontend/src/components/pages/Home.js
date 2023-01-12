@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { API_QUIZ } from 'utils/urls';
+import { API_URL } from 'utils/urls';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import emptystate from '../../assets/emptystate.png';
@@ -17,11 +17,9 @@ const QuizFeed = () => {
     const options = {
       method: 'GET',
     };
-    fetch(API_QUIZ, options)
-      // add loading here
+    fetch(API_URL('quiz'), options)
       .then((res) => res.json())
       .then((json) => {
-        console.log(API_QUIZ);
         setQuizList(json.response);
       })
       .catch((error) => console.error(error))
@@ -40,7 +38,7 @@ const QuizFeed = () => {
               <Card>
                 {quiz.title}
                 {quiz.creator && <p>Created by: {quiz.creator}</p>}
-                <p>Created at: {quiz.createdAt}</p>
+                <p>Created at: {quiz.createdAt.substring(0, 10)}</p>
               </Card>
             </Link>
           ))}
