@@ -7,10 +7,13 @@ import {
   PageHeading,
   PageSubHeading,
 } from 'components/styles/GlobalStyles';
+import { Link } from 'react-router-dom';
+import { GrClose } from 'react-icons/gr';
 import styled from 'styled-components/macro';
 import { API_URL } from 'utils/urls';
 
 const PlayQuiz = () => {
+  let iconStyles = { fontSize: '2em' };
   const { username } = useSelector((store) => store.user);
 
   const params = useParams();
@@ -127,6 +130,7 @@ const PlayQuiz = () => {
             <PageSubHeading>
               {timestamp && timestamp.substring(0, 10)}
             </PageSubHeading>
+
             <PlayButton type="button" onClick={() => setState('isPlaying')}>
               Play
             </PlayButton>
@@ -200,6 +204,12 @@ const PlayQuiz = () => {
           </IntroContent>
         </IntroContainer>
       )}
+
+      <ExitGame>
+        <Link to={`/profile`}>
+          <GrClose style={iconStyles} />
+        </Link>
+      </ExitGame>
     </Container>
   );
 };
@@ -207,21 +217,32 @@ const PlayQuiz = () => {
 export default PlayQuiz;
 
 const IntroContainer = styled.div`
-  /*   width: 100%;
+  width: 100%;
   height: 100%;
-  z-index: 10;
+  z-index: 1;
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: lightgrey; */
+  background-color: lightgrey;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
+const IntroContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
-const IntroContent = styled.div``;
+const ExitGame = styled.div`
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
+`;
 
 const Img = styled.img`
   width: 300px;
