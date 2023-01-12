@@ -32,6 +32,7 @@ const FormDiv = styled.div`
   background: white;
   border-radius: 10px;
   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.05);
+  font-family: 'Raleway', sans-serif;
 `;
 
 const ClonedFormInput = styled(Input)`

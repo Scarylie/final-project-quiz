@@ -51,7 +51,11 @@ const QuizFeed = () => {
   return (
     <Container>
       <PageHeading>What do you want to play today?</PageHeading>
-      <PageSubHeading>Click on a card to start a game</PageSubHeading>
+      {quizList.length > 0 ? (
+        <PageSubHeading>Click on a card to start a game</PageSubHeading>
+      ) : (
+        <PageSubHeading>No quizzes created yet!</PageSubHeading>
+      )}
       <StyledFeed
         className={quizList.length <= 0 ? 'no-items' : 'display-items'}>
         <CardContainer>
@@ -79,15 +83,6 @@ export default QuizFeed;
 
 const StyledFeed = styled.section`
   &.display-items {
-    /*   margin-bottom: 25px;
-    font-size: 16px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    margin: 10px auto;
-    height: 400px;
-    overflow-y: scroll; */
   }
   &.no-items {
     margin-bottom: 25px;
@@ -101,7 +96,6 @@ const StyledFeed = styled.section`
     width: 100%;
     object-fit: cover;
     background-repeat: no-repeat;
-    background-position: center;
   }
 `;
 

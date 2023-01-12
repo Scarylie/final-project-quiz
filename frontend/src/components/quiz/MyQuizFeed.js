@@ -5,11 +5,7 @@ import { API_URL } from 'utils/urls';
 import styled from 'styled-components/macro';
 import { Card, CardContainer } from 'components/styles/cards';
 import { Link } from 'react-router-dom';
-import {
-  PageHeading,
-  PageSubHeading,
-  Container,
-} from 'components/styles/GlobalStyles';
+import { PageSubHeading, Container } from 'components/styles/GlobalStyles';
 import emptystate from '../../assets/emptystate.png';
 
 const MyQuizFeed = () => {
@@ -31,15 +27,41 @@ const MyQuizFeed = () => {
       .finally(() => console.log('All good!'));
   }, [username]);
 
+  const colors = [
+    '#5697fe',
+    '#2490d0',
+    '#20cced',
+    '#fff2f0',
+    '#ffe437',
+    '#ff4966',
+    '#d85dfb',
+    '#fd4472',
+    '#fd4472',
+    '#da43ff',
+    '#ff7e46',
+    '#7f60ff',
+    '#ffaf20',
+    '#ffcec2',
+    '#ffcec2',
+  ];
+  const getBgColor = () => {
+    const color = Math.floor(Math.random() * colors.length);
+    return colors[color];
+  };
+
   return (
     <Container>
       <StyledFeed
         className={myQuizList?.length <= 0 ? 'no-items' : 'display-items'}>
-        <PageHeading>Your created quizes</PageHeading>
+        <PageSubHeading>👇🏼Your created quizes👇🏼</PageSubHeading>
         <CardContainer>
           {myQuizList &&
             myQuizList.map((quiz) => (
-              <Card key={quiz._id}>
+              <Card
+                key={quiz._id}
+                style={{
+                  background: getBgColor(),
+                }}>
                 <Link to={`/play/${quiz._id}`}>{quiz.title}</Link>
               </Card>
             ))}
@@ -54,17 +76,11 @@ export default MyQuizFeed;
 const StyledFeed = styled.section`
   &.display-items:before {
     text-align: center;
-    /* margin-bottom: 25px;
-    font-size: 16px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    margin: 10px auto;
-    height: 400px;
-    overflow-y: scroll; */
+    font-family: 'Raleway', sans-serif;
   }
   &.no-items:after {
-    content: 'You have not created any Quiz yet';
+    content: '😭 You have not created any quizzes yet 😭';
+    font-family: 'Raleway', sans-serif;
     margin-bottom: 25px;
     font-size: 16px;
     text-align: center;
@@ -76,6 +92,5 @@ const StyledFeed = styled.section`
     width: 100%;
     object-fit: cover;
     background-repeat: no-repeat;
-    background-position: center;
   }
 `;

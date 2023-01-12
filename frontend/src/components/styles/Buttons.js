@@ -6,6 +6,7 @@ export const GhostBtn = styled.button`
   border: none;
   padding: 0;
   border-radius: 10%;
+
   .addA-icon,
   .removeA-icon {
     width: 35px;

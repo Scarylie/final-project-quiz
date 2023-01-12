@@ -1,20 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { PlaySaveButton } from 'components/styles/Buttons';
+import { Link } from 'react-router-dom';
+
+// Url
+import { API_URL } from 'utils/urls';
+// Styles
+import styled from 'styled-components/macro';
 import {
   Container,
   PageHeading,
   PageSubHeading,
 } from 'components/styles/GlobalStyles';
-import { Input } from 'components/styles/Forms';
-import { Link } from 'react-router-dom';
+import { PlaySaveButton } from 'components/styles/Buttons';
+import { GhostBtn } from 'components/styles/Buttons';
+
+// Icons
+import { FiArrowRightCircle } from 'react-icons/fi';
 import { GrClose } from 'react-icons/gr';
-import styled from 'styled-components/macro';
-import { API_URL } from 'utils/urls';
 
 const PlayQuiz = () => {
-  let iconStyles = { fontSize: '2em' };
+  let iconStyles = { fontSize: '3em' };
   const { username } = useSelector((store) => store.user);
 
   const params = useParams();
@@ -28,6 +34,7 @@ const PlayQuiz = () => {
   const [activeAnswer, setActiveAnswer] = useState(null);
   const [results, setResults] = useState([]);
   const [state, setState] = useState('intro');
+  const [highScore, setHighScore] = useState(0);
   const [score, setScore] = useState();
 
   const calculateScore = () => {
@@ -107,7 +114,9 @@ const PlayQuiz = () => {
     fetch(API_QUIZ, options)
       .then((res) => res.json())
       .then((json) => {
-        setQuiz(json.response);
+        console.log('json', json);
+        setQuiz(json.response.quiz);
+        setHighScore(json.response.highScore);
       })
       .catch((error) => console.error(error))
       .finally(() => console.log('Quiz ready to play'));
@@ -116,6 +125,29 @@ const PlayQuiz = () => {
   const totalQuestions = quiz?.questions?.length;
 
   const [buttonText, setButtonText] = useState('Finish');
+
+  const colors = [
+    '#5697fe',
+    '#2490d0',
+    '#20cced',
+    '#fff2f0',
+    '#ffe437',
+    '#ff4966',
+    '#d85dfb',
+    '#fd4472',
+    '#fd4472',
+    '#da43ff',
+    '#ff7e46',
+    '#7f60ff',
+    '#ffaf20',
+    '#ffcec2',
+    '#ffcec2',
+  ];
+  const getBgColor = () => {
+    const color = Math.floor(Math.random() * colors.length);
+    return colors[color];
+  };
+
   return (
     <Container>
       {state === 'intro' && (
@@ -135,6 +167,24 @@ const PlayQuiz = () => {
             <PlaySaveButton type="button" onClick={() => setState('isPlaying')}>
               Play
             </PlaySaveButton>
+            <div>
+              {highScore.length > 0 && (
+                <ScoreWrapper>
+                  <PageHeading>High score:</PageHeading>
+                  {highScore.map((singleScore, index) => {
+                    return (
+                      <div key={index}>
+                        <ScoreBoard>
+                          <PageSubHeading>
+                            {singleScore?.player}:{singleScore.score} % correct
+                          </PageSubHeading>
+                        </ScoreBoard>
+                      </div>
+                    );
+                  })}
+                </ScoreWrapper>
+              )}
+            </div>
           </IntroContent>
         </IntroContainer>
       )}
@@ -154,42 +204,52 @@ const PlayQuiz = () => {
                         />
                       )}
                     </div>
-                    {currentQuestion.answers.map((answer) => {
-                      return (
-                        <div key={answer._id}>
-                          <Input
-                            type="radio"
-                            value={answer.answer}
-                            onChange={(event) =>
-                              handleSetActiveAnswer(event, answer)
-                            }
-                            checked={answer._id === activeAnswer?._id}
-                          />
-                          {answer.answer}
-                        </div>
-                      );
-                    })}
-                    <div>
-                      {index === quiz.questions.length - 1 ? (
-                        <button
-                          type="button"
-                          onClick={(event) => {
-                            handleFinishQuiz(event, currentQuestion);
+                    <ResponseContainer>
+                      <AnswersInputContainer>
+                        {currentQuestion.answers.map((answer) => {
+                          return (
+                            <SingleAnswerContainer
+                              key={answer._id}
+                              style={{
+                                background: getBgColor(),
+                              }}>
+                              <label>
+                                <StyledRadio
+                                  type="radio"
+                                  value={answer.answer}
+                                  onChange={(event) =>
+                                    handleSetActiveAnswer(event, answer)
+                                  }
+                                  checked={answer._id === activeAnswer?._id}
+                                />
+                              </label>
+                              {answer.answer}
+                            </SingleAnswerContainer>
+                          );
+                        })}
+                      </AnswersInputContainer>
+                      <div>
+                        {index === quiz.questions.length - 1 ? (
+                          <PlaySaveButton
+                            type="button"
+                            onClick={(event) => {
+                              handleFinishQuiz(event, currentQuestion);
 
-                            setButtonText('Submit');
-                          }}>
-                          {buttonText}
-                        </button>
-                      ) : (
-                        <button
-                          type="button"
-                          onClick={(event) =>
-                            handleSetQuestion(event, currentQuestion)
-                          }>
-                          next
-                        </button>
-                      )}
-                    </div>
+                              setButtonText('Submit');
+                            }}>
+                            {buttonText}
+                          </PlaySaveButton>
+                        ) : (
+                          <GhostBtn
+                            type="button"
+                            onClick={(event) =>
+                              handleSetQuestion(event, currentQuestion)
+                            }>
+                            <FiArrowRightCircle style={iconStyles} />
+                          </GhostBtn>
+                        )}
+                      </div>
+                    </ResponseContainer>
                   </div>
                 )
               );
@@ -201,13 +261,13 @@ const PlayQuiz = () => {
       {state === 'score' && (
         <IntroContainer>
           <IntroContent>
-            <div>You scored {score}% on this quiz!</div>
+            <PageHeading>You scored {score}% on this quiz!</PageHeading>
           </IntroContent>
         </IntroContainer>
       )}
 
       <ExitGame>
-        <Link to={`/profile`}>
+        <Link to={`/home`}>
           <GrClose style={iconStyles} />
         </Link>
       </ExitGame>
@@ -230,6 +290,7 @@ const IntroContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #ffd0b5;
 `;
 const IntroContent = styled.div`
   display: flex;
@@ -238,13 +299,30 @@ const IntroContent = styled.div`
   align-items: center;
 `;
 
+const AnswersInputContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+`;
+
+const SingleAnswerContainer = styled.div`
+  display: flex;
+  background-color: white;
+  border-radius: 10px;
+  align-items: center;
+  padding: 8px;
+`;
+
 const ExitGame = styled.div`
   position: absolute;
   top: 10px;
   left: 10px;
   z-index: 10;
 `;
-
+const QuizAuthor = styled.p`
+  font-size: 15px;
+  text-transform: uppercase;
+`;
 const Img = styled.img`
   width: 300px;
 
@@ -253,5 +331,82 @@ const Img = styled.img`
   }
   @media (min-width: 1300px) {
     width: 450px;
+  }
+`;
+
+const ScoreWrapper = styled.div`
+  background-color: white;
+  border-radius: 10px;
+  padding: 10px;
+  border: solid black;
+`;
+
+const ScoreBoard = styled.div`
+  text-transform: capitalize;
+`;
+const ResponseContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+const StyledRadio = styled.input`
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  height: 40px;
+  width: 40px;
+  transition: all 0.15s ease-out 0s;
+  background: #cbd1d8;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  margin-right: 0.5rem;
+  outline: none;
+  position: relative;
+  z-index: 1000;
+  border-radius: 50%;
+  font-family: 'Raleway', sans-serif;
+  :checked {
+    background: #17b047;
+  }
+  :checked::before {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  :checked::after {
+    -webkit-animation: click-wave 0.65s;
+    -moz-animation: click-wave 0.65s;
+    animation: click-wave 0.65s;
+    background: #17b047;
+    content: '';
+    display: block;
+    position: relative;
+    z-index: 100;
+  }
+  :after {
+    border-radius: 50%;
+  }
+
+  @keyframes click-wave {
+    0% {
+      height: 40px;
+      width: 40px;
+      opacity: 0.35;
+      position: relative;
+    }
+    100% {
+      height: 200px;
+      width: 200px;
+      margin-left: -80px;
+      margin-top: -80px;
+      opacity: 0;
+    }
   }
 `;

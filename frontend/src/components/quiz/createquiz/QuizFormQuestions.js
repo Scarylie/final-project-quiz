@@ -4,7 +4,6 @@ import { FormHeading } from 'components/styles/Forms';
 import { QuestionCard } from 'components/styles/cards';
 import { GhostBtn } from 'components/styles/Buttons';
 import styled from 'styled-components/macro';
-import add from 'assets/addsmall.png';
 import remove from 'assets/removesmall.png';
 
 import { RiDeleteBin6Line } from 'react-icons/ri';
@@ -148,11 +147,6 @@ const QuizFormQuestions = (
                     className="removeBtn"
                     onClick={() => handleQuestionRemove(questionIndex)}>
                     <RiDeleteBin6Line style={iconStyles} />
-                    {/* <img
-                      className="removeQ-icon"
-                      aria-label="remove-button"
-                      src={remove}
-                    /> */}
                   </GhostBtn>
                 )}
               </RemoveQBtnDiv>
@@ -202,7 +196,6 @@ const QuizFormQuestions = (
                       onClick={() =>
                         handleRemoveAnswer(questionIndex, answer.key)
                       }>
-                      {/* <RiDeleteBin6Line style={iconStyles} /> */}
                       <img
                         className="removeA-icon"
                         aria-label="remove-button"
@@ -218,11 +211,6 @@ const QuizFormQuestions = (
                     type="button"
                     onClick={() => handleAnswerAdd(questionIndex)}>
                     <GrAddCircle style={iconStyles} />
-                    {/*                     <img
-                      className="addA-icon"
-                      aria-label="add-button"
-                      src={add}
-                    /> */}
                   </GhostBtn>
                 }
               </AddABtnDiv>
@@ -234,7 +222,7 @@ const QuizFormQuestions = (
             type="button"
             className="addQuestionBtn"
             onClick={handleQuestionAdd}>
-            <img className="addQ-icon" aria-label="add-button" src={add} />
+            <GrAddCircle style={iconStyles} />
           </GhostBtn>
           <label>Add another Question</label>
         </AddQBtnDiv>
@@ -257,6 +245,7 @@ const TrueFalseBtn = styled.button`
 const QuestionInputDiv = styled.div`
   position: relative;
   padding: 1rem;
+  font-family: 'Raleway', sans-serif;
 `;
 
 const AnswerDiv = styled.div`
@@ -268,6 +257,7 @@ const AnswerDiv = styled.div`
   box-shadow: 1px 2px 3px gray;
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 10px;
+  font-family: 'Raleway', sans-serif;
 `;
 
 const ClonedAnswerInput = styled(Input)`
@@ -277,14 +267,12 @@ const ClonedAnswerInput = styled(Input)`
 
 const ClonedInput = styled(Input)`
   width: 65%;
-  /*   min-width: 10vw;
-  width: 100%;
-  max-width: 40vw; */
   margin-left: 8px;
 `;
 
 const InputDiv = styled.div`
   padding: 1rem;
+  font-family: 'Raleway', sans-serif;
 `;
 
 const ClonedFormHeading = styled(FormHeading)`

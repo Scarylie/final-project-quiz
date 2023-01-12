@@ -5,7 +5,7 @@ export const CardContainer = styled.div`
   grid-template-columns: 1fr 1fr;
   grid-auto-rows: 1fr;
   gap: 10px;
-
+  font-family: 'Raleway', sans-serif;
   @media (min-width: 600px) {
     grid-template-columns: 1fr 1fr 1fr;
   }
@@ -24,6 +24,7 @@ export const Card = styled.div`
   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.05);
   border-style: solid;
   max-width: 650px;
+  font-family: 'Raleway', sans-serif;
 
   :hover & {
     border-style: solid;

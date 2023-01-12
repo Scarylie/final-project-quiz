@@ -1,12 +1,11 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Raleway' 'Segoe UI', 'Roboto',
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    'Open Sans' sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: rgba(0, 0, 0, 0.05);
-  font-family: 'Open Sans', sans-serif;
 }
 
 code {
@@ -21,4 +20,11 @@ a:visited {
 }
 a:hover {
   font-style: italic;
+}
+p {
+  font-family: 'Raleway', sans-serif;
+}
+
+label {
+  font-family: 'Raleway', sans-serif;
 }

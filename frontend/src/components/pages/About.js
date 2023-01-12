@@ -12,7 +12,7 @@ import styled from 'styled-components/macro';
 
 import Saralie from '../../assets/saralie.jpg';
 import Sarah from '../../assets/sarah.jpg';
-// import Younas from '../../assets/younas';
+import Younas from '../../assets/younas.png';
 
 const presentation = [
   {
@@ -35,9 +35,9 @@ const presentation = [
   },
   {
     name: 'Younas Tesfamariam',
-    profileImg: '',
+    profileImg: Younas,
     descrition:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam consequat elit vel pharetra mattis. Integer eu risus lacus. Curabitur sit amet nulla eget orci fringilla scelerisque. Suspendisse potenti. Quisque ac efficitur dui. Nam convallis eros in malesuada maximus.',
+      'Currently studying at Technigo to become a frontend developer.I have a bachelor degree in Information Systems and work today as an Senior IT Operations Specialist to ensure that the day-to-day operations run smoothly. My goal is to strive to learn and gain more knowledge in programming.',
     linkedIn: 'https://www.linkedin.com/',
     github: 'https://www.linkedin.com/',
     portfolio: 'https://www.linkedin.com/',
