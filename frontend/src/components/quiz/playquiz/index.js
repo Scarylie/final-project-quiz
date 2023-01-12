@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { PlayButton } from 'components/styles/Buttons';
+import { PlaySaveButton } from 'components/styles/Buttons';
 import {
   Container,
   PageHeading,
@@ -132,9 +132,9 @@ const PlayQuiz = () => {
               {quiz.createdAt && quiz.createdAt.substring(0, 10)}
             </PageSubHeading>
 
-            <PlayButton type="button" onClick={() => setState('isPlaying')}>
+            <PlaySaveButton type="button" onClick={() => setState('isPlaying')}>
               Play
-            </PlayButton>
+            </PlaySaveButton>
           </IntroContent>
         </IntroContainer>
       )}

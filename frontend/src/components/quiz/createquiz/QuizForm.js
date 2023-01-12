@@ -13,7 +13,7 @@ const QuizForm = ({ newTitle, onNewTitleChange, onFormSubmit }) => {
             type="text"
             value={newTitle}
             onChange={onNewTitleChange}
-            placeholder="Add Quiz Title"
+            placeholder="What is your quiz about?"
             autoComplete="off"
           />
         </form>

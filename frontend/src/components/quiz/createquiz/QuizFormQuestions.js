@@ -6,6 +6,7 @@ import { GhostBtn } from 'components/styles/Buttons';
 import styled from 'styled-components/macro';
 import add from 'assets/addsmall.png';
 import remove from 'assets/removesmall.png';
+import { RiDeleteBin6Line } from 'react-icons/ri';
 /* import quiz from 'reducers/quiz' */
 
 const generateKey = (pre) => {
@@ -104,37 +105,67 @@ const QuizFormQuestions = (
     setQuestionList(list);
   };
 
+  const colors = [
+    '#5697fe',
+    '#2490d0',
+    '#20cced',
+    '#fff2f0',
+    '#ffe437',
+    '#ff4966',
+    '#d85dfb',
+    '#fd4472',
+    '#fd4472',
+    '#da43ff',
+    '#ff7e46',
+    '#7f60ff',
+    '#ffaf20',
+    '#ffcec2',
+    '#ffcec2',
+  ];
+  const getBgColor = () => {
+    const color = Math.floor(Math.random() * colors.length);
+    return colors[color];
+  };
+
+  let iconStyles = { fontSize: '3em' };
+
   return (
     <div id="questionForm">
       <div>
         {questionList.map((singleQuestion, questionIndex) => (
-          <QuestionCard key={singleQuestion.key}>
-            <InputDiv>
+          <QuestionCard
+            key={singleQuestion.key}
+            style={{
+              background: getBgColor(),
+            }}>
+            <QuestionInputDiv>
               <RemoveQBtnDiv>
                 {questionList.length > 1 && (
                   <GhostBtn
                     className="removeBtn"
                     onClick={() => handleQuestionRemove(questionIndex)}>
-                    <img
+                    <RiDeleteBin6Line style={iconStyles} />
+                    {/* <img
                       className="removeQ-icon"
                       aria-label="remove-button"
                       src={remove}
-                    />
+                    /> */}
                   </GhostBtn>
                 )}
-                <label>Remove Question</label>
               </RemoveQBtnDiv>
-              <ClonedFormHeading>Question</ClonedFormHeading>
-              <ClonedInput
-                name="question"
-                id="question"
-                type="text"
-                value={singleQuestion.questionTitle}
-                onChange={(e) => handleQuestionChange(e, questionIndex)}
-                placeholder="Question"
-                autoComplete="off"
-              />
-            </InputDiv>
+              <div>
+                <ClonedFormHeading>Question</ClonedFormHeading>
+                <ClonedInput
+                  name="question"
+                  id="question"
+                  type="text"
+                  value={singleQuestion.questionTitle}
+                  onChange={(e) => handleQuestionChange(e, questionIndex)}
+                  placeholder="Question"
+                  autoComplete="off"
+                />
+              </div>
+            </QuestionInputDiv>
             <InputDiv>
               <ClonedFormHeading>Image url</ClonedFormHeading>
               <ClonedInput type="url" placeholder="https://..." />
@@ -168,6 +199,7 @@ const QuizFormQuestions = (
                       onClick={() =>
                         handleRemoveAnswer(questionIndex, answer.key)
                       }>
+                      {/* <RiDeleteBin6Line style={iconStyles} /> */}
                       <img
                         className="removeA-icon"
                         aria-label="remove-button"
@@ -176,18 +208,20 @@ const QuizFormQuestions = (
                     </GhostBtn>
                   </AnswerDiv>
                 ))}
-              {
-                <GhostBtn
-                  className="addAnswerBtn"
-                  type="button"
-                  onClick={() => handleAnswerAdd(questionIndex)}>
-                  <img
-                    className="addA-icon"
-                    aria-label="add-button"
-                    src={add}
-                  />
-                </GhostBtn>
-              }
+              <AddABtnDiv>
+                {
+                  <GhostBtn
+                    className="addAnswerBtn"
+                    type="button"
+                    onClick={() => handleAnswerAdd(questionIndex)}>
+                    <img
+                      className="addA-icon"
+                      aria-label="add-button"
+                      src={add}
+                    />
+                  </GhostBtn>
+                }
+              </AddABtnDiv>
             </InputDiv>
           </QuestionCard>
         ))}
@@ -216,6 +250,11 @@ const TrueFalseBtn = styled.button`
   }
 `;
 
+const QuestionInputDiv = styled.div`
+  position: relative;
+  padding: 1rem;
+`;
+
 const AnswerDiv = styled.div`
   display: flex;
   align-items: center;
@@ -223,23 +262,24 @@ const AnswerDiv = styled.div`
   margin: 1%;
   position: relative;
   box-shadow: 1px 2px 3px gray;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
 `;
 
 const ClonedAnswerInput = styled(Input)`
-  min-width: 5vw;
-  width: 100%;
-  max-width: 40vw;
+  width: 70%;
   margin-right: 1rem;
 `;
 
 const ClonedInput = styled(Input)`
-  min-width: 5vw;
+  width: 65%;
+  /*   min-width: 10vw;
   width: 100%;
-  max-width: 40vw;
+  max-width: 40vw; */
+  margin-left: 8px;
 `;
 
 const InputDiv = styled.div`
-  box-shadow: 1px 2px 3px gray;
   padding: 1rem;
 `;
 
@@ -249,11 +289,14 @@ const ClonedFormHeading = styled(FormHeading)`
 `;
 
 const RemoveQBtnDiv = styled.div`
-  background-color: red;
   display: flex;
   flex-direction: row-reverse;
   margin: 2%;
   align-items: center;
+  position: absolute;
+  align-items: top;
+  right: 0;
+  top: 0;
 `;
 
 const AddQBtnDiv = styled.div`
@@ -261,4 +304,9 @@ const AddQBtnDiv = styled.div`
   flex-direction: row-reverse;
   margin: 2%;
   align-items: center;
+`;
+
+const AddABtnDiv = styled.div`
+  margin-top: 15px;
+  margin-left: 15px;
 `;

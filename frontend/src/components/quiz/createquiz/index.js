@@ -5,8 +5,8 @@ import quiz from 'reducers/quiz';
 import QuizForm from './QuizForm';
 import QuizFormQuestions from './QuizFormQuestions';
 import { Container } from 'components/styles/GlobalStyles';
-import { Card } from 'components/styles/cards';
-import { SaveButton } from 'components/styles/Buttons';
+import { CreateCard } from 'components/styles/cards';
+import { PlaySaveButton } from 'components/styles/Buttons';
 
 const CreateQuiz = () => {
   /*  const id = useSelector((store) => store.user.userId);
@@ -48,7 +48,7 @@ const CreateQuiz = () => {
 
   return (
     <Container>
-      <Card>
+      <CreateCard>
         <QuizForm
           newTitle={newTitle}
           onNewTitleChange={handleNewTitleChange}
@@ -56,14 +56,14 @@ const CreateQuiz = () => {
         />
         <QuizFormQuestions />
         <div>
-          <SaveButton
+          <PlaySaveButton
             disabled={!newTitle}
             type="submit"
             onSubmit={handleFormSubmit}>
             save
-          </SaveButton>
+          </PlaySaveButton>
         </div>
-      </Card>
+      </CreateCard>
     </Container>
   );
 };

@@ -53,7 +53,6 @@ export default MyQuizFeed;
 
 const StyledFeed = styled.section`
   &.display-items:before {
-    content: 'Click on a card to start a game';
     text-align: center;
     /* margin-bottom: 25px;
     font-size: 16px;

@@ -5,6 +5,7 @@ export const GhostBtn = styled.button`
   cursor: pointer;
   border: none;
   padding: 0;
+  border-radius: 10%;
   .addA-icon,
   .removeA-icon {
     width: 35px;
@@ -79,7 +80,7 @@ export const PlayButton = styled.button`
   }
 `;
 
-export const SaveButton = styled.button`
+export const PlaySaveButton = styled.button`
   margin: 10px;
   padding: 15px 30px;
   text-align: center;
