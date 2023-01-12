@@ -28,6 +28,7 @@ const PlayQuiz = () => {
   const [activeAnswer, setActiveAnswer] = useState(null);
   const [results, setResults] = useState([]);
   const [state, setState] = useState('intro');
+  const [highScore, setHighScore] = useState(0);
   const [score, setScore] = useState();
 
   const calculateScore = () => {
@@ -107,7 +108,9 @@ const PlayQuiz = () => {
     fetch(API_QUIZ, options)
       .then((res) => res.json())
       .then((json) => {
-        setQuiz(json.response);
+        console.log('json', json);
+        setQuiz(json.response.quiz);
+        setHighScore(json.response.highScore);
       })
       .catch((error) => console.error(error))
       .finally(() => console.log('Quiz ready to play'));
@@ -135,6 +138,20 @@ const PlayQuiz = () => {
             <PlayButton type="button" onClick={() => setState('isPlaying')}>
               Play
             </PlayButton>
+            <div>
+              {highScore.length > 0 && (
+                <div>
+                  <h2>High score:</h2>
+                  {highScore.map((singleScore, index) => {
+                    return (
+                      <div key={index}>
+                        {singleScore?.player}: {singleScore.score} % correct
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
           </IntroContent>
         </IntroContainer>
       )}

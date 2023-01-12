@@ -24,7 +24,7 @@ const Score = mongoose.model("Score", ScoreSchema);
 // GET Single Quiz //
 const getScore = async (req, res) => {
   try {
-    const oneScore = await Score.findById(req.params.id);
+    const oneScore = await Score.find({ quizId: req.params.id });
 
     if (oneScore) {
       res.status(200).json({ success: true, response: oneScore });
@@ -55,4 +55,4 @@ const addScore = async (req, res) => {
   }
 };
 
-module.exports = { addScore, getScore };
+module.exports = { addScore, getScore, ScoreSchema };

@@ -1,8 +1,10 @@
 import mongoose from "mongoose";
 
 const { UserSchema } = require("./user");
+const { ScoreSchema } = require("./score");
 
 const User = mongoose.model("User", UserSchema);
+const Score = mongoose.model("Score", ScoreSchema);
 
 // ************ SCHEMAS & MODELS *************** //
 const answerSchema = new mongoose.Schema({
@@ -121,23 +123,24 @@ const getQuiz = async (req, res) => {
   }
 };
 
-// GET all Quiz //
-// const getQuiz = async (req, res) => {
-//   try {
-//     const quiz = await Quiz.find().sort({ createdAt: "desc" });
-//     res.status(200).json({ success: true, response: quiz });
-//   } catch (error) {
-//     res.status(400).json({ success: false, response: error });
-//   }
-// };
-
 // GET Single Quiz //
 const singleQuiz = async (req, res) => {
   try {
+    console.log("SingleQuiz!");
     const oneQuiz = await Quiz.findById(req.params.id);
+    const highScore = await Score.find({ quizId: req.params.id })
+      .sort("desc")
+      .limit(5);
+
+    console.log("highScore: ", highScore);
+
+    const responseObj = {
+      quiz: oneQuiz,
+      highScore,
+    };
 
     if (oneQuiz) {
-      res.status(200).json({ success: true, response: oneQuiz });
+      res.status(200).json({ success: true, response: responseObj });
     } else {
       res.status(404).json({ error: "Quiz not found" });
     }
