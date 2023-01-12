@@ -42,7 +42,7 @@ const HeroContainer = styled.div`
   color: rgba(255, 255, 255, 0.8);
   font-size: 3.5em;
   text-align: center;
-  padding: 10vh 0 10vh 0;
+  padding: 5vh 0 5vh 0;
   font-weight: 800;
 
   @media (min-width: 600px) {

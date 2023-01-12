@@ -10,7 +10,7 @@ const StartPage = () => {
     <Container>
       <Wrapper>
         <Header>
-          <Body>Play and create quizzes with friends</Body>
+          <Body>Play and create quizzes</Body>
         </Header>
 
         {!accessToken ? (
@@ -43,10 +43,15 @@ const Header = styled.div`
 `;
 
 const Body = styled.h1`
-  font-size: 80px;
+  font-size: 30px;
   text-align: center;
 
   @media (min-width: 600px) {
     margin-top: 50px;
+    font-size: 45px;
+  }
+  @media (min-width: 1200px) {
+    margin-top: 50px;
+    font-size: 70px;
   }
 `;
