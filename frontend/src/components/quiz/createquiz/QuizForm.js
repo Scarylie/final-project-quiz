@@ -2,15 +2,16 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch, batch } from 'react-redux';
 import { API_QUIZ } from 'utils/urls';
 import quiz from 'reducers/quiz';
-import { Form, FormHeading } from 'components/styles/Forms';
+import { Input, Form, FormHeading } from 'components/styles/Forms';
+import styled from 'styled-components';
 
 const QuizForm = ({ newTitle, onNewTitleChange, onFormSubmit }) => {
   return (
     <>
-      <div>
-        <FormHeading>Quiz title</FormHeading>
+      <FormDiv>
+        <FormHeading>Qreate Your Own Quiz</FormHeading>
         <form onSubmit={onFormSubmit}>
-          <input
+          <ClonedFormInput
             className="quiz-title"
             type="text"
             value={newTitle}
@@ -19,9 +20,26 @@ const QuizForm = ({ newTitle, onNewTitleChange, onFormSubmit }) => {
             autoComplete="off"
           />
         </form>
-      </div>
+      </FormDiv>
     </>
   );
 };
 
 export default QuizForm;
+
+const FormDiv = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin: 1rem;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.05);
+`;
+
+const ClonedFormInput = styled(Input)`
+  min-width: 40vw;
+  width: 100%;
+  max-width: 40vw;
+  margin: 1rem;
+`;

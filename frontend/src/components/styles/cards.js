@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components/macro';
 
 export const CardContainer = styled.div`
@@ -24,6 +23,7 @@ export const Card = styled.div`
   border-radius: 10px;
   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.05);
   border-style: solid;
+  max-width: 650px;
 
   :hover & {
     border-style: solid;

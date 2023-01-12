@@ -4,12 +4,17 @@ export const GhostBtn = styled.button`
   background-color: inherit;
   cursor: pointer;
   border: none;
-  .submit-icon {
+  .addA-icon,
+  .removeA-icon {
     width: 35px;
     height: 35px;
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  &.removeAnswerBtn {
+    position: absolute;
+    right: 1em;
   }
 `;
 
@@ -27,9 +32,9 @@ export const PlayButton = styled.button`
   width: auto;
   z-index: 0;
 
-  /*    @media (min-width: 768px) & {  NOT SURE HOW TO USE ThIS
-    padding: 19px 32px; 
-  } */
+  @media (min-width: 768px) {
+    padding: 19px 32px;
+  }
 
   &:before,
   :after {
@@ -70,5 +75,38 @@ export const PlayButton = styled.button`
     right: 0;
     top: 0;
     transition-timing-function: ease-in;
+  }
+`;
+
+export const SaveButton = styled.button`
+  margin: 10px;
+  padding: 15px 30px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  border-radius: 10px;
+  border: 0px;
+  font-weight: 700;
+  background-image: linear-gradient(
+    45deg,
+    #ff512f 0%,
+    #f09819 51%,
+    #ff512f 100%
+  );
+  cursor: pointer;
+  touch-action: manipulation;
+
+  @media (min-width: 1024px) {
+    &:hover {
+      background-position: right center;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
   }
 `;
