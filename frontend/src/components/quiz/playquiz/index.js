@@ -12,7 +12,6 @@ import { API_URL } from 'utils/urls';
 
 const PlayQuiz = () => {
   const { username } = useSelector((store) => store.user);
-  console.log('Username in PlayQuiz: ', username);
 
   const params = useParams();
   const API_QUIZ = `${API_URL('quiz')}/${params.id}`;
@@ -36,17 +35,13 @@ const PlayQuiz = () => {
         return result.activeAnswer.isCorrect === true;
       });
       const numberOfCorrect = filteredArray.length;
-      // console.log('numberOfCorrect', numberOfCorrect);
-
       const correctOfTotal = (numberOfCorrect / totalQuestions) * 100;
-      // console.log('correctOfTotal', correctOfTotal);
 
       return correctOfTotal;
     }
   };
 
   const handleSetActiveAnswer = (event, answer) => {
-    // console.log('handleSetActiveAnswer', event.target.value);
     setActiveAnswer(answer);
   };
 
@@ -67,13 +62,15 @@ const PlayQuiz = () => {
     const correctOfTotal = calculateScore();
     console.log('correctOfTotal, ', correctOfTotal);
     setScore(correctOfTotal);
-    console.log('player:', username, 'quizId:', params.id, 'score:', score);
-    if (
-      results.length === quiz.questions.length
-      // && username &&
-      // params.id &&
-      // correctOfTotal
-    ) {
+    console.log(
+      'player:',
+      username,
+      'quizId:',
+      params.id,
+      'score:',
+      correctOfTotal
+    );
+    if (results.length === quiz.questions.length) {
       console.log('results', results);
       console.log('we have correct number of results');
 
@@ -114,9 +111,6 @@ const PlayQuiz = () => {
   const totalQuestions = quiz?.questions?.length;
   const timestamp = quiz.createdAt;
 
-  // useEffect(() => {
-  //   calculateScore();
-  // }, [score]);
   const [buttonText, setButtonText] = useState('Finish');
   return (
     <Container>
