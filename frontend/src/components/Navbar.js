@@ -96,9 +96,11 @@ const NavbarContainer = styled.div`
 
 const Logos = styled.div`
   display: flex;
-  gap: 10px;
+  gap: 15px;
+  align-items: center;
 `;
 
 const Img = styled.img`
   width: 30px;
+  margin-left: 30px;
 `;

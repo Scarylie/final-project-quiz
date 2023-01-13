@@ -32,12 +32,12 @@ export const Card = styled.div`
 `;
 
 export const CreateCard = styled.div`
-  background: white;
+  background: #faedfe;
   padding: 20px 10px;
   display: flex;
   flex-direction: column;
   border-radius: 10px;
-  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.08);
   border-style: solid;
   max-width: 650px;
   margin: 0 auto;
@@ -54,7 +54,7 @@ export const QuestionCard = styled.div`
   display: flex;
   flex-direction: column;
   border-radius: 10px;
-  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
   border-style: solid;
 
   :hover & {

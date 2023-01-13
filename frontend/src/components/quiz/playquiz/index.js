@@ -46,7 +46,8 @@ const PlayQuiz = () => {
         return result.activeAnswer.isCorrect === true;
       });
       const numberOfCorrect = filteredArray.length;
-      const correctOfTotal = (numberOfCorrect / totalQuestions) * 100;
+      const scoreCalculate = (numberOfCorrect / totalQuestions) * 100;
+      const correctOfTotal = Math.round(scoreCalculate);
 
       return correctOfTotal;
     }
@@ -72,20 +73,10 @@ const PlayQuiz = () => {
       { question: currentQuestion?.question, activeAnswer },
     ]);
     const correctOfTotal = calculateScore();
-    console.log('correctOfTotal, ', correctOfTotal);
-    setScore(correctOfTotal);
-    console.log(
-      'player:',
-      username,
-      'quizId:',
-      params.id,
-      'score:',
-      correctOfTotal
-    );
-    if (results.length === quiz.questions.length) {
-      console.log('results', results);
-      console.log('we have correct number of results');
 
+    setScore(correctOfTotal);
+
+    if (results.length === quiz.questions.length) {
       const options = {
         method: 'POST',
         headers: {
@@ -101,9 +92,7 @@ const PlayQuiz = () => {
         .then((res) => res.json())
         .then(() => {
           setState('score');
-        })
-        .catch((error) => console.error(error))
-        .finally(() => console.log('Score posted to database'));
+        });
     }
   };
 
@@ -114,12 +103,9 @@ const PlayQuiz = () => {
     fetch(API_QUIZ, options)
       .then((res) => res.json())
       .then((json) => {
-        console.log('json', json);
         setQuiz(json.response.quiz);
         setHighScore(json.response.highScore);
-      })
-      .catch((error) => console.error(error))
-      .finally(() => console.log('Quiz ready to play'));
+      });
   }, []);
 
   const totalQuestions = quiz?.questions?.length;
@@ -176,7 +162,7 @@ const PlayQuiz = () => {
                       <div key={index}>
                         <ScoreBoard>
                           <PageSubHeading>
-                            {singleScore?.player}:{singleScore.score} % correct
+                            {singleScore?.player}: {singleScore.score}% correct
                           </PageSubHeading>
                         </ScoreBoard>
                       </div>
@@ -297,6 +283,7 @@ const IntroContent = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 20px;
 `;
 
 const AnswersInputContainer = styled.div`
@@ -327,7 +314,7 @@ const Img = styled.img`
   width: 300px;
 
   @media (min-width: 600px) {
-    width: 400px;
+    width: 350px;
   }
   @media (min-width: 1300px) {
     width: 450px;
@@ -335,10 +322,11 @@ const Img = styled.img`
 `;
 
 const ScoreWrapper = styled.div`
-  background-color: white;
+  background-color: #fef7ee;
   border-radius: 10px;
   padding: 10px;
-  border: solid black;
+  border: solid grey;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1);
 `;
 
 const ScoreBoard = styled.div`

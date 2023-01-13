@@ -9,19 +9,10 @@ import remove from 'assets/removesmall.png';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { GrAddCircle } from 'react-icons/gr';
 
-/* import quiz from 'reducers/quiz' */
-
 const generateKey = (pre) => {
   return `${pre}_${new Date().getTime()}`;
 };
-const QuizFormQuestions = (
-  {
-    /* questionList,
-  setQuestionList,
-  questionTitle,
-  setQuestionTitle, */
-  }
-) => {
+const QuizFormQuestions = () => {
   const [questionList, setQuestionList] = useState([
     {
       question: '',
@@ -190,7 +181,6 @@ const QuizFormQuestions = (
                       placeholder="Answer"
                       autoComplete="off"
                     />
-
                     <GhostBtn
                       className="removeAnswerBtn"
                       onClick={() =>
@@ -267,7 +257,7 @@ const ClonedAnswerInput = styled(Input)`
 
 const ClonedInput = styled(Input)`
   width: 65%;
-  margin-left: 8px;
+  margin-left: 11px;
 `;
 
 const InputDiv = styled.div`

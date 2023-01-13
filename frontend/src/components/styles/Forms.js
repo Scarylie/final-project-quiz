@@ -15,6 +15,7 @@ export const Form = styled.form`
 export const FormHeading = styled.h2`
   margin-bottom: 5px;
   font-weight: bold;
+  margin: 1rem;
 `;
 
 export const Input = styled.input`

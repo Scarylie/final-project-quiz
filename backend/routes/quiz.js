@@ -20,7 +20,7 @@ const answerSchema = new mongoose.Schema({
     enum: ["True/False", "Multiple"],
   },
 });
-const Answers = mongoose.model("Answers", answerSchema); // används ej
+const Answers = mongoose.model("Answers", answerSchema);
 
 const questionSchema = new mongoose.Schema({
   question: {
@@ -39,11 +39,11 @@ const questionSchema = new mongoose.Schema({
     required: true,
   },
 });
-const Questions = mongoose.model("Questions", questionSchema); // används ej
+const Questions = mongoose.model("Questions", questionSchema);
 
 const interactionSchema = new mongoose.Schema({
   name: {
-    type: String, // connect to username
+    type: String,
   },
   comment: {
     type: String,

@@ -21,9 +21,7 @@ const QuizFeed = () => {
       .then((res) => res.json())
       .then((json) => {
         setQuizList(json.response);
-      })
-      .catch((error) => console.error(error))
-      .finally(() => console.log('All good!'));
+      });
   }, []);
 
   const colors = [

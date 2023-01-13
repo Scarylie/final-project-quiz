@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
 import { API_URL } from 'utils/urls';
 import styled from 'styled-components/macro';
 import { Card, CardContainer } from 'components/styles/cards';
@@ -22,9 +21,7 @@ const MyQuizFeed = () => {
       .then((res) => res.json())
       .then((json) => {
         setMyQuizList(json.response);
-      })
-      .catch((error) => console.error(error))
-      .finally(() => console.log('All good!'));
+      });
   }, [username]);
 
   const colors = [
