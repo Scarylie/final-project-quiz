@@ -22,14 +22,13 @@ const Register = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const accessToken = useSelector((store) => store.user.accessToken);
+  const accessToken = localStorage.getItem('accessToken');
 
-  // useEffect(() => {
-  //   if (accessToken) {
-  //     const userId = useSelector((store) => store.user.userId);
-  //     navigate(`/profile`);
-  //   }
-  // }, [accessToken]);
+  useEffect(() => {
+    if (accessToken) {
+      navigate(`/profile`);
+    }
+  }, [accessToken]);
 
   const onFormSubmit = (event) => {
     event.preventDefault();
@@ -48,15 +47,18 @@ const Register = () => {
 
     fetch(API_URL(mode), options)
       .then((response) => response.json())
+      .then((response) => {
+        localStorage.setItem('accessToken', response.response.accessToken);
+        return response;
+      })
       .then((data) => {
         if (data.success) {
           batch(() => {
             dispatch(user.actions.setUsername(data.response.username));
             dispatch(user.actions.setUserId(data.response.id));
             dispatch(user.actions.setEmail(data.response.email));
-            dispatch(user.actions.setAccessToken(data.response.accessToken));
             dispatch(user.actions.setError(null));
-            navigate(`/login`);
+            navigate(`/profile`);
             window.location.reload();
           });
         } else {
