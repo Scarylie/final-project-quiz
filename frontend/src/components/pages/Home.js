@@ -49,7 +49,7 @@ const QuizFeed = () => {
   return (
     <Container>
       <PageHeading>What do you want to play today?</PageHeading>
-      {quizList.length > 0 ? (
+      {quizList?.length > 0 ? (
         <PageSubHeading>Click on a card to start a game</PageSubHeading>
       ) : (
         <PageSubHeading>No quizzes created yet!</PageSubHeading>
@@ -57,7 +57,7 @@ const QuizFeed = () => {
       <StyledFeed
         className={quizList.length <= 0 ? 'no-items' : 'display-items'}>
         <CardContainer>
-          {quizList.map((quiz) => (
+          {quizList?.map((quiz) => (
             <Link to={`/play/${quiz._id}`} key={quiz._id}>
               <Card
                 style={{
