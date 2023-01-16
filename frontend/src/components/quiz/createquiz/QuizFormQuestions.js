@@ -26,7 +26,8 @@ const QuizFormQuestions = () => {
       ],
     },
   ]);
-  const [questionTitle, setQuestionTitle] = useState('');
+
+  //const [questionTitle, setQuestionTitle] = useState('');
 
   const handleQuestionAdd = (e) => {
     e.preventDefault();
@@ -34,43 +35,45 @@ const QuizFormQuestions = () => {
       ...questionList,
       {
         question: '',
+        imageUrl: '',
         key: generateKey('question'),
         answers: [{ key: generateKey('answer'), answer: '', isCorrect: false }],
       },
     ]);
   };
-
   const handleQuestionRemove = (index) => {
     const list = [...questionList];
     list.splice(index, 1);
     setQuestionList(list);
   };
+
+  //************** HANDLING WHEN INPUT'S UPDATE ************** //
   const handleQuestionChange = (e, index) => {
     const { name, value } = e.target;
+    console.log('handleQuestionChange name:', name);
+    console.log('handleQuestionChange value:', value);
     const list = [...questionList];
     list[index][name] = value;
     setQuestionList(list);
   };
-
+  const handleImageUrlChange = (e, index) => {
+    const { name, value } = e.target;
+    console.log('handleQuestionChange name:', name);
+    console.log('handleQuestionChange value:', value);
+    const list = [...questionList];
+    list[index][name] = value;
+    setQuestionList(list);
+  };
   const handleAnswerTextChange = (e, questionIndex, answerIndex) => {
     const { name, value } = e.target;
     const list = [...questionList];
     list[questionIndex].answers[answerIndex].answer = value;
     setQuestionList(list);
+    //console.log('handleAnswerTextChange name:', name);
+    console.log('handleAnswerTextChange value:', value);
   };
-  const handleIsCorrectChange = (questionIndex, answerIndex) => {
-    const list = [...questionList];
-    list[questionIndex].answers[answerIndex].isCorrect =
-      !list[questionIndex].answers[answerIndex].isCorrect;
-    setQuestionList(list);
-  };
-  const handleRemoveAnswer = (questionIndex, key) => {
-    const list = [...questionList];
-    const filtered = list[questionIndex].answers.filter((el) => el.key != key);
-    list[questionIndex].answers = filtered;
-    setQuestionList(list);
-    console.log('list[questionIndex].answers', list[questionIndex].answers);
-  };
+
+  //************** ADDING AND REMOVING ANSWERS ************** //
   const handleAnswerAdd = (questionIndex) => {
     const list = [...questionList];
     list[questionIndex].answers.push({
@@ -80,12 +83,25 @@ const QuizFormQuestions = () => {
     });
     setQuestionList(list);
   };
+  const handleRemoveAnswer = (questionIndex, key) => {
+    const list = [...questionList];
+    const filtered = list[questionIndex].answers.filter((el) => el.key != key);
+    list[questionIndex].answers = filtered;
+    setQuestionList(list);
+    console.log('list[questionIndex].answers', list[questionIndex].answers);
+  };
+
+  //************** HANDLING ISCORRECT ************** //
+  const handleIsCorrectChange = (questionIndex, answerIndex) => {
+    const list = [...questionList];
+    list[questionIndex].answers[answerIndex].isCorrect =
+      !list[questionIndex].answers[answerIndex].isCorrect;
+    setQuestionList(list);
+  };
   const toggleAnswerCorrect = (questionIndex, answerIndex) => {
     console.log('questionIndex', questionIndex);
-
     const list = questionList;
     console.log('list', list);
-
     list[questionIndex].answers.map((singleAnswer, index) => {
       if (index !== answerIndex) {
         list[questionIndex].answers[index] = false;
@@ -156,14 +172,22 @@ const QuizFormQuestions = () => {
             </QuestionInputDiv>
             <InputDiv>
               <ClonedFormHeading>Image url</ClonedFormHeading>
-              <ClonedInput type="url" placeholder="https://..." />
+              <ClonedInput
+                type="url"
+                placeholder="https://..."
+                name="imageUrl"
+                id="imageUrl"
+                value={singleQuestion.questionImage}
+                onChange={(e) => handleImageUrlChange(e, questionIndex)}
+                autoComplete="off"
+              />
             </InputDiv>
             <InputDiv>
               <ClonedFormHeading>Answers</ClonedFormHeading>
               {singleQuestion.answers.length > 0 &&
                 singleQuestion.answers.map((answer, answerIndex) => (
                   <AnswerDiv key={answer.key}>
-                    {/*   <TrueFalseBtn
+                    {/*    <TrueFalseBtn
                       className={answer.isCorrect ? 'True' : 'False'}
                       onClick={() =>
                         toggleAnswerCorrect(questionIndex, answerIndex)

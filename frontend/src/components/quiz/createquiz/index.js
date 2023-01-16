@@ -9,14 +9,13 @@ import { CreateCard } from 'components/styles/cards';
 import { PlaySaveButton } from 'components/styles/Buttons';
 
 const CreateQuiz = () => {
-  /*  const id = useSelector((store) => store.user.userId);
-  const accessToken = useSelector((store) => store.user.accessToken); */
-
   const [newTitle, setNewTitle] = useState('');
+  const questionList = useSelector((store) => store.quiz.questionList);
 
   const dispatch = useDispatch();
 
   const handleFormSubmit = (event) => {
+    console.log('Inside handeFormSubmit');
     event.preventDefault();
     const options = {
       method: 'POST',
@@ -24,14 +23,16 @@ const CreateQuiz = () => {
         'Content-Type': 'application/json',
         /* 'Authorization': accessToken */
       },
-      body: JSON.stringify({ title: newTitle }),
+      body: JSON.stringify({ title: newTitle, questions: questionList }),
     };
+
     fetch(API_URL('quiz'), options)
       .then((res) => res.json())
       .then((data) => {
         batch(() => {
           dispatch(quiz.actions.setNewTitle(data.response));
           dispatch(quiz.actions.setError(null));
+          console.log('HandleFormSubmit send to database');
         });
       })
       .catch((error) => {
@@ -39,6 +40,7 @@ const CreateQuiz = () => {
       })
       .finally(() => {
         setNewTitle('');
+        dispatch(quiz.actions.setQuestionList(null));
       });
   };
 
