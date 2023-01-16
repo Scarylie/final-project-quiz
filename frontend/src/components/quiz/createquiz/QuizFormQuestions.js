@@ -114,6 +114,7 @@ const QuizFormQuestions = () => {
     setQuestionList(list);
   };
 
+  //************** RANDOM BACKGROUND COLOR ************** //
   const colors = [
     '#5697fe',
     '#2490d0',
