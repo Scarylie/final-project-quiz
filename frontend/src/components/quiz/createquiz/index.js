@@ -35,6 +35,8 @@ const CreateQuiz = () => {
     },
   ]);
 
+  const { username } = useSelector((store) => store.user);
+
   const dispatch = useDispatch();
 
   const handleFormSubmit = (event) => {
@@ -46,7 +48,11 @@ const CreateQuiz = () => {
         'Content-Type': 'application/json',
         /* 'Authorization': accessToken */
       },
-      body: JSON.stringify({ title: newTitle, ...questionList }),
+      body: JSON.stringify({
+        title: newTitle,
+        creator: username,
+        questions: questionList,
+      }),
     };
 
     fetch(API_URL('quiz'), options)

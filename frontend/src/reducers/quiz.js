@@ -5,17 +5,7 @@ const quiz = createSlice({
   initialState: {
     _id: null,
     title: null,
-    questions: [
-      {
-        question: '',
-        answers: [
-          {
-            answer: '',
-            isCorrect: false,
-          },
-        ],
-      },
-    ],
+    questions: [],
     error: null,
   },
   reducers: {
