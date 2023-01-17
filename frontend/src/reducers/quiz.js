@@ -5,7 +5,17 @@ const quiz = createSlice({
   initialState: {
     _id: null,
     title: null,
-    questionList: [{}],
+    questions: [
+      {
+        question: '',
+        answers: [
+          {
+            answer: '',
+            isCorrect: false,
+          },
+        ],
+      },
+    ],
     error: null,
   },
   reducers: {
@@ -14,7 +24,7 @@ const quiz = createSlice({
     },
     setQuestionList: (store, action) => {
       console.log('setQuestionList reducer action.payload', action.payload);
-      store.question = action.payload;
+      store.questions = [action.payload, ...store.questions];
     },
     setError: (store, action) => {
       store.error = action.payload;
