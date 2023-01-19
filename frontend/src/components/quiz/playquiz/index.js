@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-
+// Pages
+import ScoreBoard from './ScoreBoard';
 // Url
 import { API_URL } from 'utils/urls';
 // Styles
@@ -116,7 +117,6 @@ const PlayQuiz = () => {
     '#5697fe',
     '#2490d0',
     '#20cced',
-    '#fff2f0',
     '#ffe437',
     '#ff4966',
     '#d85dfb',
@@ -126,8 +126,6 @@ const PlayQuiz = () => {
     '#ff7e46',
     '#7f60ff',
     '#ffaf20',
-    '#ffcec2',
-    '#ffcec2',
   ];
   const getBgColor = () => {
     const color = Math.floor(Math.random() * colors.length);
@@ -137,62 +135,53 @@ const PlayQuiz = () => {
   return (
     <Container>
       {state === 'intro' && (
-        <IntroContainer>
-          <IntroContent>
-            <PageHeading>{quiz?.title}</PageHeading>
+        <PlayWrapper>
+          <QuizContent>
+            <QuestionPageHeading>{quiz?.title}</QuestionPageHeading>
             <PageSubHeading>
               This quiz has {totalQuestions} questions
             </PageSubHeading>
             {quiz.creator && (
-              <PageSubHeading>Created By: {quiz.creator}</PageSubHeading>
+              <PageSubHeading>
+                Created By: <QuizAuthor>{quiz.creator}</QuizAuthor>
+              </PageSubHeading>
             )}
             <PageSubHeading>
               {quiz.createdAt && quiz.createdAt.substring(0, 10)}
             </PageSubHeading>
 
-            <PlaySaveButton type="button" onClick={() => setState('isPlaying')}>
-              Play
+            <PlaySaveButton
+              aria-label="play button"
+              type="button"
+              onClick={() => setState('isPlaying')}>
+              <ButtonSpan>Play</ButtonSpan>
             </PlaySaveButton>
-            <div>
-              {highScore.length > 0 && (
-                <ScoreWrapper>
-                  <PageHeading>High score:</PageHeading>
-                  {highScore.map((singleScore, index) => {
-                    return (
-                      <div key={index}>
-                        <ScoreBoard>
-                          <PageSubHeading>
-                            {singleScore?.player}: {singleScore.score}% correct
-                          </PageSubHeading>
-                        </ScoreBoard>
-                      </div>
-                    );
-                  })}
-                </ScoreWrapper>
-              )}
-            </div>
-          </IntroContent>
-        </IntroContainer>
+          </QuizContent>
+        </PlayWrapper>
       )}
       {state === 'isPlaying' && (
-        <IntroContainer>
-          <IntroContent>
+        <PlayWrapper>
+          <QuizContent>
             {quiz?.questions.map((currentQuestion, index) => {
               return (
                 step === index && (
                   <div key={currentQuestion._id}>
                     <div>
-                      <PageHeading>{currentQuestion.question}</PageHeading>
+                      <QuestionPageHeading>
+                        {currentQuestion.question}
+                      </QuestionPageHeading>
                       {currentQuestion.imageUrl && (
-                        <Img
-                          src={currentQuestion.imageUrl}
-                          alt={currentQuestion.imageUrl}
-                        />
+                        <ImgDiv>
+                          <Img
+                            src={currentQuestion.imageUrl}
+                            alt={currentQuestion.imageUrl}
+                          />
+                        </ImgDiv>
                       )}
                     </div>
                     <ResponseContainer>
                       <AnswersInputContainer>
-                        {currentQuestion.answers.map((answer) => {
+                        {currentQuestion.answers.map((answer, answerIndex) => {
                           return (
                             <SingleAnswerContainer
                               key={answer._id}
@@ -209,51 +198,54 @@ const PlayQuiz = () => {
                                   checked={answer._id === activeAnswer?._id}
                                 />
                               </label>
-                              {answer.answer}
+                              <AnswerSpan>{answer.answer}</AnswerSpan>
                             </SingleAnswerContainer>
                           );
                         })}
                       </AnswersInputContainer>
-                      <div>
-                        {index === quiz.questions.length - 1 ? (
-                          <PlaySaveButton
-                            type="button"
-                            onClick={(event) => {
-                              handleFinishQuiz(event, currentQuestion);
-
-                              setButtonText('Submit');
-                            }}>
-                            {buttonText}
-                          </PlaySaveButton>
-                        ) : (
-                          <GhostBtn
-                            type="button"
-                            onClick={(event) =>
-                              handleSetQuestion(event, currentQuestion)
-                            }>
-                            <FiArrowRightCircle style={iconStyles} />
-                          </GhostBtn>
-                        )}
-                      </div>
                     </ResponseContainer>
+                    <AnswerButtonContainer>
+                      {index === quiz.questions.length - 1 ? (
+                        <PlaySaveButton
+                          type="button"
+                          aria-label="submit button"
+                          onClick={(event) => {
+                            handleFinishQuiz(event, currentQuestion);
+
+                            setButtonText('Submit');
+                          }}>
+                          <ButtonSpan>{buttonText}</ButtonSpan>
+                        </PlaySaveButton>
+                      ) : (
+                        <GhostBtn
+                          type="button"
+                          aria-label="next button"
+                          onClick={(event) =>
+                            handleSetQuestion(event, currentQuestion)
+                          }>
+                          <FiArrowRightCircle style={iconStyles} />
+                        </GhostBtn>
+                      )}
+                    </AnswerButtonContainer>
                   </div>
                 )
               );
             })}
-          </IntroContent>
-        </IntroContainer>
+          </QuizContent>
+        </PlayWrapper>
       )}
 
       {state === 'score' && (
-        <IntroContainer>
-          <IntroContent>
+        <PlayWrapper>
+          <QuizContent>
             <PageHeading>You scored {score}% on this quiz!</PageHeading>
-          </IntroContent>
-        </IntroContainer>
+            <ScoreBoard highScore={highScore} />
+          </QuizContent>
+        </PlayWrapper>
       )}
 
       <ExitGame>
-        <Link to={`/home`}>
+        <Link aria-label="Link to home" to={`/home`}>
           <GrClose style={iconStyles} />
         </Link>
       </ExitGame>
@@ -263,7 +255,7 @@ const PlayQuiz = () => {
 
 export default PlayQuiz;
 
-const IntroContainer = styled.div`
+const PlayWrapper = styled.div`
   width: 100%;
   height: 100%;
   z-index: 1;
@@ -272,70 +264,108 @@ const IntroContainer = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: lightgrey;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #ffd0b5;
+  background: rgb(133, 233, 156);
+  background: linear-gradient(
+    45deg,
+    rgba(133, 233, 156, 1) 0%,
+    rgba(9, 124, 139, 1) 35%,
+    rgba(106, 9, 121, 1) 100%
+  );
 `;
-const IntroContent = styled.div`
+const QuizContent = styled.div`
+  background-color: white;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   padding: 20px;
-`;
+  border-radius: 3%;
+  box-shadow: 5px 10px 15px rgb(133, 233, 156);
+  margin: 50px;
+  min-width: 17rem;
 
+  @media (min-width: 778px) {
+    padding: 50px;
+  }
+  @media (min-width: 1024px) {
+    padding: 50px;
+    min-width: 30rem;
+  }
+`;
+const ButtonSpan = styled.span`
+  text-shadow: 0 0 7px #cbc3c3, 0 0 11px #cbc3c3, 0 0 17px #cbc3c3;
+`;
 const AnswersInputContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 5px;
-`;
+  gap: 10px;
+  margin: 5px;
 
+  @media (min-width: 778px) {
+    gap: 15px;
+    margin: 10px;
+  }
+`;
 const SingleAnswerContainer = styled.div`
   display: flex;
   background-color: white;
   border-radius: 10px;
   align-items: center;
-  padding: 8px;
+  padding: 12px;
+  box-shadow: 3px 7px 20px white;
+
+  @media (min-width: 778px) {
+    padding: 15px;
+  }
+`;
+
+const AnswerSpan = styled.span`
+  font-weight: bold;
+  font-family: 'Raleway', sans-serif;
+  margin-left: 5px;
 `;
 
 const ExitGame = styled.div`
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 25px;
+  left: 25px;
   z-index: 10;
 `;
-const QuizAuthor = styled.p`
+const QuizAuthor = styled.span`
   font-size: 15px;
   text-transform: uppercase;
 `;
+const QuestionPageHeading = styled(PageHeading)`
+  margin: 20px;
+`;
+const ImgDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 10px;
+`;
 const Img = styled.img`
-  width: 300px;
+  width: 200px;
 
   @media (min-width: 600px) {
-    width: 350px;
+    width: 300px;
   }
   @media (min-width: 1300px) {
-    width: 450px;
+    width: 350px;
   }
-`;
-
-const ScoreWrapper = styled.div`
-  background-color: #fef7ee;
-  border-radius: 10px;
-  padding: 10px;
-  border: solid grey;
-  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1);
-`;
-
-const ScoreBoard = styled.div`
-  text-transform: capitalize;
 `;
 const ResponseContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  justify-content: center;
+`;
+
+const AnswerButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 10px;
 `;
 
 const StyledRadio = styled.input`
@@ -344,8 +374,8 @@ const StyledRadio = styled.input`
   -ms-appearance: none;
   -o-appearance: none;
   appearance: none;
-  height: 40px;
-  width: 40px;
+  height: 30px;
+  width: 30px;
   transition: all 0.15s ease-out 0s;
   background: #cbd1d8;
   border: none;
@@ -362,8 +392,8 @@ const StyledRadio = styled.input`
     background: #17b047;
   }
   :checked::before {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -384,8 +414,8 @@ const StyledRadio = styled.input`
 
   @keyframes click-wave {
     0% {
-      height: 40px;
-      width: 40px;
+      height: 30px;
+      width: 30px;
       opacity: 0.35;
       position: relative;
     }
@@ -396,5 +426,10 @@ const StyledRadio = styled.input`
       margin-top: -80px;
       opacity: 0;
     }
+  }
+  @media (min-width: 778px) {
+    height: 40px;
+    width: 40px;
+    min-width: 30px;
   }
 `;
