@@ -2,26 +2,30 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components/macro';
 import LogIn from 'components/auth/LogIn';
-import { Container } from 'components/styles/GlobalStyles';
+import { Container, ContainerWrapper } from 'components/styles/GlobalStyles';
 
 const StartPage = () => {
   const { accessToken } = useSelector((store) => store.user);
   return (
-    <Container>
-      <Wrapper>
-        <Header>
-          <Body>Play and create quizzes</Body>
-        </Header>
+    <ContainerWrapper>
+      <Container>
+        <Wrapper>
+          <Header>
+            <div>
+              <Body>Play and create quizzes</Body>
+            </div>
+          </Header>
 
-        {!accessToken ? (
-          <div>
-            <LogIn />
-          </div>
-        ) : (
-          <div></div>
-        )}
-      </Wrapper>
-    </Container>
+          {!accessToken ? (
+            <div>
+              <LogIn />
+            </div>
+          ) : (
+            <div></div>
+          )}
+        </Wrapper>
+      </Container>
+    </ContainerWrapper>
   );
 };
 

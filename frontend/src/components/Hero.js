@@ -9,7 +9,9 @@ const Hero = () => {
     <div>
       {!accessToken ? (
         <HeroBackground>
-          <HeroContainer>QUIZZIS</HeroContainer>
+          <HeroContainer>
+            <HeroText>QUIZZIS</HeroText>
+          </HeroContainer>
         </HeroBackground>
       ) : (
         <MiniHeroBackground>{''}</MiniHeroBackground>
@@ -51,5 +53,27 @@ const HeroContainer = styled.div`
 
   @media (min-width: 1200px) {
     font-size: 10em;
+  }
+`;
+
+const HeroText = styled.h1`
+  margin-top: 20px;
+  font-size: 50px;
+  font-weight: 500;
+  color: white;
+  font-family: 'Raleway', sans-serif;
+  text-shadow:
+  /* White glow */ 0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff,
+    /* Green glow */ 0 0 42px #0fa, 0 0 82px #0fa, 0 0 92px #0fa, 0 0 102px #0fa,
+    0 0 151px #0fa;
+
+  @media (min-width: 350px) {
+    font-size: 70px;
+  }
+  @media (min-width: 500px) {
+    font-size: 90px;
+  }
+  @media (min-width: 778px) {
+    font-size: 120px;
   }
 `;

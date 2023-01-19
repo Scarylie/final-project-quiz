@@ -48,7 +48,7 @@ const QuizFeed = () => {
 
   return (
     <Container>
-      <PageHeading>What do you want to play today?</PageHeading>
+      <h1 className="home-heading">What do you want to play today?</h1>
       {quizList?.length > 0 ? (
         <PageSubHeading>Click on a card to start a game</PageSubHeading>
       ) : (

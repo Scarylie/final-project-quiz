@@ -8,7 +8,9 @@ import {
   PageHeading,
   PageSubHeading,
   ErrorText,
+  ContainerWrapper,
 } from 'components/styles/GlobalStyles';
+import { LoginRegisterDiv } from 'components/styles/cards';
 import { Form, FormHeading, Input, Button } from 'components/styles/Forms';
 
 const LogIn = () => {
@@ -70,44 +72,51 @@ const LogIn = () => {
   }
 
   return (
-    <SignInContainer>
-      <section>
-        <div>
-          <PageHeading>Welcome Back!</PageHeading>
-          <PageSubHeading>Sign in to start quizzing.</PageSubHeading>
-        </div>
+    <ContainerWrapper>
+      <SignInContainer>
+        <section>
+          <div>
+            <PageHeading>Welcome Back!</PageHeading>
+            <PageSubHeading>Sign in to start quizzing.</PageSubHeading>
+          </div>
 
-        <div>
-          <Form className="signup-form" action="#" onSubmit={onFormSubmit}>
-            <FormHeading>Sign in</FormHeading>
+          <div>
+            <Form className="signup-form" action="#" onSubmit={onFormSubmit}>
+              <FormHeading>Sign in</FormHeading>
 
-            <Input
-              className="signup-input"
-              id="username"
-              type="text"
-              value={username}
-              placeholder="Username"
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            <Input
-              className="signup-input"
-              id="password"
-              type="password"
-              value={password}
-              placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            {inputError && <ErrorText>{inputErrorMessage}</ErrorText>}
+              <Input
+                className="signup-input"
+                id="username"
+                type="text"
+                value={username}
+                placeholder="Username"
+                aria-label="Input Username"
+                autoComplete="off"
+                onChange={(e) => setUsername(e.target.value)}
+              />
+              <Input
+                className="signup-input"
+                id="password"
+                type="password"
+                value={password}
+                placeholder="Password"
+                aria-label="input passeord"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              {inputError && <ErrorText>{inputErrorMessage}</ErrorText>}
 
-            <Button type="submit">Sign In</Button>
-          </Form>
-
-          <p>
-            Don´t have an account? <Link to={`/register`}>Sign up here!</Link>
-          </p>
-        </div>
-      </section>
-    </SignInContainer>
+              <Button type="submit">Sign In</Button>
+            </Form>
+            <LoginRegisterDiv>
+              <p>
+                Don´t have an account?{' '}
+                <Link to={`/register`}>Sign up here!</Link>
+              </p>
+            </LoginRegisterDiv>
+          </div>
+        </section>
+      </SignInContainer>
+    </ContainerWrapper>
   );
 };
 

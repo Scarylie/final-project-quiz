@@ -92,6 +92,7 @@ export const PlaySaveButton = styled.button`
   border-radius: 10px;
   border: 0px;
   font-weight: 700;
+  box-shadow: 2px 4px 6px #f09819;
   background-image: linear-gradient(
     45deg,
     #ff512f 0%,

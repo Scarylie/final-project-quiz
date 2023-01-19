@@ -40,3 +40,9 @@ export const StyledNavbar = styled.header`
   padding: 5px;
   background-color: #bb5ff7;
 `;
+
+export const ContainerWrapper = styled.section`
+  /* background-image: url(${bulb}); */
+  background-repeat: no-repeat;
+  background-size: cover;
+`;

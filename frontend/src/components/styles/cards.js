@@ -61,3 +61,8 @@ export const QuestionCard = styled.div`
     border-style: solid;
   }
 `;
+
+export const LoginRegisterDiv = styled.div`
+  display: flex;
+  justify-content: center;
+`;
