@@ -320,6 +320,10 @@ const CreateQuiz = () => {
 export default CreateQuiz;
 
 const TrueFalseBtn = styled.button`
+  width: 50px;
+  margin: 5px;
+  background-color: inherit;
+  border-radius: 10px;
   &.True {
     color: green;
   }
