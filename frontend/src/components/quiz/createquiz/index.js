@@ -129,6 +129,7 @@ const CreateQuiz = () => {
   //************** ADDING AND REMOVING ANSWERS ************** //
   const handleAnswerAdd = (questionIndex) => {
     const list = [...questionList];
+
     list[questionIndex].answers.push({
       answer: '',
       isCorrect: false,
@@ -285,14 +286,14 @@ const CreateQuiz = () => {
                         </AnswerDiv>
                       ))}
                     <AddABtnDiv>
-                      {
+                      {singleQuestion.answers.length < 4 && (
                         <GhostBtn
                           className="addAnswerBtn"
                           type="button"
                           onClick={() => handleAnswerAdd(questionIndex)}>
                           <GrAddCircle style={iconStyles} />
                         </GhostBtn>
-                      }
+                      )}
                     </AddABtnDiv>
                   </InputDiv>
                 </QuestionCard>
@@ -324,10 +325,13 @@ export default CreateQuiz;
 const TrueFalseBtn = styled.button`
   width: 50px;
   margin: 5px;
-  background-color: inherit;
+  border: none;
   border-radius: 10px;
+  font-weight: bold;
+  box-shadow: 4px 6px 8px grey;
+  padding: 4px;
   &.True {
-    color: green;
+    color: #04ab04;
   }
   &.False {
     color: red;
