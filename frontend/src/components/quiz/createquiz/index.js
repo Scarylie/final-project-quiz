@@ -192,6 +192,7 @@ const CreateQuiz = () => {
               onChange={handleNewTitleChange}
               placeholder="What is your quiz about?"
               autoComplete="off"
+              required
             />
           </FormDiv>
 
@@ -207,6 +208,7 @@ const CreateQuiz = () => {
                     <RemoveQBtnDiv>
                       {questionList.length > 1 && (
                         <GhostBtn
+                          type="button"
                           className="removeBtn"
                           onClick={() => handleQuestionRemove(questionIndex)}>
                           <RiDeleteBin6Line style={iconStyles} />
@@ -223,6 +225,7 @@ const CreateQuiz = () => {
                         onChange={(e) => handleQuestionChange(e, questionIndex)}
                         placeholder="Question"
                         autoComplete="off"
+                        required
                       />
                     </div>
                   </QuestionInputDiv>
@@ -265,8 +268,10 @@ const CreateQuiz = () => {
                             }
                             placeholder="Answer"
                             autoComplete="off"
+                            required
                           />
                           <GhostBtn
+                            type="button"
                             className="removeAnswerBtn"
                             onClick={() =>
                               handleRemoveAnswer(questionIndex, answer.key)
@@ -304,11 +309,8 @@ const CreateQuiz = () => {
             </div>
           </div>
           <div>
-            <PlaySaveButton
-              disabled={!newTitle}
-              type="submit"
-              onSubmit={handleFormSubmit}>
-              save
+            <PlaySaveButton type="submit" onSubmit={handleFormSubmit}>
+              Complete
             </PlaySaveButton>
           </div>
         </form>
