@@ -217,7 +217,11 @@ const CreateQuiz = () => {
                       )}
                     </RemoveQBtnDiv>
                     <div>
-                      <ClonedFormHeading>Question</ClonedFormHeading>
+                      <ClonedFormHeading>
+                        <span htmlFor="title">
+                          Question {questionIndex + 1}.{' '}
+                        </span>
+                      </ClonedFormHeading>
                       <ClonedInput
                         name="question"
                         id="question"
