@@ -40,7 +40,6 @@ const CreateQuiz = () => {
   const dispatch = useDispatch();
 
   const handleFormSubmit = (event) => {
-    console.log('You clicked on save');
     event.preventDefault();
     const options = {
       method: 'POST',
@@ -62,7 +61,6 @@ const CreateQuiz = () => {
           dispatch(quiz.actions.setNewTitle(data.response));
           dispatch(quiz.action.setQuestionList(data.respone));
           dispatch(quiz.actions.setError(null));
-          console.log('HandleFormSubmit send to database');
         });
       })
       .catch((error) => {
@@ -111,16 +109,12 @@ const CreateQuiz = () => {
   //************** HANDLING WHEN INPUT'S UPDATE ************** //
   const handleQuestionChange = (e, index) => {
     const { name, value } = e.target;
-    console.log('handleQuestionChange name:', name);
-    console.log('handleQuestionChange value:', value);
     const list = [...questionList];
     list[index][name] = value;
     setQuestionList(list);
   };
   const handleImageUrlChange = (e, index) => {
     const { name, value } = e.target;
-    console.log('handleQuestionChange name:', name);
-    console.log('handleQuestionChange value:', value);
     const list = [...questionList];
     list[index][name] = value;
     setQuestionList(list);
@@ -130,8 +124,6 @@ const CreateQuiz = () => {
     const list = [...questionList];
     list[questionIndex].answers[answerIndex].answer = value;
     setQuestionList(list);
-    //console.log('handleAnswerTextChange name:', name);
-    console.log('handleAnswerTextChange value:', value);
   };
 
   //************** ADDING AND REMOVING ANSWERS ************** //
@@ -149,29 +141,15 @@ const CreateQuiz = () => {
     const filtered = list[questionIndex].answers.filter((el) => el.key != key);
     list[questionIndex].answers = filtered;
     setQuestionList(list);
-    console.log('list[questionIndex].answers', list[questionIndex].answers);
   };
 
   //************** HANDLING ISCORRECT ************** //
-  const handleIsCorrectChange = (questionIndex, answerIndex) => {
+  const toggleAnswerCorrect = (questionIndex, answerIndex) => {
     const list = [...questionList];
+
     list[questionIndex].answers[answerIndex].isCorrect =
       !list[questionIndex].answers[answerIndex].isCorrect;
-    setQuestionList(list);
-  };
-  const toggleAnswerCorrect = (questionIndex, answerIndex) => {
-    console.log('questionIndex', questionIndex);
-    const list = questionList;
-    console.log('list', list);
-    list[questionIndex].answers.map((singleAnswer, index) => {
-      if (index !== answerIndex) {
-        list[questionIndex].answers[index] = false;
-      }
-      if (answerIndex === index) {
-        list[questionIndex].answers[answerIndex] =
-          !list[questionIndex].answers[answerIndex];
-      }
-    });
+
     setQuestionList(list);
   };
 
@@ -265,13 +243,14 @@ const CreateQuiz = () => {
                     {singleQuestion.answers.length > 0 &&
                       singleQuestion.answers.map((answer, answerIndex) => (
                         <AnswerDiv key={answer.key}>
-                          {/*    <TrueFalseBtn
-                      className={answer.isCorrect ? 'True' : 'False'}
-                      onClick={() =>
-                        toggleAnswerCorrect(questionIndex, answerIndex)
-                      }>
-                      {answer.isCorrect ? 'True' : 'False'}
-                    </TrueFalseBtn> */}
+                          <TrueFalseBtn
+                            type="button"
+                            className={answer.isCorrect ? 'True' : 'False'}
+                            onClick={() =>
+                              toggleAnswerCorrect(questionIndex, answerIndex)
+                            }>
+                            {answer.isCorrect ? 'True' : 'False'}
+                          </TrueFalseBtn>
                           <ClonedAnswerInput
                             name="answer"
                             id="answer"
