@@ -3,6 +3,8 @@ import { Input, FormHeading } from 'components/styles/Forms';
 import styled from 'styled-components/macro';
 
 const QuizForm = ({ newTitle, onNewTitleChange, onFormSubmit }) => {
+  console.log('onNewTitleChange', onNewTitleChange);
+  console.log('newTitle', newTitle);
   return (
     <>
       <FormDiv>

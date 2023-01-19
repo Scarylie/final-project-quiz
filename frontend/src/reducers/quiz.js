@@ -6,18 +6,15 @@ const quiz = createSlice({
     _id: null,
     title: null,
     questions: [],
-    question: [],
     error: null,
   },
   reducers: {
-    setTitle: (store, action) => {
+    setNewTitle: (store, action) => {
       store.title = action.payload;
     },
-    setQuestionTitle: (store, action) => {
-      store.question = action.payload;
-    },
     setQuestionList: (store, action) => {
-      store.questions = action.payload;
+      console.log('setQuestionList reducer action.payload', action.payload);
+      store.questions = [action.payload, ...store.questions];
     },
     setError: (store, action) => {
       store.error = action.payload;
