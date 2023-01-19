@@ -8,10 +8,10 @@ import Logo from '../assets/quizzies-logo.png';
 import user from 'reducers/auth';
 import { API_URL } from 'utils/urls';
 
-import { AiOutlineHome } from 'react-icons/ai';
-import { CgProfile } from 'react-icons/cg';
+import { AiOutlinePlayCircle } from 'react-icons/ai';
+import { AiOutlinePlusCircle } from 'react-icons/ai';
+import { BsFillPersonFill } from 'react-icons/bs';
 import { VscInfo } from 'react-icons/vsc';
-import { MdOutlineCreateNewFolder } from 'react-icons/md';
 import { RiLogoutBoxRLine } from 'react-icons/ri';
 
 const Navbar = () => {
@@ -62,7 +62,7 @@ const Navbar = () => {
           <div>
             {accessToken ? (
               <Link to={`/home`}>
-                <AiOutlineHome style={iconStyles} />
+                <AiOutlinePlayCircle style={iconStyles} />
               </Link>
             ) : (
               <div></div>
@@ -71,7 +71,7 @@ const Navbar = () => {
           <div>
             {accessToken ? (
               <Link to={`/create`}>
-                <MdOutlineCreateNewFolder style={iconStyles} />
+                <AiOutlinePlusCircle style={iconStyles} />
               </Link>
             ) : (
               <Link to={`/about`}>
@@ -83,7 +83,7 @@ const Navbar = () => {
             {accessToken ? (
               <Link to={`/profile`}>
                 <ProfileIconWrapper>
-                  <CgProfile style={iconStyles} /> {username && username}
+                  <BsFillPersonFill style={iconStyles} /> {username && username}
                   <Menu className="profile-menu">
                     <GhostBtn type="button" onClick={onLogOut}>
                       <LinkWrapper>
