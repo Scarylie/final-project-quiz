@@ -9,6 +9,10 @@ import {
 } from 'components/styles/GlobalStyles';
 import MyQuizFeed from 'components/quiz/MyQuizFeed';
 import { Link } from 'react-router-dom';
+import { AiOutlinePlayCircle } from 'react-icons/ai';
+import { AiOutlinePlusCircle } from 'react-icons/ai';
+
+let iconStyles = { fontSize: '3em' };
 
 const Profile = () => {
   const { username } = useSelector((store) => store.user);
@@ -27,11 +31,15 @@ const Profile = () => {
           <LinksContainerWrapper>
             <LinksContainer>
               <PageSubHeading>👇🏼Play quizzes here👇🏼</PageSubHeading>
-              <Link to={`/home`}>PLAY</Link>
+              <Link to={`/home`}>
+                <AiOutlinePlayCircle style={iconStyles} />
+              </Link>
             </LinksContainer>
             <LinksContainer>
               <PageSubHeading>👇🏼Create you own quiz here👇🏼</PageSubHeading>
-              <Link to={`/create`}>CREATE</Link>
+              <Link to={`/create`}>
+                <AiOutlinePlusCircle style={iconStyles} />
+              </Link>
             </LinksContainer>
           </LinksContainerWrapper>
         </PageHeading>
@@ -50,9 +58,13 @@ const UserName = styled.div`
 `;
 
 const LinksContainerWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 20px;
+
+  @media (min-width: 600px) {
+    grid-template-columns: 1fr 1fr;
+  }
 `;
 
 const LinksContainer = styled.div`
