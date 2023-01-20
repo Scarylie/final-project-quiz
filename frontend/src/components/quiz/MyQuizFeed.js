@@ -28,7 +28,6 @@ const MyQuizFeed = () => {
     '#5697fe',
     '#2490d0',
     '#20cced',
-    '#fff2f0',
     '#ffe437',
     '#ff4966',
     '#d85dfb',
@@ -38,8 +37,6 @@ const MyQuizFeed = () => {
     '#ff7e46',
     '#7f60ff',
     '#ffaf20',
-    '#ffcec2',
-    '#ffcec2',
   ];
   const getBgColor = () => {
     const color = Math.floor(Math.random() * colors.length);
@@ -50,7 +47,7 @@ const MyQuizFeed = () => {
     <Container>
       <StyledFeed
         className={myQuizList?.length <= 0 ? 'no-items' : 'display-items'}>
-        <PageSubHeading>👇🏼Your created quizes👇🏼</PageSubHeading>
+        <YourQuizzes>👇🏼Your created quizes👇🏼</YourQuizzes>
         <CardContainer>
           {myQuizList &&
             myQuizList.map((quiz) => (
@@ -90,4 +87,13 @@ const StyledFeed = styled.section`
     object-fit: cover;
     background-repeat: no-repeat;
   }
+`;
+
+const YourQuizzes = styled.p`
+  margin: 10px;
+  margin-bottom: 25px;
+  font-weight: bold;
+  font-size: 22px;
+  text-align: center;
+  font-family: 'Raleway', sans-serif;
 `;

@@ -55,6 +55,7 @@ const UserName = styled.div`
   text-transform: capitalize;
   font-size: 30px;
   font-weight: bold;
+  margin-bottom: 20px;
 `;
 
 const LinksContainerWrapper = styled.div`
