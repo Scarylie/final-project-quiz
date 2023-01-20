@@ -170,7 +170,6 @@ const CreateQuiz = () => {
     '#7f60ff',
     '#ffaf20',
     '#ffcec2',
-    '#ffcec2',
   ];
   const getBgColor = () => {
     const color = Math.floor(Math.random() * colors.length);
@@ -184,8 +183,7 @@ const CreateQuiz = () => {
       <CreateCard>
         <form onSubmit={handleFormSubmit}>
           <FormDiv>
-            <FormHeading>Qreate Your Own Quiz</FormHeading>
-
+            <QuizHeading>Qreate Your Own Quiz</QuizHeading>
             <ClonedFormInput
               className="quiz-title"
               type="text"
@@ -196,7 +194,6 @@ const CreateQuiz = () => {
               required
             />
           </FormDiv>
-
           <div id="questionForm">
             <div>
               {questionList.map((singleQuestion, questionIndex) => (
@@ -339,6 +336,14 @@ const TrueFalseBtn = styled.button`
   }
   &.False {
     color: red;
+  }
+`;
+
+const QuizHeading = styled(FormHeading)`
+  font-size: large;
+
+  @media (min-width: 778px) {
+    font-size: x-large;
   }
 `;
 

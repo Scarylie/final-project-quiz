@@ -163,4 +163,7 @@ const UserName = styled.div`
   text-transform: capitalize;
   align-self: flex-end;
   padding-bottom: 2px;
+  margin-bottom: 1px;
+  font-family: 'Raleway', sans-serif;
+  font-weight: bold;
 `;
