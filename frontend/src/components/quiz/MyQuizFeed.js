@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import DeleteQuiz from './DeleteQuiz';
+import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { API_URL } from 'utils/urls';
 import styled from 'styled-components/macro';
 import { Card, CardContainer } from 'components/styles/cards';
-import { Link } from 'react-router-dom';
 import { PageSubHeading, Container } from 'components/styles/GlobalStyles';
 import emptystate from '../../assets/emptystate.png';
 
@@ -54,13 +56,15 @@ const MyQuizFeed = () => {
         <CardContainer>
           {myQuizList &&
             myQuizList.map((quiz) => (
-              <Card
-                key={quiz._id}
-                style={{
-                  background: getBgColor(),
-                }}>
-                <Link to={`/play/${quiz._id}`}>{quiz.title}</Link>
-              </Card>
+              <div key={quiz._id}>
+                <Card
+                  style={{
+                    background: getBgColor(),
+                  }}>
+                  <Link to={`/play/${quiz._id}`}>{quiz.title}</Link>
+                </Card>
+                <DeleteQuiz title={quiz.title} id={quiz._id} />
+              </div>
             ))}
         </CardContainer>
       </StyledFeed>
