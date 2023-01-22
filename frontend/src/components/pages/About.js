@@ -38,11 +38,12 @@ const presentation = [
     profileImg: Younas,
     descrition:
       'Currently studying at Technigo to become a frontend developer.I have a bachelor degree in Information Systems and work today as an Senior IT Operations Specialist to ensure that the day-to-day operations run smoothly. My goal is to strive to learn and gain more knowledge in programming.',
-    linkedIn: 'https://www.linkedin.com/',
-    github: 'https://www.linkedin.com/',
-    portfolio: 'https://www.linkedin.com/',
+    linkedIn: 'https://www.linkedin.com/in/younas-tesfamariam-3538a6134/',
+    github: 'https://github.com/yotesfam',
+    portfolio: 'https://younas-tesfamariam-portfolio.netlify.app/',
   },
 ];
+
 
 const About = () => {
   let iconStyles = { fontSize: '1.5em' };
