@@ -16,11 +16,9 @@ const DeleteQuiz = ({ title, id }) => {
     const options = {
       method: 'DELETE',
     };
-    fetch(API_QUIZ_ID, options);
-    console
-      .log('Delete this quiz:', API_QUIZ_ID)
+    fetch(API_QUIZ_ID, options)
       .then((data) => data.json())
-      .then((data) => console.log(data))
+      .then((data) => console.log(API_QUIZ_ID, data))
       .catch((error) => console.error(error));
   };
 
