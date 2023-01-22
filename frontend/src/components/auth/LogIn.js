@@ -76,7 +76,7 @@ const LogIn = () => {
       <SignInContainer>
         <section>
           <div>
-            <PageHeading>Welcome Back!</PageHeading>
+            <PageHeading>Welcome!</PageHeading>
             <PageSubHeading>Sign in to start quizzing.</PageSubHeading>
           </div>
 
