@@ -39,9 +39,6 @@ We have developed the Backend for this application which consist of
 * Be more consistance with our styling.
 ***
 
-<img src="./frontend/src/assets/Home.png" width="350" alt="Home page">
-
-
 **Additional Packages used**
 
 * React icons
@@ -60,3 +57,19 @@ Setup
 
 ✨ Frontend:https://quizzis.netlify.app/
 >🔥 Backend :https://final-project-quiz-gl4puda6xq-lz.a.run.app/
+
+**How it looks like**
+
+<img src="./frontend/src/assets/Login.png" width="350" alt="Login page">
+
+<img src="./frontend/src/assets/Home.png" width="350" alt="Home">
+
+<img src="./frontend/src/assets/Profile.png" width="350" alt="Profile">
+
+<img src="./frontend/src/assets/Createquiz.png" width="350" alt="Create Quiz">
+
+<img src="./frontend/src/assets/Playintro.png" width="350" alt="Play intro">
+
+<img src="./frontend/src/assets/playquiz.png" width="350" alt="Play Quiz">
+
+<img src="./frontend/src/assets/About.png" width="350" alt="About page">
