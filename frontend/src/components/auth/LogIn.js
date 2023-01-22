@@ -100,7 +100,7 @@ const LogIn = () => {
                 type="password"
                 value={password}
                 placeholder="Password"
-                aria-label="input passeord"
+                aria-label="input password"
                 onChange={(e) => setPassword(e.target.value)}
               />
               {inputError && <ErrorText>{inputErrorMessage}</ErrorText>}

@@ -55,18 +55,16 @@ const About = () => {
           This page is made as a final project at Technigo web developer
           bootcamp 2022
         </PageSubHeading>
-        <PageSubHeading>
-          👇🏼Have a look at our code here👇🏼
-          <a
-            href="https://github.com/Scarylie/final-project-quiz"
-            role="button"
-            aria-pressed="false"
-            aria-label="linkedin"
-            target="_blank"
-            rel="noreferrer">
-            <BsGithub style={iconStyles} />
-          </a>
-        </PageSubHeading>
+        <PageSubHeading>👇🏼Have a look at our code here👇🏼</PageSubHeading>
+        <GitRepo
+          href="https://github.com/Scarylie/final-project-quiz"
+          role="button"
+          aria-pressed="false"
+          aria-label="linkedin"
+          target="_blank"
+          rel="noreferrer">
+          <BsGithub style={iconStyles} />
+        </GitRepo>
       </Card>
       <CardContainer>
         {presentation.map((person) => {
@@ -75,7 +73,7 @@ const About = () => {
               <PageHeading>{person.name}</PageHeading>
               <InfoWrapper>
                 <div>
-                  <ImgWrapper>
+                  <AboutCard>
                     <a
                       href={person.portfolio}
                       role="button"
@@ -83,10 +81,10 @@ const About = () => {
                       aria-label="linkedin"
                       target="_blank"
                       rel="noreferrer">
-                      <p>{person.descrition}</p>
+                      <DescriptionText>{person.descrition}</DescriptionText>
                       <Img src={person.profileImg} alt="profile picture" />
                     </a>
-                  </ImgWrapper>
+                  </AboutCard>
                   <Links>
                     <div>
                       <a
@@ -145,11 +143,13 @@ const Card = styled.div`
 `;
 const InfoWrapper = styled.div`
   display: flex;
+  justify-content: space-between;
 `;
 const Img = styled.img`
   border: 2px solid black;
   width: 100px;
   border-radius: 100vw;
+  margin: 10px;
 
   @media (min-width: 600px) {
     width: 150px;
@@ -158,8 +158,10 @@ const Img = styled.img`
     width: 200px;
   }
 `;
-const ImgWrapper = styled.div`
+const AboutCard = styled.div`
   margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
 `;
 
 const Links = styled.div`
@@ -167,4 +169,12 @@ const Links = styled.div`
   flex-direction: row;
   gap: 10px;
   margin-top: 10px;
+`;
+
+const GitRepo = styled.a`
+  align-self: center;
+`;
+
+const DescriptionText = styled.p`
+  margin: 5px;
 `;

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch, batch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { API_URL } from 'utils/urls';
 import quiz from 'reducers/quiz';
 //import QuizForm from './QuizForm';
@@ -37,6 +38,7 @@ const CreateQuiz = () => {
 
   const { username } = useSelector((store) => store.user);
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleFormSubmit = (event) => {
@@ -81,6 +83,7 @@ const CreateQuiz = () => {
             ],
           },
         ]);
+        navigate('/profile');
       });
   };
 
