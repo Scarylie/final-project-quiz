@@ -149,7 +149,7 @@ const PlayQuiz = () => {
             <PageSubHeading>
               {quiz.createdAt && quiz.createdAt.substring(0, 10)}
             </PageSubHeading>
-
+            <ScoreBoard highScore={highScore} />
             <PlaySaveButton
               aria-label="play button"
               type="button"
