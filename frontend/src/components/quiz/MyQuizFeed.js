@@ -63,7 +63,7 @@ const MyQuizFeed = () => {
                   }}>
                   <Link to={`/play/${quiz._id}`}>{quiz.title}</Link>
                 </Card>
-                <DeleteQuiz title={quiz.title} id={quiz._id} />
+                <DeleteQuiz id={quiz._id} />
               </div>
             ))}
         </CardContainer>
