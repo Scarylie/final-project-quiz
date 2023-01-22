@@ -57,13 +57,16 @@ const MyQuizFeed = () => {
           {myQuizList &&
             myQuizList.map((quiz) => (
               <div key={quiz._id}>
-                <Card
+                <CardDelete
                   style={{
                     background: getBgColor(),
                   }}>
-                  <Link to={`/play/${quiz._id}`}>{quiz.title}</Link>
-                </Card>
-                <DeleteQuiz id={quiz._id} />
+                  <Link to={`/play/${quiz._id}`}>
+                    <p>{quiz.title}</p>
+                    <p>{quiz.createdAt && quiz.createdAt.substring(0, 10)}</p>
+                  </Link>
+                  <DeleteQuiz id={quiz._id} />
+                </CardDelete>
               </div>
             ))}
         </CardContainer>
@@ -94,4 +97,10 @@ const StyledFeed = styled.section`
     object-fit: cover;
     background-repeat: no-repeat;
   }
+`;
+
+const CardDelete = styled(Card)`
+  dislpay: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `;
