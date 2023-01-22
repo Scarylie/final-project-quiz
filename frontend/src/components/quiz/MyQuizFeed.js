@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import DeleteQuiz from './DeleteQuiz';
+import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { API_URL } from 'utils/urls';
 import styled from 'styled-components/macro';
 import { Card, CardContainer } from 'components/styles/cards';
-import { Link } from 'react-router-dom';
 import { PageSubHeading, Container } from 'components/styles/GlobalStyles';
 import emptystate from '../../assets/emptystate.png';
 
@@ -51,13 +53,18 @@ const MyQuizFeed = () => {
         <CardContainer>
           {myQuizList &&
             myQuizList.map((quiz) => (
-              <Card
-                key={quiz._id}
-                style={{
-                  background: getBgColor(),
-                }}>
-                <Link to={`/play/${quiz._id}`}>{quiz.title}</Link>
-              </Card>
+              <div key={quiz._id}>
+                <CardDelete
+                  style={{
+                    background: getBgColor(),
+                  }}>
+                  <Link to={`/play/${quiz._id}`}>
+                    <p>{quiz.title}</p>
+                    <p>{quiz.createdAt && quiz.createdAt.substring(0, 10)}</p>
+                  </Link>
+                  <DeleteQuiz id={quiz._id} />
+                </CardDelete>
+              </div>
             ))}
         </CardContainer>
       </StyledFeed>
@@ -87,6 +94,12 @@ const StyledFeed = styled.section`
     object-fit: cover;
     background-repeat: no-repeat;
   }
+`;
+
+const CardDelete = styled(Card)`
+  dislpay: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `;
 
 const YourQuizzes = styled.p`

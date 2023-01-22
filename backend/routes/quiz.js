@@ -175,9 +175,11 @@ const createQuiz = async (req, res) => {
 const deleteQuiz = async (req, res) => {
   console.log("deleteQuiz req.params", req.params);
   try {
-    const deletedQuiz = await Quiz.findOneAndDelete(req.params._id);
+    const deletedQuiz = await Quiz.findOneAndDelete({
+      _id: new mongoose.Types.ObjectId(req.params.id),
+    });
     if (deletedQuiz) {
-      res.status(200).json({ success: true, response: "Quiz deleted" });
+      res.status(200).json({ success: true, response: deletedQuiz });
     } else {
       res.status(404).json({ success: false, response: "Quiz not found" });
     }
