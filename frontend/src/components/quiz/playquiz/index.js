@@ -17,6 +17,7 @@ import {
 } from 'components/styles/GlobalStyles';
 import { PlaySaveButton } from 'components/styles/Buttons';
 import { GhostBtn } from 'components/styles/Buttons';
+import WinnerAnimation from '../../WinnerAnimation';
 
 // Icons
 import { FiArrowRightCircle } from 'react-icons/fi';
@@ -161,6 +162,7 @@ const PlayQuiz = () => {
               {quiz.createdAt && quiz.createdAt.substring(0, 10)}
             </PageSubHeading>
             <ScoreBoard highScore={highScore} />
+
             <PlaySaveButton
               aria-label="play button"
               type="button"
@@ -250,6 +252,7 @@ const PlayQuiz = () => {
         <PlayWrapper>
           <QuizContent>
             <PageHeading>You scored {score}% on this quiz!</PageHeading>
+            <WinnerAnimation width="200px" height="200px" />
             <ScoreBoard highScore={highScore} />
           </QuizContent>
         </PlayWrapper>
