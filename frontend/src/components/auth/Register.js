@@ -61,11 +61,10 @@ const Register = () => {
             dispatch(user.actions.setEmail(data.response.email));
             dispatch(user.actions.setError(null));
             navigate(`/profile`);
-            window.location.reload();
           });
         } else {
           setInputErrorMessage(data.response);
-          setInputError(true);
+          setInputError('Fill in your credentials');
         }
       });
   };
