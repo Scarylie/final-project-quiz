@@ -60,16 +60,16 @@ Setup
 
 **How it looks like**
 
-<img src="./frontend/src/assets/Login.png" width="350" alt="Login page">
+<img src="./frontend/src/assets/Login.png" width="600" alt="Login page">
 
-<img src="./frontend/src/assets/Home.png" width="350" alt="Home">
+<img src="./frontend/src/assets/Home.png" width="600" alt="Home">
 
-<img src="./frontend/src/assets/Profile.png" width="350" alt="Profile">
+<img src="./frontend/src/assets/Profile.png" width="600" alt="Profile">
 
-<img src="./frontend/src/assets/Createquiz.png" width="350" alt="Create Quiz">
+<img src="./frontend/src/assets/Createquiz.png" width="600" alt="Create Quiz">
 
-<img src="./frontend/src/assets/Playintro.png" width="350" alt="Play intro">
+<img src="./frontend/src/assets/Playintro.png" width="600" alt="Play intro">
 
-<img src="./frontend/src/assets/playquiz.png" width="350" alt="Play Quiz">
+<img src="./frontend/src/assets/playquiz.png" width="600" alt="Play Quiz">
 
-<img src="./frontend/src/assets/About.png" width="350" alt="About page">
+<img src="./frontend/src/assets/About.png" width="600" alt="About page">
