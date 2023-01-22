@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+// Loading
+import LoadingPage from 'components/LoadingPage';
 // Pages
 import ScoreBoard from './ScoreBoard';
 // Url
@@ -37,6 +39,7 @@ const PlayQuiz = () => {
   const [state, setState] = useState('intro');
   const [highScore, setHighScore] = useState(0);
   const [score, setScore] = useState();
+  const [isLoading, setisLoading] = useState(false)
 
   const calculateScore = () => {
     const answeredOn = results.length;
@@ -98,12 +101,14 @@ const PlayQuiz = () => {
   };
 
   useEffect(() => {
+    setisLoading(true)
     const options = {
       method: 'GET',
     };
     fetch(API_QUIZ, options)
       .then((res) => res.json())
       .then((json) => {
+        setisLoading(false)
         setQuiz(json.response.quiz);
         setHighScore(json.response.highScore);
       });
@@ -131,6 +136,12 @@ const PlayQuiz = () => {
     const color = Math.floor(Math.random() * colors.length);
     return colors[color];
   };
+
+  if (isLoading) {
+    return (
+      <LoadingPage />
+    )
+  }
 
   return (
     <Container>

@@ -1,28 +1,45 @@
-import React from 'react';
-import Lottie from 'react-lottie';
-import { useSelector } from 'react-redux';
-import animationData from '../lotties/loader';
+import React from 'react'
+import styled from 'styled-components'
+import Loader from '../assets/Loader.gif'
 
-const LoadingPage = () => {
-  const loading = useSelector((store) => store.ui.loading);
-  const defaultOptions = {
-    loop: true,
-    autoplay: true,
-    animationData,
-    rendererSettings: {
-      preserveAspectRatio: 'xMidYMid slice',
-    },
-  };
-
+ const LoadingPage = () => {
+  
   return (
-    <>
-      {loading && (
-        <div className="lottiestyle">
-          <Lottie options={defaultOptions} height={400} width={400} />
-        </div>
-      )}
-    </>
+    <BackgroundBlur>
+    <LoadingWrapper>
+      <Loadergif src={Loader} alt="Loader" />
+      </LoadingWrapper>
+      </BackgroundBlur>
   );
 };
 
-export default LoadingPage;
+export default LoadingPage
+
+const Loadergif = styled.img`
+  display: flex; 
+  width: auto;
+  height: auto;
+  align-items:center;
+  justify-content: center; 
+`
+const BackgroundBlur = styled.div`
+width: 100%;
+  height: 100%;
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+`
+
+const LoadingWrapper = styled.div`
+display: flex; 
+justify-content: center; 
+align-items: center;
+position: relative;
+  `
