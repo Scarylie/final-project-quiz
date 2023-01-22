@@ -19,6 +19,9 @@ const DeleteQuiz = ({ title, id }) => {
     fetch(API_QUIZ_ID, options)
       .then((data) => data.json())
       .then((data) => console.log(API_QUIZ_ID, data))
+      .then(() => {
+        window.location.reload();
+      })
       .catch((error) => console.error(error));
   };
 
