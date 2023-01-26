@@ -13,6 +13,7 @@ import { GhostBtn } from 'components/styles/Buttons';
 import remove from 'assets/removesmall.png';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { GrAddCircle } from 'react-icons/gr';
+import { getBgColor } from '../styles/Colors';
 
 const generateKey = (pre) => {
   return `${pre}_${new Date().getTime()}`;
@@ -152,29 +153,6 @@ const CreateQuiz = () => {
       !list[questionIndex].answers[answerIndex].isCorrect;
 
     setQuestionList(list);
-  };
-
-  //************** RANDOM BACKGROUND COLOR ************** //
-  const colors = [
-    '#5697fe',
-    '#2490d0',
-    '#20cced',
-    '#fff2f0',
-    '#ffe437',
-    '#ff4966',
-    '#d85dfb',
-    '#fd4472',
-    '#fd4472',
-    '#da43ff',
-    '#ff7e46',
-    '#7f60ff',
-    '#ffaf20',
-    '#ffcec2',
-    '#ffcec2',
-  ];
-  const getBgColor = () => {
-    const color = Math.floor(Math.random() * colors.length);
-    return colors[color];
   };
 
   let iconStyles = { fontSize: '3em' };

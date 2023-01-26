@@ -6,6 +6,7 @@ import emptystate from '../../assets/emptystate.png';
 import LoadingPage from 'components/LoadingPage';
 import { Container, PageSubHeading } from 'components/styles/GlobalStyles';
 import { CardContainer, Card } from 'components/styles/cards';
+import { getBgColor } from '../styles/Colors';
 
 const QuizFeed = () => {
   const [quizList, setQuizList] = useState([]);
@@ -23,28 +24,6 @@ const QuizFeed = () => {
         setQuizList(json.response);
       });
   }, []);
-
-  const colors = [
-    '#5697fe',
-    '#2490d0',
-    '#20cced',
-    '#fff2f0',
-    '#ffe437',
-    '#ff4966',
-    '#d85dfb',
-    '#fd4472',
-    '#fd4472',
-    '#da43ff',
-    '#ff7e46',
-    '#7f60ff',
-    '#ffaf20',
-    '#ffcec2',
-    '#ffcec2',
-  ];
-  const getBgColor = () => {
-    const color = Math.floor(Math.random() * colors.length);
-    return colors[color];
-  };
 
   if (isLoading) {
     return <LoadingPage />;

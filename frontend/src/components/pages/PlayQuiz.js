@@ -17,6 +17,7 @@ import {
 } from 'components/styles/GlobalStyles';
 import { PlaySaveButton } from 'components/styles/Buttons';
 import { GhostBtn } from 'components/styles/Buttons';
+import { getBgColor } from '../styles/Colors';
 
 // Icons
 import { FiArrowRightCircle } from 'react-icons/fi';
@@ -117,25 +118,6 @@ const PlayQuiz = () => {
   const totalQuestions = quiz?.questions?.length;
 
   const [buttonText, setButtonText] = useState('Finish');
-
-  const colors = [
-    '#5697fe',
-    '#2490d0',
-    '#20cced',
-    '#ffe437',
-    '#ff4966',
-    '#d85dfb',
-    '#fd4472',
-    '#fd4472',
-    '#da43ff',
-    '#ff7e46',
-    '#7f60ff',
-    '#ffaf20',
-  ];
-  const getBgColor = () => {
-    const color = Math.floor(Math.random() * colors.length);
-    return colors[color];
-  };
 
   if (isLoading) {
     return <LoadingPage />;

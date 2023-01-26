@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import DeleteQuiz from './DeleteQuiz';
 import { Link } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
 import { API_URL } from 'utils/urls';
 import styled from 'styled-components/macro';
 import { Card, CardContainer } from 'components/styles/cards';
-import { PageSubHeading, Container } from 'components/styles/GlobalStyles';
+import { Container } from 'components/styles/GlobalStyles';
 import emptystate from '../../assets/emptystate.png';
+import { getBgColor } from '../styles/Colors';
 
 const MyQuizFeed = () => {
   const [myQuizList, setMyQuizList] = useState([]);
@@ -25,25 +25,6 @@ const MyQuizFeed = () => {
         setMyQuizList(json.response);
       });
   }, [username]);
-
-  const colors = [
-    '#5697fe',
-    '#2490d0',
-    '#20cced',
-    '#ffe437',
-    '#ff4966',
-    '#d85dfb',
-    '#fd4472',
-    '#fd4472',
-    '#da43ff',
-    '#ff7e46',
-    '#7f60ff',
-    '#ffaf20',
-  ];
-  const getBgColor = () => {
-    const color = Math.floor(Math.random() * colors.length);
-    return colors[color];
-  };
 
   return (
     <Container>

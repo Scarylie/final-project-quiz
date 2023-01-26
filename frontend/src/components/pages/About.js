@@ -7,6 +7,7 @@ import {
 import { SlSocialLinkedin } from 'react-icons/sl';
 import { VscGithub } from 'react-icons/vsc';
 import { BsGithub } from 'react-icons/bs';
+import { getBgColor } from '../styles/Colors';
 
 import styled from 'styled-components/macro';
 
@@ -44,33 +45,8 @@ const presentation = [
   },
 ];
 
-
 const About = () => {
   let iconStyles = { fontSize: '1.5em' };
-
-  //************** RANDOM BACKGROUND COLOR ************** //
-  const colors = [
-    '#5697fe',
-    '#2490d0',
-    '#20cced',
-    '#fff2f0',
-    '#ffe437',
-    '#ff4966',
-    '#d85dfb',
-    '#fd4472',
-    '#fd4472',
-    '#da43ff',
-    '#ff7e46',
-    '#7f60ff',
-    '#ffaf20',
-    '#ffcec2',
-    '#ffcec2',
-  ];
-  const getBgColor = () => {
-    const color = Math.floor(Math.random() * colors.length);
-    return colors[color];
-  };
-
   return (
     <Container>
       <div>
