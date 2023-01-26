@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import DeleteQuiz from './DeleteQuiz';
 import { Link } from 'react-router-dom';
+import DeleteQuiz from './DeleteQuiz';
 import { API_URL } from 'utils/urls';
 import styled from 'styled-components/macro';
 import { Card, CardContainer } from 'components/styles/cards';
@@ -78,7 +78,7 @@ const StyledFeed = styled.section`
 `;
 
 const CardDelete = styled(Card)`
-  dislpay: flex;
+  display: flex;
   flex-direction: row;
   justify-content: space-between;
 `;

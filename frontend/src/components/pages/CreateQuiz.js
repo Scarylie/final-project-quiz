@@ -3,17 +3,17 @@ import { useSelector, useDispatch, batch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { API_URL } from 'utils/urls';
 import quiz from 'reducers/quiz';
-import { Container } from 'components/styles/GlobalStyles';
-import { CreateCard } from 'components/styles/cards';
-import { PlaySaveButton } from 'components/styles/Buttons';
-import { Input, FormHeading } from 'components/styles/Forms';
+
+// STYLES & ICONS //
 import styled from 'styled-components/macro';
-import { QuestionCard } from 'components/styles/cards';
-import { GhostBtn } from 'components/styles/Buttons';
+import { Container } from 'components/styles/GlobalStyles';
+import { CreateCard, QuestionCard } from 'components/styles/cards';
+import { PlaySaveButton, GhostBtn } from 'components/styles/Buttons';
+import { Input, FormHeading } from 'components/styles/Forms';
+import { getBgColor } from '../styles/Colors';
 import remove from 'assets/removesmall.png';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { GrAddCircle } from 'react-icons/gr';
-import { getBgColor } from '../styles/Colors';
 
 const generateKey = (pre) => {
   return `${pre}_${new Date().getTime()}`;

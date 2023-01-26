@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-// Loading
 import LoadingPage from 'components/LoadingPage';
-// Pages
 import ScoreBoard from './ScoreBoard';
-// Url
 import { API_URL } from 'utils/urls';
-// Styles
+// STYLES & ICONS //
 import styled from 'styled-components/macro';
 import {
   Container,
@@ -18,8 +14,6 @@ import {
 import { PlaySaveButton } from 'components/styles/Buttons';
 import { GhostBtn } from 'components/styles/Buttons';
 import { getBgColor } from '../styles/Colors';
-
-// Icons
 import { FiArrowRightCircle } from 'react-icons/fi';
 import { GrClose } from 'react-icons/gr';
 
@@ -53,7 +47,6 @@ const PlayQuiz = () => {
       const numberOfCorrect = filteredArray.length;
       const scoreCalculate = (numberOfCorrect / totalQuestions) * 100;
       const correctOfTotal = Math.round(scoreCalculate);
-
       return correctOfTotal;
     }
   };
@@ -202,7 +195,6 @@ const PlayQuiz = () => {
                           aria-label="submit button"
                           onClick={(event) => {
                             handleFinishQuiz(event, currentQuestion);
-
                             setButtonText('Submit');
                           }}>
                           <ButtonSpan>{buttonText}</ButtonSpan>
@@ -225,7 +217,6 @@ const PlayQuiz = () => {
           </QuizContent>
         </PlayWrapper>
       )}
-
       {state === 'score' && (
         <PlayWrapper>
           <QuizContent>
@@ -234,7 +225,6 @@ const PlayQuiz = () => {
           </QuizContent>
         </PlayWrapper>
       )}
-
       <ExitGame>
         <Link aria-label="Link to home" to={`/home`}>
           <GrClose style={iconStyles} />

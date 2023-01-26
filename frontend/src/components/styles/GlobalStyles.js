@@ -42,7 +42,6 @@ export const StyledNavbar = styled.header`
 `;
 
 export const ContainerWrapper = styled.section`
-  /* background-image: url(${bulb}); */
   background-repeat: no-repeat;
   background-size: cover;
 `;
