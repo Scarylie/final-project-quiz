@@ -39,7 +39,7 @@ const PlayQuiz = () => {
   const [state, setState] = useState('intro');
   const [highScore, setHighScore] = useState(0);
   const [score, setScore] = useState();
-  const [isLoading, setisLoading] = useState(false)
+  const [isLoading, setisLoading] = useState(false);
 
   const calculateScore = () => {
     const answeredOn = results.length;
@@ -101,14 +101,14 @@ const PlayQuiz = () => {
   };
 
   useEffect(() => {
-    setisLoading(true)
+    setisLoading(true);
     const options = {
       method: 'GET',
     };
     fetch(API_QUIZ, options)
       .then((res) => res.json())
       .then((json) => {
-        setisLoading(false)
+        setisLoading(false);
         setQuiz(json.response.quiz);
         setHighScore(json.response.highScore);
       });
@@ -138,9 +138,7 @@ const PlayQuiz = () => {
   };
 
   if (isLoading) {
-    return (
-      <LoadingPage />
-    )
+    return <LoadingPage />;
   }
 
   return (

@@ -11,12 +11,12 @@ import LogIn from 'components/auth/LogIn';
 import Register from 'components/auth/Register';
 import Profile from 'components/pages/Profile';
 import About from 'components/pages/About';
-import QuizFeed from 'components/pages/Home';
-import PlayQuiz from 'components/quiz/playquiz';
-import { NotFound } from 'components/NotFound';
+import QuizFeed from 'components/pages/QuizFeed';
+import PlayQuiz from 'components/pages/PlayQuiz';
 import Navbar from 'components/Navbar';
 import Hero from 'components/Hero';
-import CreateQuiz from 'components/quiz/createquiz/';
+import CreateQuiz from 'components/pages/CreateQuiz';
+import { NotFound } from 'components/NotFound';
 
 const reducer = combineReducers({
   user: user.reducer,

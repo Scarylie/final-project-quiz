@@ -4,26 +4,22 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import emptystate from '../../assets/emptystate.png';
 import LoadingPage from 'components/LoadingPage';
-import {
-  Container,
-  PageHeading,
-  PageSubHeading,
-} from 'components/styles/GlobalStyles';
+import { Container, PageSubHeading } from 'components/styles/GlobalStyles';
 import { CardContainer, Card } from 'components/styles/cards';
 
 const QuizFeed = () => {
   const [quizList, setQuizList] = useState([]);
-  const [isLoading, setisLoading] = useState(false)
+  const [isLoading, setisLoading] = useState(false);
 
   useEffect(() => {
-    setisLoading(true)
+    setisLoading(true);
     const options = {
       method: 'GET',
     };
     fetch(API_URL('quiz'), options)
       .then((res) => res.json())
       .then((json) => {
-        setisLoading(false)
+        setisLoading(false);
         setQuizList(json.response);
       });
   }, []);
@@ -51,9 +47,7 @@ const QuizFeed = () => {
   };
 
   if (isLoading) {
-    return (
-      <LoadingPage />
-    )
+    return <LoadingPage />;
   }
 
   return (

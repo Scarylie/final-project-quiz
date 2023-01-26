@@ -3,8 +3,6 @@ import { useSelector, useDispatch, batch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { API_URL } from 'utils/urls';
 import quiz from 'reducers/quiz';
-//import QuizForm from './QuizForm';
-/* import QuizFormQuestions from './QuizFormQuestions'; */
 import { Container } from 'components/styles/GlobalStyles';
 import { CreateCard } from 'components/styles/cards';
 import { PlaySaveButton } from 'components/styles/Buttons';
@@ -47,7 +45,6 @@ const CreateQuiz = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        /* 'Authorization': accessToken */
       },
       body: JSON.stringify({
         title: newTitle,

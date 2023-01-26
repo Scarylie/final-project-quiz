@@ -7,7 +7,7 @@ import {
   PageHeading,
   PageSubHeading,
 } from 'components/styles/GlobalStyles';
-import MyQuizFeed from 'components/quiz/MyQuizFeed';
+import MyQuizFeed from 'components/pages/MyQuizFeed';
 import { Link } from 'react-router-dom';
 import { AiOutlinePlayCircle } from 'react-icons/ai';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
