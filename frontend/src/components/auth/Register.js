@@ -18,7 +18,6 @@ const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
-  const [mode, setMode] = useState('register');
   const [inputError, setInputError] = useState(false);
   const [inputErrorMessage, setInputErrorMessage] = useState('');
 
@@ -28,9 +27,9 @@ const Register = () => {
 
   useEffect(() => {
     if (accessToken) {
-      navigate(`/profile`);
+      navigate('/');
     }
-  }, [accessToken]);
+  }, [accessToken, navigate]);
 
   const onFormSubmit = (event) => {
     event.preventDefault();
@@ -47,7 +46,7 @@ const Register = () => {
       }),
     };
 
-    fetch(API_URL(mode), options)
+    fetch(API_URL('register'), options)
       .then((response) => response.json())
       .then((response) => {
         localStorage.setItem('accessToken', response.response.accessToken);
