@@ -52,7 +52,6 @@ app.post("/login", logInUser);
 app.get("/user", authenticateUser);
 
 // * Quiz * //
-// app.get("/quiz", authenticateUser);
 app.get("/quiz", getQuiz);
 app.get("/quiz/:id", singleQuiz);
 app.post("/quiz", createQuiz);
