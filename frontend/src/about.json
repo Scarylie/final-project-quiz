@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Sarah Kneedler",
+    "profileImg": "image/sarah.jpg",
+    "description": "Hi! I am a curios frontend developer with a background in social work. I am eager to continue learning and I am inspired and amazed by what can be done with code. My hope is to combine my new found love for coding with my previous work experience and bring a different insight in to the creative world of tech. I am a problem solver and used to collaborate and work in teams across different professions and roles.",
+    "linkedIn": "https://www.linkedin.com/in/sarah-kneedler/",
+    "github": "https://github.com/Kneedler",
+    "portfolio": "https://sarahkneedler-portfolio.netlify.app/"
+  },
+  {
+    "name": "Saralie Bognandi",
+    "profileImg": "image/saralie.jpg",
+    "description": "I am a Frontend Developer with a background as a Design Engineer who love to improve user experience for digital services that the users love while working with a modern tech stack. I have experience working as a team leader and enjoy enabling teams to collaborate and thrive while reaching their full potential.",
+    "linkedIn": "https://www.linkedin.com/in/saralie-bognandi-439939b3/",
+    "github": "https://github.com/Scarylie",
+    "portfolio": "https://saralie-bognandi.netlify.app/"
+  },
+  {
+    "name": "Younas Tesfamariam",
+    "profileImg": "image/younas.png",
+    "description": "Currently studying at Technigo to become a frontend developer.I have a bachelor degree in Information Systems and work today as an Senior IT Operations Specialist to ensure that the day-to-day operations run smoothly. My goal is to strive to learn and gain more knowledge in programming.",
+    "linkedIn": "https://www.linkedin.com/in/younas-tesfamariam-3538a6134/",
+    "github": "https://github.com/yotesfam",
+    "portfolio": "https://younas-tesfamariam-portfolio.netlify.app/"
+  }
+]

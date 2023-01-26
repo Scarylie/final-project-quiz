@@ -8,42 +8,8 @@ import { SlSocialLinkedin } from 'react-icons/sl';
 import { VscGithub } from 'react-icons/vsc';
 import { BsGithub } from 'react-icons/bs';
 import { getBgColor } from '../styles/Colors';
-
 import styled from 'styled-components/macro';
-
-import Saralie from '../../assets/saralie.jpg';
-import Sarah from '../../assets/sarah.jpg';
-import Younas from '../../assets/younas.png';
-
-const presentation = [
-  {
-    name: 'Sarah Kneedler',
-    profileImg: Sarah,
-    descrition:
-      'Hi! I am a curios frontend developer with a background in social work. I am eager to continue learning and I am inspired and amazed by what can be done with code. My hope is to combine my new found love for coding with my previous work experience and bring a different insight in to the creative world of tech. I am a problem solver and used to collaborate and work in teams across different professions and roles.',
-    linkedIn: 'https://www.linkedin.com/in/sarah-kneedler/',
-    github: 'https://github.com/Kneedler',
-    portfolio: 'https://sarahkneedler-portfolio.netlify.app/',
-  },
-  {
-    name: 'Saralie Bognandi',
-    profileImg: Saralie,
-    descrition:
-      'I am a Frontend Developer with a background as a Design Engineer who love to improve user experience for digital services that the users love while working with a modern tech stack. I have experience working as a team leader and enjoy enabling teams to collaborate and thrive while reaching their full potential.',
-    linkedIn: 'https://www.linkedin.com/in/saralie-bognandi-439939b3/',
-    github: 'https://github.com/Scarylie',
-    portfolio: 'https://saralie-bognandi.netlify.app/',
-  },
-  {
-    name: 'Younas Tesfamariam',
-    profileImg: Younas,
-    descrition:
-      'Currently studying at Technigo to become a frontend developer.I have a bachelor degree in Information Systems and work today as an Senior IT Operations Specialist to ensure that the day-to-day operations run smoothly. My goal is to strive to learn and gain more knowledge in programming.',
-    linkedIn: 'https://www.linkedin.com/in/younas-tesfamariam-3538a6134/',
-    github: 'https://github.com/yotesfam',
-    portfolio: 'https://younas-tesfamariam-portfolio.netlify.app/',
-  },
-];
+import about from '../../about.json';
 
 const About = () => {
   let iconStyles = { fontSize: '1.5em' };
@@ -70,7 +36,7 @@ const About = () => {
         </div>
       </div>
       <CardContainer>
-        {presentation.map((person) => {
+        {about.map((person) => {
           return (
             <Card
               key={person.name}
@@ -91,7 +57,7 @@ const About = () => {
                       <ImageContainer>
                         <Img src={person.profileImg} alt="profile picture" />
                       </ImageContainer>
-                      <DescriptionText>{person.descrition}</DescriptionText>
+                      <DescriptionText>{person.description}</DescriptionText>
                     </a>
                   </AboutCard>
                   <Links>
