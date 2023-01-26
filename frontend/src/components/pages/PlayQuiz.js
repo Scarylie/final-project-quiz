@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import LoadingPage from 'components/LoadingPage';
 import ScoreBoard from './ScoreBoard';
@@ -11,8 +11,8 @@ import {
   PageHeading,
   PageSubHeading,
 } from 'components/styles/GlobalStyles';
-import { PlaySaveButton } from 'components/styles/Buttons';
-import { GhostBtn } from 'components/styles/Buttons';
+import { PlaySaveButton, GhostBtn } from 'components/styles/Buttons';
+import { Button } from 'components/styles/Forms';
 import { getBgColor } from '../styles/Colors';
 import { FiArrowRightCircle } from 'react-icons/fi';
 import { GrClose } from 'react-icons/gr';
@@ -24,8 +24,6 @@ const PlayQuiz = () => {
   const params = useParams();
   const API_QUIZ = `${API_URL('quiz')}/${params.id}`;
   const API_SCORE = `${API_URL('score')}`;
-
-  const navigate = useNavigate();
 
   const [quiz, setQuiz] = useState({});
   const [step, setStep] = useState(0);
@@ -195,7 +193,7 @@ const PlayQuiz = () => {
                           aria-label="submit button"
                           onClick={(event) => {
                             handleFinishQuiz(event, currentQuestion);
-                            setButtonText('Submit');
+                            setButtonText('Press again to see score');
                           }}>
                           <ButtonSpan>{buttonText}</ButtonSpan>
                         </PlaySaveButton>
@@ -222,6 +220,11 @@ const PlayQuiz = () => {
           <QuizContent>
             <PageHeading>You scored {score}% on this quiz!</PageHeading>
             <ScoreBoard highScore={highScore} />
+            <ReturnContainer>
+              <Link aria-label="Link to home" to={`/home`}>
+                <Button type="submit">Return to home</Button>
+              </Link>
+            </ReturnContainer>
           </QuizContent>
         </PlayWrapper>
       )}
@@ -413,4 +416,8 @@ const StyledRadio = styled.input`
     width: 40px;
     min-width: 30px;
   }
+`;
+
+const ReturnContainer = styled.div`
+  margin: 10px;
 `;
