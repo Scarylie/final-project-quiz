@@ -53,14 +53,19 @@ const Navbar = () => {
     <StyledNavbar>
       <NavbarContainer>
         <div>
-          <Link to={`/`}>
+          <Link className="tooltip" to={`/`}>
             <Img src={Logo} alt="Quizzies logo" />
+            <span className="tooltiptext">Start page</span>
           </Link>
         </div>
         <Logos>
           <div>
             {accessToken ? (
-              <Link aria-label="Link to home page" to={`/home`}>
+              <Link
+                className="tooltip"
+                aria-label="Link to play quiz"
+                to={`/home`}>
+                <span className="tooltiptext">Play quiz</span>
                 <AiOutlinePlayCircle style={iconStyles} />
               </Link>
             ) : (
@@ -69,12 +74,20 @@ const Navbar = () => {
           </div>
           <div>
             {accessToken ? (
-              <Link aria-label="Link to create quiz" to={`/create`}>
+              <Link
+                className="tooltip"
+                aria-label="Link to create quiz"
+                to={`/create`}>
                 <AiOutlinePlusCircle style={iconStyles} />
+                <span className="tooltiptext">Create quiz</span>
               </Link>
             ) : (
-              <Link aria-label="Link to start page" to={`/about`}>
+              <Link
+                className="tooltip"
+                aria-label="Link to start page"
+                to={`/about`}>
                 <VscInfo style={iconStyles} />
+                <span className="tooltiptext">More about this page</span>
               </Link>
             )}
           </div>
