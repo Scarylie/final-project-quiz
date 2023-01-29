@@ -13,7 +13,6 @@ const quiz = createSlice({
       store.title = action.payload;
     },
     setQuestionList: (store, action) => {
-      console.log('setQuestionList reducer action.payload', action.payload);
       store.questions = [action.payload, ...store.questions];
     },
     setError: (store, action) => {

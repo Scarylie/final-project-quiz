@@ -44,7 +44,6 @@ const Navbar = () => {
 
   const onLogOut = () => {
     dispatch(user.actions.logout());
-    console.log('Log out');
     location.href = '/';
   };
 

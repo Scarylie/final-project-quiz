@@ -108,10 +108,8 @@ const logInUser = async (req, res) => {
 // Authentication //
 const authenticateUser = async (req, res, next) => {
   const accessToken = req.header("Authorization");
-  console.log("authenticate user: ", accessToken);
   try {
     const user = await User.findOne({ accessToken: accessToken });
-    console.log("user!!!!!!!! ", user);
     if (user) {
       res.status(200).json({
         response: {

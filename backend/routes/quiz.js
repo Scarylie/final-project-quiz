@@ -106,7 +106,6 @@ const Quiz = mongoose.model("Quiz", quizSchema);
 // GET myQuiz //
 const getQuiz = async (req, res) => {
   const { creator } = req.query;
-  console.log("getQuiz req", req);
   const creatorQuery = creator ? creator : /.*/;
   try {
     const quizzes = await Quiz.find({ creator: creatorQuery }).sort({
@@ -126,13 +125,10 @@ const getQuiz = async (req, res) => {
 // GET Single Quiz //
 const singleQuiz = async (req, res) => {
   try {
-    console.log("SingleQuiz!");
     const oneQuiz = await Quiz.findById(req.params.id);
     const highScore = await Score.find({ quizId: req.params.id })
       .sort("desc")
       .limit(5);
-
-    console.log("highScore: ", highScore);
 
     const responseObj = {
       quiz: oneQuiz,
@@ -152,7 +148,6 @@ const singleQuiz = async (req, res) => {
 // POST //
 const createQuiz = async (req, res) => {
   const { title, creator, questions, category, level, interaction } = req.body;
-  console.log("req.body", req.body);
   try {
     const newQuiz = await new Quiz({
       title,
@@ -173,7 +168,6 @@ const createQuiz = async (req, res) => {
 
 // DELETE //
 const deleteQuiz = async (req, res) => {
-  console.log("deleteQuiz req.params", req.params);
   try {
     const deletedQuiz = await Quiz.findOneAndDelete({
       _id: new mongoose.Types.ObjectId(req.params.id),

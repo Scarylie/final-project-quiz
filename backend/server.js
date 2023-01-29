@@ -20,7 +20,6 @@ const mongoUrl =
   process.env.MONGO_URL ||
   `mongodb+srv://MongoSaralie:${process.env.STRING_PW}@projectmongoapi.weegxnh.mongodb.net/finalprojectquiz?retryWrites=true&w=majority`;
 
-console.log("mongoUrl", mongoUrl);
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.Promise = Promise;
 

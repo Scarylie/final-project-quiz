@@ -3,7 +3,6 @@ import styled from 'styled-components/macro';
 import { PageHeading, PageSubHeading } from 'components/styles/GlobalStyles';
 
 const ScoreBoard = ({ highScore }) => {
-  console.log('highScore', highScore);
   return (
     <div>
       {highScore.length > 0 && (
