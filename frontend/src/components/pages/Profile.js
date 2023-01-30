@@ -8,6 +8,7 @@ import {
   PageHeading,
   PageSubHeading,
 } from 'components/styles/GlobalStyles';
+
 import { AiOutlinePlayCircle } from 'react-icons/ai';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 

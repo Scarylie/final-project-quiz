@@ -14,11 +14,13 @@ const {
 const { addScore, getScore } = require("./routes/score");
 
 dotenv.config();
-
 mongoose.set("strictQuery", false);
-const mongoUrl =
-  process.env.MONGO_URL ||
-  `mongodb+srv://MongoSaralie:${process.env.STRING_PW}@projectmongoapi.weegxnh.mongodb.net/finalprojectquiz?retryWrites=true&w=majority`;
+
+const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/final-project";
+
+// const mongoUrl =
+//   process.env.MONGO_URL ||
+//   `mongodb+srv://MongoSaralie:${process.env.STRING_PW}@projectmongoapi.weegxnh.mongodb.net/finalprojectquiz?retryWrites=true&w=majority`;
 
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.Promise = Promise;
@@ -51,14 +53,26 @@ app.post("/login", logInUser);
 app.get("/user", authenticateUser);
 
 // * Quiz * //
+/* app.get("/quiz", authenticateUser); */
 app.get("/quiz", getQuiz);
+
+/* app.get("/quiz/:id", authenticateUser); */
 app.get("/quiz/:id", singleQuiz);
+
+/* app.post("/quiz", authenticateUser); */
 app.post("/quiz", createQuiz);
+
+/* app.delete("/quiz/:id", authenticateUser); */
 app.delete("/quiz/:id", deleteQuiz);
+
+/* app.patch("/quiz/:id", authenticateUser); */
 app.patch("/quiz/:id", editQuiz);
 
-// * Quiz * //
+// * Quiz Score* //
+/* app.get("/score/:id", authenticateUser); */
 app.get("/score/:id", getScore);
+
+/* app.post("/score", authenticateUser); */
 app.post("/score", addScore);
 
 // Start the server

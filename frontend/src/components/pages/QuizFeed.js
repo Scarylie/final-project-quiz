@@ -9,6 +9,7 @@ import { CardContainer, Card } from 'components/styles/cards';
 import { getBgColor } from '../styles/Colors';
 
 const QuizFeed = () => {
+  const accessToken = localStorage.getItem('accessToken');
   const [quizList, setQuizList] = useState([]);
   const [isLoading, setisLoading] = useState(false);
 
@@ -16,7 +17,13 @@ const QuizFeed = () => {
     setisLoading(true);
     const options = {
       method: 'GET',
+      headers: {
+        // prettier-ignore
+        'Authorization': accessToken,
+        'Content-Type': 'application/json',
+      },
     };
+
     fetch(API_URL('quiz'), options)
       .then((res) => res.json())
       .then((json) => {
