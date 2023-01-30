@@ -1,4 +1,3 @@
-import express from "express";
 import mongoose from "mongoose";
 import crypto from "crypto";
 import bcrypt from "bcrypt";
@@ -20,13 +19,16 @@ const UserSchema = new mongoose.Schema({
   },
   email: {
     type: String,
-    /* required: true, */
     unique: true,
     lowercase: true,
     validate: [
       /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
       "Please add valid email",
     ],
+  },
+  createdAt: {
+    type: Date,
+    default: () => new Date(),
   },
 });
 const User = mongoose.model("User", UserSchema);
