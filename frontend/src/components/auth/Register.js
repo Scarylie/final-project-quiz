@@ -27,13 +27,12 @@ const Register = () => {
 
   useEffect(() => {
     if (accessToken) {
-      navigate('/');
+      navigate('/profile');
     }
   }, [accessToken, navigate]);
 
   const onFormSubmit = (event) => {
     event.preventDefault();
-
     const options = {
       method: 'POST',
       headers: {
@@ -48,10 +47,6 @@ const Register = () => {
 
     fetch(API_URL('register'), options)
       .then((response) => response.json())
-      .then((response) => {
-        localStorage.setItem('accessToken', response.response.accessToken);
-        return response;
-      })
       .then((data) => {
         if (data.success) {
           batch(() => {
@@ -59,11 +54,23 @@ const Register = () => {
             dispatch(user.actions.setUserId(data.response.id));
             dispatch(user.actions.setEmail(data.response.email));
             dispatch(user.actions.setError(null));
+            dispatch(user.actions.setAccessToken(data.response.accessToken));
+            localStorage.setItem('accessToken', data.response.accessToken);
+            localStorage.setItem('userId', JSON.stringify(data.response.id));
+            localStorage.setItem('username', data.response.username);
             navigate(`/profile`);
           });
         } else {
-          setInputErrorMessage(data.response);
+          batch(() => {
+            dispatch(user.actions.setUsername(null));
+            dispatch(user.actions.setUserId(null));
+            dispatch(user.actions.setEmail(null));
+            dispatch(user.actions.setAccessToken(null));
+            dispatch(user.actions.setError(data.response));
+          });
+          setInputError(true);
           setInputError('Fill in your credentials');
+          setInputErrorMessage(data.response);
         }
       });
   };

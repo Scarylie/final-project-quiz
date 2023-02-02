@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch, batch } from 'react-redux';
+import { useDispatch, batch, useSelector } from 'react-redux';
 import { useNavigate, Navigate, Link } from 'react-router-dom';
 import { API_URL } from 'utils/urls';
 import user from 'reducers/auth';
@@ -21,11 +21,10 @@ const LogIn = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const accessToken = localStorage.getItem('accessToken');
+  const accessToken = useSelector((store) => store.user.accessToken);
 
   const onFormSubmit = (event) => {
     event.preventDefault();
-
     const options = {
       method: 'POST',
       headers: {
@@ -36,31 +35,37 @@ const LogIn = () => {
         password: password,
       }),
     };
-    if (username && password) {
-      fetch(API_URL('login'), options)
-        .then((response) => response.json())
-        .then((response) => {
-          localStorage.setItem('accessToken', response.response.accessToken);
-          return response;
-        })
-        .then((data) => {
-          if (data.success) {
-            batch(() => {
-              dispatch(user.actions.setUsername(data.response.username));
-              dispatch(user.actions.setUserId(data.response.id));
-              dispatch(user.actions.setError(null));
-            });
-          } else {
-            setInputErrorMessage(data.response);
-          }
-        })
-        .finally(() => {
-          navigate('/profile');
-        });
-    } else {
-      setInputError(true);
-      setInputErrorMessage('Fill in your credentials');
-    }
+    fetch(API_URL('login'), options)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          batch(() => {
+            dispatch(user.actions.setUsername(data.response.username));
+            dispatch(user.actions.setUserId(data.response.id));
+            dispatch(user.actions.setError(null));
+            dispatch(user.actions.setAccessToken(data.response.accessToken));
+            localStorage.setItem('accessToken', data.response.accessToken);
+            localStorage.setItem('userId', JSON.stringify(data.response.id));
+            localStorage.setItem('username', data.response.username);
+            navigate(`/profile`);
+          });
+        } else {
+          batch(() => {
+            dispatch(user.actions.setUsername(null));
+            dispatch(user.actions.setUserId(null));
+            dispatch(user.actions.setAccessToken(null));
+            dispatch(user.actions.setError(data.response));
+          });
+          setInputError(true);
+          setInputError('Fill in your credentials');
+          setInputErrorMessage(data.response);
+        }
+      })
+      .catch((data) => {
+        setInputError(true);
+        setInputError('Fill in your credentials');
+        setInputErrorMessage(data.response);
+      });
   };
 
   if (accessToken) {

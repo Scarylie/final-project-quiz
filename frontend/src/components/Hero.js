@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components/macro';
 
 const Hero = () => {
-  const { accessToken } = useSelector((store) => store.user);
+  const accessToken = localStorage.getItem('accessToken');
 
   return (
     <div>
