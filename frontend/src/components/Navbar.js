@@ -16,7 +16,7 @@ import { RiLogoutBoxRLine } from 'react-icons/ri';
 
 const Navbar = () => {
   const accessToken = localStorage.getItem('accessToken');
-  const { username, userId } = useSelector((store) => store.user);
+  const { username } = useSelector((store) => store.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -34,9 +34,6 @@ const Navbar = () => {
         .then((data) =>
           batch(() => {
             dispatch(user.actions.setUsername(data.response.username));
-            dispatch(user.actions.setUserId(data.response.id));
-            dispatch(user.actions.setEmail(data.response.email));
-            dispatch(user.actions.setError(null));
           })
         );
     }
@@ -53,9 +50,8 @@ const Navbar = () => {
     <StyledNavbar>
       <NavbarContainer>
         <div>
-          <Link className="tooltip" to={`/`}>
+          <Link to={`/profile`}>
             <Img src={Logo} alt="Quizzies logo" />
-            <span className="tooltiptext">Start page</span>
           </Link>
         </div>
         <Logos>

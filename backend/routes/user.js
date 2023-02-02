@@ -20,7 +20,6 @@ const UserSchema = new mongoose.Schema({
   },
   email: {
     type: String,
-    /* required: true, */
     unique: true,
     lowercase: true,
     validate: [
@@ -61,14 +60,14 @@ const registerUser = async (req, res) => {
     }
   } catch (error) {
     if (error.code === 11000) {
-      res.status(400).json({
+      res.status(401).json({
         response:
           "Username or email already exists, please choose another username!",
         error: error,
         success: false,
       });
     } else {
-      res.status(400).json({
+      res.status(500).json({
         success: false,
         response: "Something went wrong",
         error: error,
@@ -100,7 +99,8 @@ const logInUser = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      response: error,
+      response: "Something went wrong",
+      error: error,
     });
   }
 };
@@ -127,7 +127,7 @@ const authenticateUser = async (req, res, next) => {
       });
     }
   } catch (error) {
-    res.status(400).json({
+    res.status(500).json({
       response: error,
       success: false,
     });

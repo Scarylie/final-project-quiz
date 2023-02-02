@@ -1,11 +1,11 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import LogIn from 'components/auth/LogIn';
 import styled from 'styled-components/macro';
 import { Container, ContainerWrapper } from 'components/styles/GlobalStyles';
 
 const StartPage = () => {
-  const { accessToken } = useSelector((store) => store.user);
+  const accessToken = localStorage.getItem('accessToken');
+
   return (
     <ContainerWrapper>
       <Container>
