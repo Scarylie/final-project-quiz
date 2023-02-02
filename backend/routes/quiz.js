@@ -1,9 +1,7 @@
 import mongoose from "mongoose";
 
-const { UserSchema } = require("./user");
 const { ScoreSchema } = require("./score");
 
-const User = mongoose.model("User", UserSchema);
 const Score = mongoose.model("Score", ScoreSchema);
 
 // ************ SCHEMAS & MODELS *************** //
@@ -15,12 +13,7 @@ const answerSchema = new mongoose.Schema({
   isCorrect: {
     type: Boolean,
   },
-  numberOfAnswers: {
-    type: String,
-    enum: ["True/False", "Multiple"],
-  },
 });
-const Answers = mongoose.model("Answers", answerSchema);
 
 const questionSchema = new mongoose.Schema({
   question: {
@@ -39,25 +32,6 @@ const questionSchema = new mongoose.Schema({
     required: true,
   },
 });
-const Questions = mongoose.model("Questions", questionSchema);
-
-const interactionSchema = new mongoose.Schema({
-  name: {
-    type: String,
-  },
-  comment: {
-    type: String,
-    minlength: 5,
-    maxlength: 140,
-    trim: true,
-  },
-  likes: {
-    type: Number,
-    default: 0,
-  },
-});
-
-const Interaction = mongoose.model("Interaction", interactionSchema);
 
 const quizSchema = new mongoose.Schema({
   title: {
@@ -77,26 +51,14 @@ const quizSchema = new mongoose.Schema({
     type: [questionSchema],
     required: true,
   },
-  likes: {
-    type: Number,
-    default: 0,
-  },
   public: {
     type: Boolean,
     default: false,
   },
-  interaction: {
-    type: [interactionSchema],
-  },
-  category: [
-    {
-      type: String,
-      maxlength: 15,
-    },
-  ],
   level: {
     type: String,
     enum: ["easy", "medium", "hard"],
+    default: "easy",
   },
 });
 const Quiz = mongoose.model("Quiz", quizSchema);
@@ -129,12 +91,10 @@ const singleQuiz = async (req, res) => {
     const highScore = await Score.find({ quizId: req.params.id })
       .sort("desc")
       .limit(5);
-
     const responseObj = {
       quiz: oneQuiz,
       highScore,
     };
-
     if (oneQuiz) {
       res.status(200).json({ success: true, response: responseObj });
     } else {
@@ -147,15 +107,12 @@ const singleQuiz = async (req, res) => {
 
 // POST //
 const createQuiz = async (req, res) => {
-  const { title, creator, questions, category, level, interaction } = req.body;
+  const { title, creator, questions } = req.body;
   try {
     const newQuiz = await new Quiz({
       title,
       creator,
       questions,
-      category,
-      level,
-      interaction,
     });
     newQuiz.save();
     res.status(201).json({ success: true, response: newQuiz });
@@ -182,7 +139,7 @@ const deleteQuiz = async (req, res) => {
   }
 };
 
-// PATCH //
+// PATCH -- is not in frontend, but in postman //
 const editQuiz = async (req, res) => {
   const { _id } = req.params;
   try {
