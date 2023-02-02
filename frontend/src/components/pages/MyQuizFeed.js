@@ -10,6 +10,7 @@ import emptystate from '../../assets/emptystate.png';
 import { getBgColor } from '../styles/Colors';
 
 const MyQuizFeed = () => {
+  const accessToken = localStorage.getItem('accessToken');
   const [myQuizList, setMyQuizList] = useState([]);
   const { username } = useSelector((store) => store.user);
 
@@ -18,6 +19,11 @@ const MyQuizFeed = () => {
   useEffect(() => {
     const options = {
       method: 'GET',
+      headers: {
+        // prettier-ignore
+        'Authorization': accessToken,
+        'Content-Type': 'application/json',
+      },
     };
     fetch(API_QUIZ, options)
       .then((res) => res.json())
@@ -32,8 +38,8 @@ const MyQuizFeed = () => {
         className={myQuizList?.length <= 0 ? 'no-items' : 'display-items'}>
         <YourQuizzes>👇🏼Your created quizes👇🏼</YourQuizzes>
         <CardContainer>
-          {myQuizList &&
-            myQuizList.map((quiz) => (
+          {myQuizList?.length > 0 &&
+            myQuizList?.map((quiz) => (
               <div key={quiz._id}>
                 <CardDelete
                   style={{

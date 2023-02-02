@@ -20,6 +20,7 @@ const generateKey = (pre) => {
 };
 
 const CreateQuiz = () => {
+  const accessToken = localStorage.getItem('accessToken');
   const [newTitle, setNewTitle] = useState('');
   const [questionList, setQuestionList] = useState([
     {
@@ -45,6 +46,8 @@ const CreateQuiz = () => {
     const options = {
       method: 'POST',
       headers: {
+        // prettier-ignore
+        'Authorization': accessToken,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
