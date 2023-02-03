@@ -49,11 +49,21 @@ const Navbar = () => {
   return (
     <StyledNavbar>
       <NavbarContainer>
-        <div>
-          <Link to={`/profile`}>
-            <Img src={Logo} alt="Quizzies logo" />
-          </Link>
-        </div>
+        {accessToken ? (
+          <div>
+            <Link to={`/profile`}>
+              <Img src={Logo} alt="Quizzies logo" />
+            </Link>
+          </div>
+        ) : (
+          <div>
+            <Link className="tooltip" to={`/`}>
+              <span className="tooltiptext">Home</span>
+              <Img src={Logo} alt="Quizzies logo" />
+            </Link>
+          </div>
+        )}
+
         <Logos>
           <div>
             {accessToken ? (
